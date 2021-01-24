@@ -1,7 +1,14 @@
 {
-  "name": "vimdotmd-desktop",
-  "version": "1.0.0",
-  "description": "Desktop version of Vim.md",
-  "main": "main.js",
-  "license": "MIT"
+	"name": "vimdotmd-desktop",
+	"version": "1.0.0",
+	"description": "Desktop version of Vim.md",
+	"main": "dist/main.js",
+	"license": "MIT",
+	"scripts": {
+		"start": "tsc && electron ."
+	},
+	"devDependencies": {
+		"electron": "11.2.1",
+		"typescript": "4.1.3"
+	}
 }
