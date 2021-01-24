@@ -1,14 +1,17 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
+import path from "path";
 
 const createWindow = () => {
 	const win = new BrowserWindow({
 		width: 800,
 		height: 600,
 		webPreferences: {
+			preload: path.resolve(__dirname, "preload.js"),
 			contextIsolation: true,
+			nodeIntegration: false,
 		},
 	});
-	win.loadFile("static/index.html");
+	win.loadFile(path.resolve(__dirname, "../static/index.html"));
 };
 
 app.whenReady().then(createWindow);
@@ -24,3 +27,10 @@ app.on("activate", () => {
 		createWindow();
 	}
 });
+
+ipcMain.handle(
+	"get-42",
+	async (): Promise<number> => {
+		return 42;
+	}
+);

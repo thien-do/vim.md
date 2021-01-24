@@ -8,22 +8,8 @@
 			content="script-src 'self' 'unsafe-inline';"
 		/>
 	</head>
-	<body style="background: white">
+	<body>
 		<h1>Hello World!</h1>
-		<p>
-			We are using node
-			<script>
-				document.write(process.versions.node);
-			</script>
-			, Chrome
-			<script>
-				document.write(process.versions.chrome);
-			</script>
-			, and Electron
-			<script>
-				document.write(process.versions.electron);
-			</script>
-			.
-		</p>
+		<script src="../dist/renderer.js"></script>
 	</body>
 </html>
