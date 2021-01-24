@@ -1,0 +1,7 @@
+{
+  "name": "vimdotmd-desktop",
+  "version": "1.0.0",
+  "description": "Desktop version of Vim.md",
+  "main": "main.js",
+  "license": "MIT"
+}
