@@ -1,10 +1,18 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, Rectangle } from "electron";
+import Store from "electron-store";
 import path from "path";
+
+const store = new Store();
+
+const getBounds = (): Rectangle | undefined => {
+	const bounds = store.get("winBounds");
+	if (typeof bounds === "object") return bounds as Rectangle;
+	return undefined;
+};
 
 const createWindow = () => {
 	const win = new BrowserWindow({
-		width: 800,
-		height: 600,
+		...getBounds(),
 		webPreferences: {
 			preload: path.resolve(__dirname, "preload.js"),
 			contextIsolation: true,
@@ -12,6 +20,10 @@ const createWindow = () => {
 		},
 	});
 	win.loadFile(path.resolve(__dirname, "../static/index.html"));
+	win.on("close", () => {
+		store.set("winBounds", win.getBounds());
+	});
+	win.webContents.openDevTools();
 };
 
 app.whenReady().then(createWindow);
