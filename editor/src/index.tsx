@@ -1,12 +1,9 @@
 import { render as reactRender } from "react-dom";
+import { App } from "./app/app";
+import { Store } from "./store/store";
 
-const Editor = () => (
-	<div>
-		<p>Hello world!</p>
-		<textarea />
-	</div>
-);
+export { Store };
 
-export const render = () => {
-	reactRender(<Editor />, document.getElementById("root"));
+export const render = (store: Store) => {
+	reactRender(<App store={store} />, document.getElementById("root"));
 };

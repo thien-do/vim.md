@@ -2,10 +2,10 @@
 	"name": "@vimdotmd/desktop",
 	"version": "1.0.0",
 	"description": "Desktop version of Vim.md",
-	"main": "dist/server/server.js",
+	"main": "dist/main.js",
 	"license": "MIT",
 	"scripts": {
-		"build": "tsc",
+		"build": "rm -rf ./dist && tsc",
 		"start": "yarn build && electron ."
 	},
 	"dependencies": {

@@ -1,9 +1,10 @@
-import { ipcRenderer, contextBridge } from "electron";
 import { render } from "@vimdotmd/editor";
+import { contextBridge, ipcRenderer } from "electron";
+import { store } from "./store/store";
 
 process.once("loaded", () => {
 	contextBridge.exposeInMainWorld("backend", {
 		get42: async () => ipcRenderer.invoke("get-42"),
-		render: () => render(),
+		render: async () => void render(store),
 	});
 });
