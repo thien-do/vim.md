@@ -2,12 +2,14 @@
 	"name": "@vimdotmd/desktop",
 	"version": "1.0.0",
 	"description": "Desktop version of Vim.md",
-	"main": "dist/main.js",
+	"main": "dist/server/server.js",
 	"license": "MIT",
 	"scripts": {
-		"start": "tsc && electron ."
+		"build": "tsc",
+		"start": "yarn build && electron ."
 	},
 	"dependencies": {
+		"@vimdotmd/editor": "*",
 		"electron-store": "7.0.0",
 		"electron": "11.2.1",
 		"typescript": "4.1.3"

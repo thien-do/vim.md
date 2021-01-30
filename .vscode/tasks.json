@@ -8,10 +8,19 @@
 			"problemMatcher": [],
 			"label": "npm: start - desktop",
 			"detail": "tsc && electron .",
+			"group": "build"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "editor/",
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			}
+			},
+			"problemMatcher": [],
+			"label": "npm: build - editor",
+			"detail": "tsc"
 		}
 	]
 }
