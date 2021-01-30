@@ -8,8 +8,7 @@ This is the monorepo of Vim.md:
 
 ## Development
 
-1. Clone the repo then [`yarn install`](https://classic.yarnpkg.com/en/docs/cli/install) at root. This is a [yarn workspace](https://classic.yarnpkg.com/en/docs/workspaces/).
+1. This is a [yarn workspace](https://classic.yarnpkg.com/en/docs/workspaces/). Clone the repo then [`yarn install`](https://classic.yarnpkg.com/en/docs/cli/install) at root.
 2. Use VSCode's "NPM SCRIPTS" panel to build or start the app you want:
-   - ![Image of NPM SCRIPTS panel](/docs/npm-scripts.png)
    - <img src="/docs/npm-scripts.png" alt="Image of NPM SCRIPTS panel" width="259">
    - Apps (like "desktop" and "web") depend on libs (like "editor") so you may need to build libs before build or start an app.
