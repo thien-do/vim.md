@@ -1,8 +1,8 @@
 {
-  "private": true,
-  "workspaces": [
-    "desktop",
-    "web",
-    "editor"
-  ]
+	"private": true,
+	"workspaces": [
+		"desktop",
+		"web",
+		"editor"
+	]
 }
