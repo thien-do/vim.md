@@ -1,11 +1,15 @@
 import { Editor } from "../editor/editor";
 import { Explorer } from "../explorer/explorer";
 import { Prefs } from "../prefs/prefs";
+import { ToolbarToggle } from "../toolbar/toggle/toggle";
 import { Toolbar } from "../toolbar/toolbar";
 import s from "./app.module.css";
 
 export const App = (): JSX.Element => (
 	<div className={s.container}>
+		<div className={s.toolbarToggle}>
+			<ToolbarToggle />
+		</div>
 		<div className={s.toolbar}>
 			<Toolbar />
 		</div>

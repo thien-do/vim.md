@@ -1,11 +1,12 @@
 .container {
-    height: 100%;
+	height: 100%;
 	display: grid;
 	grid-template-columns: max-content auto max-content;
 	grid-template-rows: max-content auto;
 	grid-template-areas:
 		"toolbar toolbar toolbar"
 		"explorer editor prefs";
+	position: relative;
 }
 
 .explorer {
@@ -22,4 +23,11 @@
 
 .prefs {
 	grid-area: prefs;
+}
+
+.toolbarToggle {
+	position: absolute;
+	top: 16px;
+	left: 16px;
+	z-index: 1;
 }

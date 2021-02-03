@@ -20,3 +20,7 @@
 .right {
 	justify-content: flex-end;
 }
+
+.toggle {
+	visibility: hidden;
+}
