@@ -1,0 +1,25 @@
+.container {
+    height: 100%;
+	display: grid;
+	grid-template-columns: max-content auto max-content;
+	grid-template-rows: max-content auto;
+	grid-template-areas:
+		"toolbar toolbar toolbar"
+		"explorer editor prefs";
+}
+
+.explorer {
+	grid-area: explorer;
+}
+
+.toolbar {
+	grid-area: toolbar;
+}
+
+.editor {
+	grid-area: editor;
+}
+
+.prefs {
+	grid-area: prefs;
+}

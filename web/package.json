@@ -5,6 +5,7 @@
 	"homepage": ".",
 	"dependencies": {
 		"@moai/core": "0.197.0",
+		"@moai/icon": "0.36.0",
 		"@types/react": "17.0.0",
 		"@types/react-dom": "17.0.0",
 		"react": "17.0.1",

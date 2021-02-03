@@ -1,0 +1,22 @@
+.wrapper {
+	margin: -1px -1px 0;
+}
+
+.container {
+	display: flex;
+}
+
+.left,
+.right {
+	flex: 1 1 0px;
+	display: flex;
+}
+
+.center {
+	flex: 0 0 auto;
+	width: 300px;
+}
+
+.right {
+	justify-content: flex-end;
+}
