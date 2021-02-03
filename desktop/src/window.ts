@@ -30,4 +30,5 @@ export const createWindow = () => {
 	);
 	win.on("close", () => void store.set("winBounds", win.getBounds()));
 	win.webContents.openDevTools();
+	win.setMenuBarVisibility(false);
 };

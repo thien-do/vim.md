@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Store } from "../store/store";
+import { Store } from "../../store/store";
 
 interface Props {
 	store: Store;
 	file: string;
 }
 
-export const Editor = (props: Props): JSX.Element => {
+export const DummyEditor = (props: Props): JSX.Element => {
 	const [value, setValue] = useState("");
 	const load = async () => void setValue(await props.store.read(props.file));
 	const save = async () => void props.store.write(props.file, value);
