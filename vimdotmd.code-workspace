@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../writer"
+		},
+		{
+			"path": "../../me/moai"
+		}
+	],
+	"settings": {}
+}

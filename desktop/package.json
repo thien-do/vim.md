@@ -9,9 +9,8 @@
 		"start": "yarn build && electron ."
 	},
 	"dependencies": {
-		"@vimdotmd/editor": "*",
-		"electron-store": "7.0.0",
-		"electron": "11.2.1",
+		"electron": "11.2.2",
+		"electron-store": "7.0.1",
 		"typescript": "4.1.3"
 	}
 }

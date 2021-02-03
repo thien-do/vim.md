@@ -1,5 +1,5 @@
-import { app, BrowserWindow, ipcMain } from "electron";
-import { createWindow } from "./window/window";
+import { app, BrowserWindow } from "electron";
+import { createWindow } from "./window";
 
 app.whenReady().then(createWindow);
 
@@ -10,5 +10,3 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
 	if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
-
-ipcMain.handle("get-42", async () => 42);

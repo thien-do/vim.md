@@ -2,8 +2,8 @@ import { BrowserWindow, Rectangle } from "electron";
 import Store from "electron-store";
 import path from "path";
 
-// dirname === desktop/dist/window
-const root = path.resolve(__dirname, "../../");
+// dirname === desktop/dist
+const root = path.resolve(__dirname, "../");
 if (root.endsWith("desktop") === false) throw Error("Root should be desktop");
 
 const store = new Store();
@@ -23,7 +23,7 @@ export const createWindow = () => {
 			nodeIntegration: false,
 		},
 	});
-	win.loadFile(path.resolve(root, "static/index.html"));
+	win.loadFile(path.resolve(root, "../web/build/index.html"));
 	win.on("close", () => void store.set("winBounds", win.getBounds()));
 	win.webContents.openDevTools();
 };

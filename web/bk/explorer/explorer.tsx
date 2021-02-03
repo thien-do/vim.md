@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Store } from "../store/store";
+import { Button } from "@moai/core";
 
 interface Props {
 	store: Store;
@@ -25,8 +26,8 @@ export const Explorer = (props: Props): JSX.Element => {
 	return (
 		<div>
 			<div>
-				<button onClick={open} children="1. Open folder" />
-				<button onClick={load} children="2. Load files" />
+				<Button onClick={open} children="1. Open folder" />
+				<Button onClick={load} children="2. Load files" />
 			</div>
 			<ul>{files.map(renderFile)}</ul>
 		</div>
