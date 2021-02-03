@@ -5,8 +5,8 @@
 	"main": "dist/main.js",
 	"license": "MIT",
 	"scripts": {
-		"build": "rm -rf ./dist && tsc",
-		"start": "yarn build && electron ."
+		"compile": "rm -rf ./dist && tsc",
+		"start": "yarn compile && NODE_ENV=development electron ."
 	},
 	"dependencies": {
 		"electron": "11.2.2",

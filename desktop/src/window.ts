@@ -23,7 +23,11 @@ export const createWindow = () => {
 			nodeIntegration: false,
 		},
 	});
-	win.loadFile(path.resolve(root, "../web/build/index.html"));
+	win.loadURL(
+		process.env.NODE_ENV === "development"
+			? "http://localhost:3000"
+			: `file://${path.resolve(root, "../web/build/index.html")}`
+	);
 	win.on("close", () => void store.set("winBounds", win.getBounds()));
 	win.webContents.openDevTools();
 };
