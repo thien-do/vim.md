@@ -4,14 +4,14 @@
 	"private": true,
 	"homepage": ".",
 	"dependencies": {
-		"@moai/core": "0.197.0",
+		"@moai/core": "0.200.0",
 		"@moai/icon": "0.36.0",
-		"@types/react": "17.0.0",
+		"@types/react": "17.0.1",
 		"@types/react-dom": "17.0.0",
 		"react": "17.0.1",
 		"react-dom": "17.0.1",
 		"react-scripts": "4.0.2",
-		"typescript": "4.1.2"
+		"typescript": "4.1.3"
 	},
 	"scripts": {
 		"start": "BROWSER=NONE react-scripts start",

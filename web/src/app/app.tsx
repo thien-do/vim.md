@@ -1,3 +1,4 @@
+import { useTheme } from "@moai/core";
 import s from "./app.module.css";
 import { Editor } from "./editor/editor";
 import { Explorer } from "./explorer/explorer";
@@ -8,6 +9,7 @@ import { Toolbar } from "./toolbar/toolbar";
 
 export const App = (): JSX.Element => {
 	const { prefs, setPrefs } = usePrefs();
+	const { theme, setTheme } = useTheme();
 	const toolbarCls = prefs.toolbarVisible ? "" : s.woToolbar;
 	return (
 		<div className={[s.container, toolbarCls].join(" ")}>
@@ -30,7 +32,12 @@ export const App = (): JSX.Element => {
 				</div>
 				{prefs.prefsVisible && (
 					<div className={s.prefs}>
-						<PrefsPane prefs={prefs} setPrefs={setPrefs} />
+						<PrefsPane
+							prefs={prefs}
+							setPrefs={setPrefs}
+							theme={theme}
+							setTheme={setTheme}
+						/>
 					</div>
 				)}
 			</div>
