@@ -13,7 +13,7 @@ export type Template = "github" | "serif" | "blank";
 
 export interface Prefs {
 	toolbarVisible: boolean;
-	libraryVisible: boolean;
+	explorerVisible: boolean;
 	prefsVisible: boolean;
 	layout: Layout;
 	lineLength: LineLength;
@@ -26,7 +26,7 @@ export interface Prefs {
 
 const defaultPrefs: Prefs = {
 	toolbarVisible: true,
-	libraryVisible: false,
+	explorerVisible: false,
 	prefsVisible: false,
 	layout: "editor",
 	lineLength: 72,

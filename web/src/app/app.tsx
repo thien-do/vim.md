@@ -8,22 +8,31 @@ import { Toolbar } from "./toolbar/toolbar";
 
 export const App = (): JSX.Element => {
 	const { prefs, setPrefs } = usePrefs();
+	const toolbarCls = prefs.toolbarVisible ? "" : s.woToolbar;
 	return (
-		<div className={s.container}>
+		<div className={[s.container, toolbarCls].join(" ")}>
 			<div className={s.toolbarToggle}>
-				<ToolbarToggle />
+				<ToolbarToggle prefs={prefs} setPrefs={setPrefs} />
 			</div>
-			<div className={s.toolbar}>
-				<Toolbar />
-			</div>
-			<div className={s.explorer}>
-				<Explorer />
-			</div>
-			<div className={s.editor}>
-				<Editor />
-			</div>
-			<div className={s.prefs}>
-				<PrefsPane />
+			{prefs.toolbarVisible && (
+				<div className={s.toolbar}>
+					<Toolbar prefs={prefs} setPrefs={setPrefs} />
+				</div>
+			)}
+			<div className={s.body}>
+				{prefs.explorerVisible && (
+					<div className={s.explorer}>
+						<Explorer />
+					</div>
+				)}
+				<div className={s.editor}>
+					<Editor />
+				</div>
+				{prefs.prefsVisible && (
+					<div className={s.prefs}>
+						<PrefsPane />
+					</div>
+				)}
 			</div>
 		</div>
 	);

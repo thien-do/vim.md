@@ -1,5 +1,5 @@
 import { Pane } from "@moai/core";
-import s from "./prefs.module.css";
+import s from "./pane.module.css";
 
 export const PrefsPane = (): JSX.Element => (
 	<div className={s.wrapper}>

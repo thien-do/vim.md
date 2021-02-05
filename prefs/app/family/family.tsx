@@ -1,7 +1,5 @@
 import { DivPx, MutedSpan, Radio } from "@moai/core";
-import { PrefLabel } from "app/prefs/widget/label/label";
-import React from "react";
-import { SetterOrUpdater, useRecoilState } from "recoil";
+import { PrefLabel } from "components/label/label";
 import s from "./family.module.scss";
 import { FontFamily, Prefs } from "state/pref/pref";
 import { prefsState } from "state/pref/pref";

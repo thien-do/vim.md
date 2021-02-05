@@ -1,28 +1,8 @@
 .container {
 	height: 100%;
-	display: grid;
-	grid-template-columns: max-content auto max-content;
-	grid-template-rows: max-content auto;
-	grid-template-areas:
-		"toolbar toolbar toolbar"
-		"explorer editor prefs";
 	position: relative;
-}
-
-.explorer {
-	grid-area: explorer;
-}
-
-.toolbar {
-	grid-area: toolbar;
-}
-
-.editor {
-	grid-area: editor;
-}
-
-.prefs {
-	grid-area: prefs;
+	display: flex;
+	flex-direction: column;
 }
 
 .toolbarToggle {
@@ -30,4 +10,32 @@
 	top: 16px;
 	left: 16px;
 	z-index: 1;
+}
+
+.toolbar {
+	flex: 0 0 auto;
+}
+
+.body {
+	flex: 1 1 0px;
+	overflow: hidden;
+	display: flex;
+}
+
+.explorer {
+	flex: 0 0 auto;
+}
+
+/* Visual fix to avoid toolbarToggle button */
+.container.woToolbar .explorer {
+	padding-top: 32px;
+}
+
+.editor {
+	flex: 1 1 0px;
+	overflow: hidden;
+}
+
+.prefs {
+	flex: 0 0 auto;
 }
