@@ -30,7 +30,7 @@ export const App = (): JSX.Element => {
 				</div>
 				{prefs.prefsVisible && (
 					<div className={s.prefs}>
-						<PrefsPane />
+						<PrefsPane prefs={prefs} setPrefs={setPrefs} />
 					</div>
 				)}
 			</div>

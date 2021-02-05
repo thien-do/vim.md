@@ -1,12 +1,12 @@
 import { Background, Border, DivPx, MutedDiv } from "@moai/core";
-import s from "./section.module.scss";
+import s from "./section.module.css";
 
 interface Props {
     heading: string;
     children: React.ReactNode;
 }
 
-export const PrefsSection = (props: Props) => (
+export const PaneSection = (props: Props) => (
     <div>
         <Background color="weak">
             <Border color="weak" />
