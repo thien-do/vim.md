@@ -1,4 +1,5 @@
 import { useTheme } from "@moai/core";
+import { Store } from "store/store";
 import s from "./app.module.css";
 import { Editor } from "./editor/editor";
 import { Explorer } from "./explorer/explorer";
@@ -7,7 +8,11 @@ import { usePrefs } from "./prefs/state/state";
 import { ToolbarToggle } from "./toolbar/toggle/toggle";
 import { Toolbar } from "./toolbar/toolbar";
 
-export const App = (): JSX.Element => {
+interface Props {
+	store: Store;
+}
+
+export const App = (props: Props): JSX.Element => {
 	const { prefs, setPrefs } = usePrefs();
 	const { theme, setTheme } = useTheme();
 	const toolbarCls = prefs.toolbarVisible ? "" : s.woToolbar;
@@ -24,7 +29,7 @@ export const App = (): JSX.Element => {
 			<div className={s.body}>
 				{prefs.explorerVisible && (
 					<div className={s.explorer}>
-						<Explorer />
+						<Explorer store={props.store} />
 					</div>
 				)}
 				<div className={s.editor}>

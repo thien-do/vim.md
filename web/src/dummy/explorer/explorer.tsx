@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { Store } from "../../store/store";
+import { Store, StoreFile } from "../../store/store";
 
 interface Props {
 	store: Store;
@@ -8,12 +8,12 @@ interface Props {
 }
 
 export const DummyExplorer = (props: Props): JSX.Element => {
-	const [files, setFiles] = useState<string[]>([]);
+	const [files, setFiles] = useState<StoreFile[]>([]);
 	const [folder, setFolder] = useState("");
 	const open = async () => void setFolder(await props.store.openFolder());
 	const load = async () => void setFiles(await props.store.list(folder));
-	const renderFile = (file: string): JSX.Element => {
-		const full = `${folder}/${file}`;
+	const renderFile = (file: StoreFile): JSX.Element => {
+		const full = `${folder}/${file.name}`;
 		const button = (
 			<button
 				onClick={() => void props.setFile(full)}

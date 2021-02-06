@@ -15,7 +15,7 @@ const DUMMY = false;
 
 ReactDOM.render(
 	<React.StrictMode>
-		{DUMMY ? <DummyApp store={store} /> : <App />}
+		{DUMMY ? <DummyApp store={store} /> : <App store={store} />}
 	</React.StrictMode>,
 	document.getElementById("root")
 );

@@ -31,13 +31,13 @@ interface Props {
 	 * This returns "void" since it expects the "root" prop will be update and
 	 * thus leads to a new render altogether.
 	 */
-	loadChildren?: () => Promise<void>;
+	loadChildren?: (node: TreeNode) => Promise<void>;
 	/** Controlled selected nodes */
-	selectedIds: Set<string>;
-	setSelectedIds: SetState<Set<string>>;
+	selected: Set<string>;
+	setSelected: SetState<Set<string>>;
 	/** Controlled expanded nodes */
-	expandedIds: Set<string>;
-	setExpandedIds: SetState<Set<string>>;
+	expanded: Set<string>;
+	setExpanded: SetState<Set<string>>;
 }
 
 const isLeaf = (node: TreeNode): boolean => {
@@ -49,14 +49,17 @@ const isLeaf = (node: TreeNode): boolean => {
 };
 
 const toggle = async (props: Props): Promise<void> => {
-	if (props.expandedIds.has(props.node.id)) {
-		props.expandedIds.delete(props.node.id);
+	const expanded = new Set(props.expanded);
+	if (expanded.has(props.node.id)) {
+		expanded.delete(props.node.id);
 	} else {
-		await props.loadChildren?.();
-		props.expandedIds.add(props.node.id);
+		await props.loadChildren?.(props.node);
+		expanded.add(props.node.id);
 	}
+	props.setExpanded(expanded);
 };
 
+// Extract "node" here to ensure it would never be passed down (recursively)
 export const Tree = ({ node, ...rest }: Props): JSX.Element => (
 	<div>
 		{isLeaf(node) === false && (
@@ -64,13 +67,13 @@ export const Tree = ({ node, ...rest }: Props): JSX.Element => (
 				<Button
 					icon={ChevronRight}
 					iconLabel="Toggle folder"
-					onClick={toggle}
+					onClick={() => toggle({ node, ...rest })}
 				/>
 			</div>
 		)}
-		{rest.selectedIds.has(node.id) && "Selected"}
+		{rest.selected.has(node.id) && "Selected"}
 		<div>{node.label}</div>
-		{node.children && rest.expandedIds.has(node.id) && (
+		{node.children && rest.expanded.has(node.id) && (
 			<div>
 				{node.children.map((child) => (
 					<div key={child.id}>
