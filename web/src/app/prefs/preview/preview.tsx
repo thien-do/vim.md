@@ -5,7 +5,7 @@ import { PrefsTemplate } from "./template/template";
 interface Props extends PrefsState {}
 
 export const PrefsPreview = (props: Props): JSX.Element => (
-	<PaneSection heading="Template">
+	<PaneSection heading="Preview">
 		<PrefsTemplate {...props} />
 	</PaneSection>
 );
