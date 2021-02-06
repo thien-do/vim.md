@@ -10,7 +10,7 @@
 		"noEmit": true,
 		"noFallthroughCasesInSwitch": false,
 		"allowJs": false,
-		"allowSyntheticDefaultImports": false,
+		"allowSyntheticDefaultImports": true,
 		"baseUrl": "./src"
 	}
 }

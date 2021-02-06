@@ -1,0 +1,74 @@
+/* WARNING:
+- This file comes from iA Writer's manuscript template.
+- Its original name is "typography-core.css".
+*/
+
+.font-size {
+    --font-size: 18px;
+}
+
+@media screen {
+    .font-size-4xs {
+        --font-size: 11px;
+    }
+    .font-size-3xs {
+        --font-size: 12px;
+    }
+    .font-size-2xs {
+        --font-size: 13px;
+    }
+    .font-size-xs {
+        --font-size: 14px;
+    }
+    .font-size-s {
+        --font-size: 15px;
+    }
+    .font-size-m {
+        --font-size: 16px;
+    }
+    .font-size-l {
+        --font-size: 18px;
+    }
+    .font-size-xl {
+        --font-size: 20px;
+    }
+    .font-size-2xl {
+        --font-size: 24px;
+    }
+    .font-size-3xl {
+        --font-size: 28px;
+    }
+    .font-size-4xl {
+        --font-size: 32px;
+    }
+    .font-size-5xl {
+        --font-size: 36px;
+    }
+    .font-size-6xl {
+        --font-size: 42px;
+    }
+    .font-size-7xl {
+        --font-size: 48px;
+    }
+    .font-size-8xl {
+        --font-size: 54px;
+    }
+    .font-size-9xl {
+        --font-size: 60px;
+    }
+    .font-size-10xl {
+        --font-size: 72px;
+    }
+}
+
+@media print {
+    .font-size {
+        --font-size: 13px;
+    }
+}
+
+/* Font Size */
+
+.font-size {
+    font-size: var(--font-size);
+}

@@ -44,7 +44,12 @@ export const App = (props: Props): JSX.Element => {
 					</div>
 				)}
 				<div className={s.editor}>
-					<Editor />
+					<Editor
+						store={props.store}
+						filePath={filePath}
+						prefs={prefs}
+						setPrefs={setPrefs}
+					/>
 				</div>
 				{prefs.prefsVisible && (
 					<div className={s.prefs}>
