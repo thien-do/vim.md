@@ -1,5 +1,6 @@
 import { useTheme } from "@moai/core";
 import { Store } from "store/store";
+import { useStorageState } from "utils/state";
 import s from "./app.module.css";
 import { Editor } from "./editor/editor";
 import { Explorer } from "./explorer/explorer";
@@ -12,9 +13,15 @@ interface Props {
 	store: Store;
 }
 
+const FILE_PATH_KEY = "vmd-file-path";
+
 export const App = (props: Props): JSX.Element => {
+	// State
 	const { prefs, setPrefs } = usePrefs();
 	const { theme, setTheme } = useTheme();
+	const [filePath, setFilePath] = useStorageState<string>(FILE_PATH_KEY);
+
+	// Render
 	const toolbarCls = prefs.toolbarVisible ? "" : s.woToolbar;
 	return (
 		<div className={[s.container, toolbarCls].join(" ")}>
@@ -29,7 +36,11 @@ export const App = (props: Props): JSX.Element => {
 			<div className={s.body}>
 				{prefs.explorerVisible && (
 					<div className={s.explorer}>
-						<Explorer store={props.store} />
+						<Explorer
+							filePath={filePath}
+							setFilePath={setFilePath}
+							store={props.store}
+						/>
 					</div>
 				)}
 				<div className={s.editor}>

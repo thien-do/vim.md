@@ -2,15 +2,17 @@ import { Tree, TreeNode } from "components/tree/tree";
 import { TreeUtils } from "components/tree/utils";
 import { useEffect, useState } from "react";
 import { Store, StoreFile } from "store/store";
+import { SetState } from "utils/state";
 import s from "./tree.module.css";
 
 interface Props {
 	store: Store;
 	rootPath: string;
+	filePath: string | null;
+	setFilePath: SetState<string | null>;
 }
 
 const EXPANDED_KEY = "vdm-explorer-expanded";
-const SELECTED_KEY = "vdm-explorer-selected";
 
 const useSetSave = (key: string, set: Set<string>): void => {
 	useEffect(() => {
@@ -36,19 +38,13 @@ const toTreeNode = (parentPath: string) => (file: StoreFile): TreeNode => ({
 
 export const ExplorerTree = (props: Props): JSX.Element | null => {
 	const [rootNode, setRootNode] = useState<null | TreeNode>(null);
-	const [expanded, setExpanded] = useState(() => {
-		return getInitialSet(EXPANDED_KEY);
-	});
-	const [selected, setSelected] = useState(() => {
-		return getInitialSet(SELECTED_KEY);
-	});
+	const [expanded, setExpanded] = useState(() => getInitialSet(EXPANDED_KEY));
 
 	const { list } = props.store;
-	const { rootPath } = props;
+	const { rootPath, filePath } = props;
 
 	// Save state to localStorage
 	useSetSave(EXPANDED_KEY, expanded);
-	useSetSave(SELECTED_KEY, selected);
 
 	// Reset state when rootPath is changed
 	useEffect(() => {
@@ -93,8 +89,13 @@ export const ExplorerTree = (props: Props): JSX.Element | null => {
 			<Tree
 				expanded={expanded}
 				setExpanded={setExpanded}
-				selected={selected}
-				setSelected={setSelected}
+				// Tree supports multi-selection but we only want single
+				// @TODO: This should be simpler but need to wait for API
+				// update from the tree component?
+				selected={new Set(filePath === null ? [] : [filePath])}
+				setSelected={(set: Set<string>) => {
+					props.setFilePath(Array.from(set)[0]);
+				}}
 				loadChildren={loadChildren}
 				node={rootNode}
 			/>

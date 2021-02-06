@@ -32,7 +32,18 @@ export const TreeItem = (props: Props): JSX.Element => {
 	const expanded = props.expanded.has(props.node.id);
 	const selected = props.selected.has(props.node.id);
 	return (
-		<div className={[s.container, selected ? s.selected : ""].join(" ")}>
+		<div
+			className={[
+				s.container,
+				Button.styles.flat.main,
+				selected ? Button.styles.flat.selected : "",
+			].join(" ")}
+			// @TODO: Handle a11y properly
+			onClick={() => {
+				// @TODO: Handle multi-select case (e.g. Cmd + Click to add)
+				props.setSelected(new Set([props.node.id]));
+			}}
+		>
 			{[...Array(props.level ?? 0)].map((_v, i) => (
 				<Tab key={i} />
 			))}

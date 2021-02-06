@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { SetState } from "utils/state";
 import { TreeItem } from "./row/row";
 
 export interface TreeNode {
@@ -40,10 +39,10 @@ export interface TreeProps {
 	loadChildren?: (node: TreeNode) => Promise<void>;
 	/** Controlled selected nodes */
 	selected: Set<string>;
-	setSelected: SetState<Set<string>>;
+	setSelected: (set: Set<string>) => void;
 	/** Controlled expanded nodes */
 	expanded: Set<string>;
-	setExpanded: SetState<Set<string>>;
+	setExpanded: (set: Set<string>) => void;
 }
 
 const renderChild = (props: TreeProps) => (child: TreeNode) => (
