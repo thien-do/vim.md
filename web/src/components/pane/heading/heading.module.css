@@ -6,6 +6,10 @@
 	border-top-width: 1px;
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
+
+	position: sticky;
+	top: -1px;
+	z-index: 2;
 }
 
 .aside {
@@ -23,7 +27,7 @@
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
 
-	padding: 8px 12px;
+	padding: 8px 16px;
 	font-size: 12px;
 	line-height: 16px;
 }

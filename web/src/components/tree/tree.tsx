@@ -1,6 +1,6 @@
-import { Button } from "@moai/core";
-import { ChevronRight } from "@moai/icon/hrs";
+import { useEffect } from "react";
 import { SetState } from "utils/state";
+import { TreeItem } from "./row/row";
 
 export interface TreeNode {
 	id: string;
@@ -18,7 +18,13 @@ export interface TreeNode {
 	isLeaf?: boolean;
 }
 
-interface Props {
+export interface TreeProps {
+	/**
+	 * Nested level. This is only used to render the left padding of nested
+	 * nodes. The consumer usually should not set this since they are passing
+	 * the root node.
+	 */
+	level?: number;
 	/**
 	 * A tree's shape is completely controlled. The Tree component cannot
 	 * change the tree shape (root) on its own.
@@ -40,47 +46,25 @@ interface Props {
 	setExpanded: SetState<Set<string>>;
 }
 
-const isLeaf = (node: TreeNode): boolean => {
-	if (node.isLeaf === undefined) {
-		return node.children === undefined; // Sync
-	} else {
-		return node.isLeaf; // Async
-	}
-};
-
-const toggle = async (props: Props): Promise<void> => {
-	const expanded = new Set(props.expanded);
-	if (expanded.has(props.node.id)) {
-		expanded.delete(props.node.id);
-	} else {
-		await props.loadChildren?.(props.node);
-		expanded.add(props.node.id);
-	}
-	props.setExpanded(expanded);
-};
-
-// Extract "node" here to ensure it would never be passed down (recursively)
-export const Tree = ({ node, ...rest }: Props): JSX.Element => (
-	<div>
-		{isLeaf(node) === false && (
-			<div>
-				<Button
-					icon={ChevronRight}
-					iconLabel="Toggle folder"
-					onClick={() => toggle({ node, ...rest })}
-				/>
-			</div>
-		)}
-		{rest.selected.has(node.id) && "Selected"}
-		<div>{node.label}</div>
-		{node.children && rest.expanded.has(node.id) && (
-			<div>
-				{node.children.map((child) => (
-					<div key={child.id}>
-						<Tree {...rest} node={child} />
-					</div>
-				))}
-			</div>
-		)}
-	</div>
+const renderChild = (props: TreeProps) => (child: TreeNode) => (
+	<Tree {...props} key={child.id} level={(props.level ?? 0) + 1} node={child} />
 );
+
+export const Tree = (props: TreeProps): JSX.Element => {
+	const expanded = props.expanded.has(props.node.id);
+
+	const { loadChildren, node } = props;
+	useEffect(() => {
+		if (expanded) loadChildren?.(node);
+	}, [loadChildren, expanded, node]);
+
+	const body = (
+		<>
+			<TreeItem {...props} />
+			{props.node.children && expanded && (
+				<>{props.node.children.map(renderChild(props))}</>
+			)}
+		</>
+	);
+	return props.level === 0 ? <div>{body}</div> : body;
+};

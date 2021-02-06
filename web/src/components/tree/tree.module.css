@@ -1,0 +1,7 @@
+.expanded .toggle {
+	transform: rotate(90deg);
+}
+
+.label {
+	white-space: nowrap;
+}

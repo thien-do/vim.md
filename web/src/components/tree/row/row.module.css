@@ -1,0 +1,13 @@
+.container {
+	display: flex;
+	align-items: center;
+}
+
+.tab,
+.toggle {
+	flex: 0 0 auto;
+}
+
+.label {
+	white-space: nowrap;
+}
