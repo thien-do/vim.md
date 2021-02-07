@@ -1,0 +1,60 @@
+.dark .CodeMirror-dialog-bottom {
+	background-color: var(--dark-gray-1);
+	border-top: solid 1px var(--dark-gray-2);
+}
+
+/* hack hack super hack */
+.dark .CodeMirror-dialog-bottom span[style*="color: #888"] {
+	color: var(--dark-gray-4) !important;
+}
+
+/* Cursor */
+.dark .CodeMirror-focused .CodeMirror-selected,
+.dark .CodeMirror-selected {
+	background-color: var(--dark-gray-3);
+}
+.dark .cm-animate-fat-cursor {
+	background-color: var(--dark-gray-4);
+}
+.dark .cm-fat-cursor .CodeMirror-cursor {
+	background-color: var(--dark-gray-3);
+}
+.dark .CodeMirror-cursor {
+	border-left: solid 3px var(--accent-2);
+}
+
+/* Text */
+.dark .cm-s-default .cm-header,
+.dark .cm-s-default .cm-variable-2,
+.dark .cm-s-default .cm-link {
+	color: inherit;
+}
+.dark .cm-s-default .cm-builtin,
+.dark .cm-s-default .cm-meta,
+.dark .cm-s-default .cm-tag,
+.dark .cm-s-default .cm-attribute,
+.dark .cm-s-default .cm-quote,
+.dark .cm-s-default .cm-variable-3,
+.dark .cm-s-default .cm-type,
+.dark .cm-s-default .cm-string,
+.dark .cm-s-default .cm-comment {
+	color: var(--dark-gray-4);
+}
+.dark .cm-searching {
+	background-color: #fbd38d;
+}
+.dark .CodeMirror-activeline-background {
+	background: none;
+}
+
+/* Gutter */
+.dark .CodeMirror-gutters {
+	background: none;
+	border: none;
+}
+.dark .CodeMirror-linenumber {
+	color: var(--dark-gray-3);
+}
+.dark .CodeMirror-activeline .CodeMirror-linenumber {
+	color: var(--dark-gray-5);
+}

@@ -3,6 +3,7 @@ import { Store } from "store/store";
 import { initEditor } from "./init";
 import s from "./editor.module.css";
 import { FontFamily, PrefsState } from "app/prefs/state/state";
+import "./style/style";
 
 interface Props extends PrefsState {
 	store: Store;

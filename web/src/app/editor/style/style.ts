@@ -1,6 +1,5 @@
 import "./core.css";
-import "./dark.scss";
+import "./dark.css";
 import "./family/family.css";
-import "./light.scss";
+import "./light.css";
 import "./size/size.css";
-

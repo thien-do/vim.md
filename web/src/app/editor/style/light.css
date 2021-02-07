@@ -1,0 +1,60 @@
+.light .CodeMirror .CodeMirror-dialog-bottom {
+	background-color: var(--gray-0);
+	border-top: solid 1px var(--gray-2);
+}
+
+/* hack hack super hack */
+.light .CodeMirror .CodeMirror-dialog-bottom span[style*="color: #888"] {
+	color: var(--gray-5) !important;
+}
+.light .CodeMirror .CodeMirror-focused .CodeMirror-selected,
+.light .CodeMirror .CodeMirror-selected {
+	background-color: var(--gray-3);
+}
+
+/* Cursor */
+.light .CodeMirror .cm-animate-fat-cursor {
+	background-color: var(--gray-5);
+}
+.light .CodeMirror.cm-fat-cursor .CodeMirror-cursor {
+	background-color: var(--gray-3);
+}
+.light .CodeMirror .CodeMirror-cursor {
+	border-left: solid 3px var(--highlight-5);
+}
+
+/* Text */
+.light .CodeMirror.cm-s-default .cm-header,
+.light .CodeMirror.cm-s-default .cm-variable-2,
+.light .CodeMirror.cm-s-default .cm-link {
+	color: inherit;
+}
+.light .CodeMirror.cm-s-default .cm-builtin,
+.light .CodeMirror.cm-s-default .cm-meta,
+.light .CodeMirror.cm-s-default .cm-tag,
+.light .CodeMirror.cm-s-default .cm-attribute,
+.light .CodeMirror.cm-s-default .cm-quote,
+.light .CodeMirror.cm-s-default .cm-variable-3,
+.light .CodeMirror.cm-s-default .cm-type,
+.light .CodeMirror.cm-s-default .cm-string,
+.light .CodeMirror.cm-s-default .cm-comment {
+	color: var(--gray-5);
+}
+.light .CodeMirror .cm-searching {
+	background-color: #fbd38d;
+}
+.light .CodeMirror .CodeMirror-activeline-background {
+	background: none;
+}
+
+/* Gutter */
+.light .CodeMirror .CodeMirror-gutters {
+	background: none;
+	border: none;
+}
+.light .CodeMirror .CodeMirror-linenumber {
+	color: var(--gray-3);
+}
+.light .CodeMirror .CodeMirror-activeline .CodeMirror-linenumber {
+	color: var(--gray-9);
+}
