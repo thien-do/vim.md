@@ -1,0 +1,14 @@
+.markdown-body pre,
+.markdown-body code {
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	tab-size: 4;
+	hyphens: none;
+}
+
+.markdown-body pre {
+	overflow: auto;
+}

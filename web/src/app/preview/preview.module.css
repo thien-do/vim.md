@@ -1,0 +1,23 @@
+.container {
+	height: 100%;
+	overflow: auto;
+}
+
+.markdown-body {
+	all: initial;
+	/* Since "markdown-body" is a div, we need to revert some styles here */
+	display: block;
+	min-width: 200px;
+	margin: 0 auto;
+	padding: 45px;
+}
+
+.markdown-body * {
+	all: revert;
+}
+
+@media (max-width: 767px) {
+	.markdown-body {
+		padding: 15px;
+	}
+}

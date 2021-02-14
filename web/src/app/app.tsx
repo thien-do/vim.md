@@ -1,8 +1,9 @@
 import { useTheme } from "@moai/core";
+import { useState } from "react";
 import { Store } from "store/store";
 import { useStorageState } from "utils/state";
 import s from "./app.module.css";
-import { Editor } from "./editor/editor";
+import { Editor, EditorPane } from "./editor/editor";
 import { Explorer } from "./explorer/explorer";
 import { PrefsPane } from "./prefs/pane/pane";
 import { usePrefs } from "./prefs/state/state";
@@ -20,6 +21,7 @@ export const App = (props: Props): JSX.Element => {
 	const { prefs, setPrefs } = usePrefs();
 	const { theme, setTheme } = useTheme();
 	const [filePath, setFilePath] = useStorageState<string>(FILE_PATH_KEY);
+	const [editor, setEditor] = useState<Editor>(null);
 
 	// Render
 	const toolbarCls = prefs.toolbarVisible ? "" : s.woToolbar;
@@ -44,11 +46,13 @@ export const App = (props: Props): JSX.Element => {
 					</div>
 				)}
 				<div className={s.editor}>
-					<Editor
+					<EditorPane
 						store={props.store}
 						filePath={filePath}
 						prefs={prefs}
 						setPrefs={setPrefs}
+						editor={editor}
+						setEditor={setEditor}
 					/>
 				</div>
 				{prefs.prefsVisible && (

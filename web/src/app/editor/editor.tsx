@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import { Store } from "store/store";
-import { initEditor } from "./init";
-import s from "./editor.module.css";
 import { FontFamily, PrefsState } from "app/prefs/state/state";
+import { useEffect, useRef } from "react";
+import { Store } from "store/store";
+import { SetState } from "utils/state";
+import s from "./editor.module.css";
+import { initEditor } from "./init";
 import "./style/style";
 
 const ERRORS = {
@@ -10,7 +11,14 @@ const ERRORS = {
 	CONTAINER: "Container for editor is not defined",
 };
 
-interface Props extends PrefsState {
+export type Editor = CodeMirror.Editor | null;
+
+export interface EditorState {
+	editor: Editor;
+	setEditor: SetState<Editor>;
+}
+
+interface Props extends PrefsState, EditorState {
 	store: Store;
 	filePath: string | null;
 }
@@ -21,25 +29,25 @@ const fontFamilyClasses: Record<FontFamily, [string, string]> = {
 	quattro: ["quattro", "quattro"],
 };
 
-export const Editor = (props: Props): JSX.Element => {
+export const EditorPane = (props: Props): JSX.Element => {
 	const container = useRef<HTMLDivElement>(null);
-	const editor = useRef<CodeMirror.Editor | null>(null);
 
+	const { editor, setEditor } = props;
 	useEffect(() => {
-		if (editor.current !== null) return;
+		if (editor !== null) return;
 		if (container.current === null) throw Error(ERRORS.CONTAINER);
-		editor.current = initEditor(container.current);
-	}, []);
+		setEditor(initEditor(container.current));
+	}, [editor, setEditor]);
 
-	const { read } = props.store;
+	const [{ filePath }, { read }] = [props, props.store];
 	useEffect(() => {
 		(async () => {
-			if (props.filePath === null) return;
-			const content = await read(props.filePath);
-			if (editor.current === null) throw Error(ERRORS.EDITOR);
-			editor.current.setValue(content);
+			if (filePath === null) return;
+			const content = await read(filePath);
+			if (editor === null) throw Error(ERRORS.EDITOR);
+			editor.setValue(content);
 		})();
-	}, [props.filePath, read]);
+	}, [filePath, editor, read]);
 
 	const fontFamilyClass = fontFamilyClasses[props.prefs.fontFamily];
 	return (
