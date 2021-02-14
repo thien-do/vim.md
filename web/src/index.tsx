@@ -1,5 +1,5 @@
-import "@moai/core/font/local.css";
-import "@moai/core/index.css";
+import "@moai/core/dist/font/local.css";
+import "@moai/core/dist/index.css";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { App } from "./app/app";

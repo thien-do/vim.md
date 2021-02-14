@@ -1,10 +1,3 @@
-.light body:not(.x) {
-	background-color: var(--gray-1);
-}
-.dark body:not(.x) {
-	background-color: var(--gray-9);
-}
-
 html,
 body,
 #root {
@@ -12,30 +5,15 @@ body,
 	overflow: hidden;
 }
 
-body {
-	/* Based on Tailwind's Cool Gray */
-	--gray-0: hsl(0, 0%, 100%);
-	--gray-1: hsl(235, 18%, 98%);
-	--gray-2: hsl(220, 13%, 90%);
-	--gray-3: hsl(216, 12%, 78%);
-	--gray-4: hsl(218, 11%, 65%);
-	--gray-5: hsl(220, 9%, 46%);
-	--gray-6: hsl(221, 13%, 32%);
-	--gray-7: hsl(222, 13%, 26%);
-	--gray-8: hsl(220, 13%, 18%);
-	--gray-9: hsl(216, 13%, 15%);
-    --gray-10: hsl(223, 6%, 10%);
-
-
-	--highlight-0: hsl(0, 0%, 100%);
-	--highlight-1: hsl(235, 18%, 98%);
-	--highlight-2: hsl(220, 13%, 90%);
-	--highlight-3: hsl(216, 12%, 78%);
-	--highlight-4: hsl(218, 11%, 65%);
-	--highlight-5: hsl(220, 9%, 46%);
-	--highlight-6: hsl(221, 13%, 32%);
-	--highlight-7: hsl(222, 13%, 26%);
-	--highlight-8: hsl(220, 13%, 18%);
-	--highlight-9: hsl(216, 13%, 15%);
-	--highlight-10: hsl(223, 6%, 10%);
+:root:not(.x) {
+	--highlight-0: var(--gray-0);
+	--highlight-1: var(--gray-1);
+	--highlight-2: var(--gray-2);
+	--highlight-3: var(--gray-3);
+	--highlight-4: var(--gray-4);
+	--highlight-5: var(--gray-5);
+	--highlight-6: var(--gray-6);
+	--highlight-7: var(--gray-7);
+	--highlight-8: var(--gray-8);
+	--highlight-9: var(--gray-9);
 }
