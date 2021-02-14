@@ -17,23 +17,23 @@ export interface Store {
 }
 
 const read: Store["read"] = async (path) => {
-	return `Content from ${path}`;
+	let content = fs.readFileSync(path, "utf8")
+	return content;
 };
 
 const write: Store["write"] = async (path, content) => {
-	console.log(`Save ${content.length} chars at ${path}`);
+	fs.writeFileSync(path, content, "utf8")
 };
 
 const list: Store["list"] = async (path) => {
-	console.log("Test fs", fs.readdirSync("/"));
-	console.log(`List files at ${path}`);
-	return [
-		{ isDirectory: true, name: "Folder 1" },
-		{ isDirectory: false, name: "Foo.md" },
-		{ isDirectory: true, name: "Folder 2" },
-		{ isDirectory: false, name: "Bar" },
-		{ isDirectory: false, name: "Baz.png" },
-	];
+	let items = fs.readdirSync(path).map(function (value) {
+		let stat = fs.statSync(path + "/" + value)
+		return {
+			isDirectory: stat.isDirectory(),
+			name: value
+		}
+	})
+	return items
 };
 
 const openFolder: Store["openFolder"] = async () => {
