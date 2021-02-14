@@ -5,6 +5,11 @@ import s from "./editor.module.css";
 import { FontFamily, PrefsState } from "app/prefs/state/state";
 import "./style/style";
 
+const ERRORS = {
+	EDITOR: "Editor is not initialized",
+	CONTAINER: "Container for editor is not defined",
+};
+
 interface Props extends PrefsState {
 	store: Store;
 	filePath: string | null;
@@ -17,20 +22,22 @@ const fontFamilyClasses: Record<FontFamily, [string, string]> = {
 };
 
 export const Editor = (props: Props): JSX.Element => {
-	const [content, setContent] = useState("");
 	const container = useRef<HTMLDivElement>(null);
+	const editor = useRef<CodeMirror.Editor | null>(null);
 
 	useEffect(() => {
-		const element = container.current;
-		if (element === null) throw Error("Editor container is null");
-		initEditor(element);
+		if (editor.current !== null) return;
+		if (container.current === null) throw Error(ERRORS.CONTAINER);
+		editor.current = initEditor(container.current);
 	}, []);
 
 	const { read } = props.store;
 	useEffect(() => {
 		(async () => {
-			if (props.filePath === null) return void setContent("");
-			setContent(await read(props.filePath));
+			if (props.filePath === null) return;
+			const content = await read(props.filePath);
+			if (editor.current === null) throw Error(ERRORS.EDITOR);
+			editor.current.setValue(content);
 		})();
 	}, [props.filePath, read]);
 
@@ -38,7 +45,7 @@ export const Editor = (props: Props): JSX.Element => {
 	return (
 		<div
 			className={[
-				s.editor,
+				s.container,
 				`font-family-${fontFamilyClass[0]}`,
 				`font-var-${fontFamilyClass[1]}`,
 				`font-size font-size-${props.prefs.fontSize}`,
