@@ -1,58 +1,51 @@
-@import "@moai/core/dist/theme/global.scss";
 @import url("https://use.typekit.net/rqe2lxn.css");
-
 .markdown-body.template-serif {
-    font-family: vollkorn, serif;
-    font-size: 20px;
-    line-height: 1.5;
-    max-width: 600px;
-    @include light {
-        color: var(--light-gray-5);
-    }
-    @include dark {
-        color: var(--dark-gray-5);
-    }
-
-    pre,
-    code {
-        font-family: source-code-pro, monospace;
-        font-size: 18px;
-    }
-
-    blockquote {
-        font-style: italic;
-        border-left: 2px solid;
-        @include light {
-            color: var(--light-gray-4);
-            border-left-color: var(--light-gray-3);
-        }
-        @include dark {
-            color: var(--dark-gray-4);
-            border-left-color: var(--dark-gray-3);
-        }
-        padding-left: 1em;
-        margin-left: -1em;
-    }
-
-    pre {
-        @include light {
-            background-color: var(--light-gray-1);
-        }
-        @include dark {
-            background-color: var(--dark-gray-0);
-        }
-        padding: 1.5em;
-        margin-left: -1.5em;
-        margin-right: -1.5em;
-    }
-
-    a,
-    a:visited {
-        @include light {
-            color: var(--accent-0);
-        }
-        @include dark {
-            color: var(--accent-3);
-        }
-    }
+	font-family: vollkorn, serif;
+	font-size: 20px;
+	line-height: 1.5;
+	max-width: 600px;
+}
+.light .markdown-body.template-serif {
+	color: var(--light-gray-5);
+}
+.dark .markdown-body.template-serif {
+	color: var(--dark-gray-5);
+}
+.markdown-body.template-serif pre,
+.markdown-body.template-serif code {
+	font-family: source-code-pro, monospace;
+	font-size: 18px;
+}
+.markdown-body.template-serif blockquote {
+	font-style: italic;
+	border-left: 2px solid;
+	padding-left: 1em;
+	margin-left: -1em;
+}
+.light .markdown-body.template-serif blockquote {
+	color: var(--light-gray-4);
+	border-left-color: var(--light-gray-3);
+}
+.dark .markdown-body.template-serif blockquote {
+	color: var(--dark-gray-4);
+	border-left-color: var(--dark-gray-3);
+}
+.markdown-body.template-serif pre {
+	padding: 1.5em;
+	margin-left: -1.5em;
+	margin-right: -1.5em;
+}
+.light .markdown-body.template-serif pre {
+	background-color: var(--light-gray-1);
+}
+.dark .markdown-body.template-serif pre {
+	background-color: var(--dark-gray-0);
+}
+.light .markdown-body.template-serif a,
+.light .markdown-body.template-serif a:visited {
+	color: var(--accent-0);
+}
+.dark .markdown-body.template-serif a,
+.dark .markdown-body.template-serif a:visited {
+	color: var(--accent-3);
 }
