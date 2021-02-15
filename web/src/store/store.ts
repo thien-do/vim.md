@@ -11,5 +11,7 @@ export interface Store {
 	/** List files in the directory at @param path */
 	list: (path: string) => Promise<StoreFile[]>;
 	/** Open OS's folder picker and return the picked folder path */
-	openFolder: () => Promise<string>;
+	pickFolder: () => Promise<string>;
+	/** Open OS's file picker and return the picked file path */
+	pickFile: () => Promise<string>;
 }

@@ -13,7 +13,9 @@ export interface Store {
 	/** List files in the directory at @param path */
 	list: (path: string) => Promise<File[]>;
 	/** Open OS's folder picker and return the picked folder path */
-	openFolder: () => Promise<string>;
+	pickFolder: () => Promise<string>;
+	/** Open OS's file picker and return the picked file path */
+	pickFile: () => Promise<string>;
 }
 
 const read: Store["read"] = async (path) => {
@@ -36,8 +38,12 @@ const list: Store["list"] = async (path) => {
 	return items
 };
 
-const openFolder: Store["openFolder"] = async () => {
+const pickFolder: Store["pickFolder"] = async () => {
 	return `/home/fake/path-${Math.random()}`;
 };
 
-export const store: Store = { read, write, list, openFolder };
+const pickFile: Store["pickFile"] = async () => {
+	return `/home/fake/path-${Math.random()}/foo.md`;
+};
+
+export const store: Store = { read, write, list, pickFolder, pickFile };
