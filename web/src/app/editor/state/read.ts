@@ -1,18 +1,22 @@
 import { useEffect } from "react";
-import { EditorProps } from "./state";
+import { Editor, EditorProps } from "./state";
 
 /**
  * Read file content into editor
  */
-export const useEditorRead = (props: EditorProps): void => {
-	const { filePath, editor } = props;
+export const useEditorRead = (props: EditorProps, editor: Editor): void => {
+	const { file } = props;
 	const { read } = props.store;
 
 	useEffect(() => {
 		(async () => {
 			if (editor === null) return;
-			const content = filePath === null ? "" : await read(filePath);
+			const content = file === null ? "" : await read(file.path);
+			// Avoid set value unnecessarily since it resets CodeMirror's state
+			// (e.g. cursor position) and trigger editor's onChange (which we
+			// use to set "file.saved" status).
+			if (editor.getValue() === content) return;
 			editor.setValue(content);
 		})();
-	}, [filePath, editor, read]);
+	}, [file, editor, read]);
 };

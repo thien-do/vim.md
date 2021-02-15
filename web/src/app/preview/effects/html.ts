@@ -8,8 +8,8 @@ export const usePreviewHtml = (editor: Editor): string => {
 
 	useEffect(() => {
         if (editor === null) return;
-		const syncHtml = (instance: CodeMirror.Editor) => {
-			const value = instance.getValue();
+		const syncHtml = (cm: CodeMirror.Editor) => {
+			const value = cm.getValue();
 			setHtml(toHTML(value));
 		};
 		syncHtml(editor); // Initial value

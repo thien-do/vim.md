@@ -1,15 +1,13 @@
+import { FileState } from "app/file/file";
 import { Tree, TreeNode } from "components/tree/tree";
 import { TreeUtils } from "components/tree/utils";
 import { useEffect, useState } from "react";
 import { Store, StoreFile } from "store/store";
-import { SetState } from "utils/state";
 import s from "./tree.module.css";
 
-interface Props {
+interface Props extends FileState {
 	store: Store;
 	rootPath: string;
-	filePath: string | null;
-	setFilePath: SetState<string | null>;
 }
 
 const EXPANDED_KEY = "vdm-explorer-expanded";
@@ -41,7 +39,7 @@ export const ExplorerTree = (props: Props): JSX.Element | null => {
 	const [expanded, setExpanded] = useState(() => getInitialSet(EXPANDED_KEY));
 
 	const { list } = props.store;
-	const { rootPath, filePath } = props;
+	const { rootPath, file } = props;
 
 	// Save state to localStorage
 	useSetSave(EXPANDED_KEY, expanded);
@@ -89,12 +87,10 @@ export const ExplorerTree = (props: Props): JSX.Element | null => {
 			<Tree
 				expanded={expanded}
 				setExpanded={setExpanded}
-				// Tree supports multi-selection but we only want single
-				// @TODO: This should be simpler but need to wait for API
-				// update from the tree component?
-				selected={new Set(filePath === null ? [] : [filePath])}
+				selected={new Set(file === null ? [] : [file.path])}
 				setSelected={(set: Set<string>) => {
-					props.setFilePath(Array.from(set)[0]);
+					const path = Array.from(set)[0];
+					props.setFile({ path, saved: true });
 				}}
 				loadChildren={loadChildren}
 				node={rootNode}

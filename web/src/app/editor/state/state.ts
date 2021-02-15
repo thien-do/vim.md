@@ -1,9 +1,10 @@
-import { FilePathState } from "app/app";
+import { FileState } from "app/file/file";
 import { PrefsState } from "app/prefs/state/state";
-import { RefObject } from "react";
+import { useState } from "react";
 import { Store } from "store/store";
 import { SetState } from "utils/state";
-import { useEditorInit } from "./init";
+import { useEditorChange } from "./change";
+import { useEditorCommands } from "./commands";
 import { useEditorRead } from "./read";
 import { useEditorWrite } from "./write";
 
@@ -14,13 +15,15 @@ export interface EditorState {
 	setEditor: SetState<Editor>;
 }
 
-export interface EditorProps extends PrefsState, EditorState, FilePathState {
+export interface EditorProps extends PrefsState, FileState {
 	store: Store;
 }
 
-export const useEditor = (props: EditorProps): RefObject<HTMLDivElement> => {
-	const container = useEditorInit(props);
-	useEditorRead(props);
+export const useEditor = (props: EditorProps): EditorState => {
+	const [editor, setEditor] = useState<Editor>(null);
+	useEditorRead(props, editor);
 	useEditorWrite(props);
-	return container;
+	useEditorCommands(props);
+	useEditorChange(props, editor);
+	return { editor, setEditor };
 };

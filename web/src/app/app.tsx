@@ -1,11 +1,10 @@
 import { useTheme } from "@moai/core";
-import { useState } from "react";
 import { Store } from "store/store";
-import { SetState, useStorageState } from "utils/state";
 import s from "./app.module.css";
-import { Editor } from "./editor/state/state";
 import { EditorPane } from "./editor/editor";
+import { useEditor } from "./editor/state/state";
 import { Explorer } from "./explorer/explorer";
+import { useFile } from "./file/file";
 import { PrefsPane } from "./prefs/pane/pane";
 import { usePrefs } from "./prefs/state/state";
 import { Preview } from "./preview/preview";
@@ -16,19 +15,14 @@ interface Props {
 	store: Store;
 }
 
-export interface FilePathState {
-	filePath: string | null;
-	setFilePath: SetState<string | null>
-}
-
-const FILE_PATH_KEY = "vmd-file-path";
-
 export const App = (props: Props): JSX.Element => {
+	const { store } = props;
+
 	// State
-	const { prefs, setPrefs } = usePrefs();
 	const { theme, setTheme } = useTheme();
-	const [filePath, setFilePath] = useStorageState<string>(FILE_PATH_KEY);
-	const [editor, setEditor] = useState<Editor>(null);
+	const { file, setFile } = useFile();
+	const { prefs, setPrefs } = usePrefs();
+	const { editor, setEditor } = useEditor({ prefs, setPrefs, file, setFile, store }) // prettier-ignore
 
 	// Render
 	const toolbarCls = prefs.toolbarVisible ? "" : s.woToolbar;
@@ -48,8 +42,8 @@ export const App = (props: Props): JSX.Element => {
 	const explorer = prefs.explorerVisible && (
 		<div className={s.explorer}>
 			<Explorer
-				filePath={filePath}
-				setFilePath={setFilePath}
+				file={file}
+				setFile={setFile}
 				store={props.store}
 			/>
 		</div>
@@ -62,11 +56,7 @@ export const App = (props: Props): JSX.Element => {
 			style={{ display: prefs.layout === "preview" ? "none" : "block" }}
 		>
 			<EditorPane
-				store={props.store}
-				filePath={filePath}
-				setFilePath={setFilePath}
 				prefs={prefs}
-				setPrefs={setPrefs}
 				editor={editor}
 				setEditor={setEditor}
 			/>

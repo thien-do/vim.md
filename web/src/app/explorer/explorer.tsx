@@ -4,10 +4,10 @@ import { Store } from "store/store";
 import { useStorageState } from "utils/state";
 import s from "./explorer.module.css";
 import { ExplorerTree } from "./tree/tree";
-import { FilePathState } from "../app";
 import { pathUtils } from "utils/path";
+import { FileState } from "app/file/file";
 
-interface Props extends FilePathState {
+interface Props extends FileState {
 	store: Store;
 }
 
@@ -19,7 +19,8 @@ export const Explorer = (props: Props): JSX.Element => {
 	const openFolder = async (): Promise<void> => {
 		// @TODO: Implement openFolder using native file picker
 		// setPath(await props.store.openFolder());
-		setPath(await dialogPrompt("Enter folder path"));
+		const path = await dialogPrompt("Enter folder path");
+		if (typeof path === "string") setPath(path);
 	};
 
 	const aside = (
@@ -37,8 +38,8 @@ export const Explorer = (props: Props): JSX.Element => {
 			<ExplorerTree
 				rootPath={path}
 				store={props.store}
-				filePath={props.filePath}
-				setFilePath={props.setFilePath}
+				file={props.file}
+				setFile={props.setFile}
 			/>
 		</div>
 	) : (
