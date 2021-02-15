@@ -43,8 +43,8 @@ export const EditorPane = (props: Props): JSX.Element => {
 	useEffect(() => {
 		(async () => {
 			if (filePath === null) return;
+			if (editor === null) return;
 			const content = await read(filePath);
-			if (editor === null) throw Error(ERRORS.EDITOR);
 			editor.setValue(content);
 		})();
 	}, [filePath, editor, read]);

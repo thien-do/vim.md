@@ -1,9 +1,12 @@
 .container {
 	height: 100%;
 	overflow: auto;
+
+	border-style: none solid;
+	border-width: 1px;
 }
 
-.markdown-body {
+:global(.markdown-body) {
 	all: initial;
 	/* Since "markdown-body" is a div, we need to revert some styles here */
 	display: block;
@@ -12,12 +15,12 @@
 	padding: 45px;
 }
 
-.markdown-body * {
+:global(.markdown-body) * {
 	all: revert;
 }
 
 @media (max-width: 767px) {
-	.markdown-body {
+	:global(.markdown-body) {
 		padding: 15px;
 	}
 }

@@ -7,6 +7,7 @@ import { Editor, EditorPane } from "./editor/editor";
 import { Explorer } from "./explorer/explorer";
 import { PrefsPane } from "./prefs/pane/pane";
 import { usePrefs } from "./prefs/state/state";
+import { Preview } from "./preview/preview";
 import { ToolbarToggle } from "./toolbar/toggle/toggle";
 import { Toolbar } from "./toolbar/toolbar";
 
@@ -25,8 +26,8 @@ export const App = (props: Props): JSX.Element => {
 
 	// Render
 	const toolbarCls = prefs.toolbarVisible ? "" : s.woToolbar;
-	return (
-		<div className={[s.container, toolbarCls].join(" ")}>
+	const toolbar = (
+		<>
 			<div className={s.toolbarToggle}>
 				<ToolbarToggle prefs={prefs} setPrefs={setPrefs} />
 			</div>
@@ -35,36 +36,62 @@ export const App = (props: Props): JSX.Element => {
 					<Toolbar prefs={prefs} setPrefs={setPrefs} />
 				</div>
 			)}
+		</>
+	);
+
+	const explorer = prefs.explorerVisible && (
+		<div className={s.explorer}>
+			<Explorer
+				filePath={filePath}
+				setFilePath={setFilePath}
+				store={props.store}
+			/>
+		</div>
+	);
+
+	// Always render Editor to keep CodeMirror's internal state
+	const editorPane = (
+		<div
+			className={s.editor}
+			style={{ display: prefs.layout === "preview" ? "none" : "block" }}
+		>
+			<EditorPane
+				store={props.store}
+				filePath={filePath}
+				prefs={prefs}
+				setPrefs={setPrefs}
+				editor={editor}
+				setEditor={setEditor}
+			/>
+		</div>
+	);
+
+	/* avoid render Preview if not necessary to improve performance */
+	const preview = prefs.layout !== "editor" && (
+		<div className={s.preview}>
+			<Preview editor={editor} prefs={prefs} />
+		</div>
+	);
+
+	const prefsPane = prefs.prefsVisible && (
+		<div className={s.prefs}>
+			<PrefsPane
+				prefs={prefs}
+				setPrefs={setPrefs}
+				theme={theme}
+				setTheme={setTheme}
+			/>
+		</div>
+	);
+
+	return (
+		<div className={[s.container, toolbarCls].join(" ")}>
+			{toolbar}
 			<div className={s.body}>
-				{prefs.explorerVisible && (
-					<div className={s.explorer}>
-						<Explorer
-							filePath={filePath}
-							setFilePath={setFilePath}
-							store={props.store}
-						/>
-					</div>
-				)}
-				<div className={s.editor}>
-					<EditorPane
-						store={props.store}
-						filePath={filePath}
-						prefs={prefs}
-						setPrefs={setPrefs}
-						editor={editor}
-						setEditor={setEditor}
-					/>
-				</div>
-				{prefs.prefsVisible && (
-					<div className={s.prefs}>
-						<PrefsPane
-							prefs={prefs}
-							setPrefs={setPrefs}
-							theme={theme}
-							setTheme={setTheme}
-						/>
-					</div>
-				)}
+				{explorer}
+				{editorPane}
+				{preview}
+				{prefsPane}
 			</div>
 		</div>
 	);

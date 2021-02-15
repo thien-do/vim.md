@@ -1,6 +1,6 @@
 .light .CodeMirror .CodeMirror-dialog-bottom {
 	background-color: var(--white);
-	border-top: solid 1px var(--gray-2);
+	border-top: solid 1px var(--gray-1);
 }
 
 /* hack hack super hack */
