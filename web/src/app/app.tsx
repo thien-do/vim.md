@@ -1,9 +1,10 @@
 import { useTheme } from "@moai/core";
 import { useState } from "react";
 import { Store } from "store/store";
-import { useStorageState } from "utils/state";
+import { SetState, useStorageState } from "utils/state";
 import s from "./app.module.css";
-import { Editor, EditorPane } from "./editor/editor";
+import { Editor } from "./editor/state/state";
+import { EditorPane } from "./editor/editor";
 import { Explorer } from "./explorer/explorer";
 import { PrefsPane } from "./prefs/pane/pane";
 import { usePrefs } from "./prefs/state/state";
@@ -13,6 +14,11 @@ import { Toolbar } from "./toolbar/toolbar";
 
 interface Props {
 	store: Store;
+}
+
+export interface FilePathState {
+	filePath: string | null;
+	setFilePath: SetState<string | null>
 }
 
 const FILE_PATH_KEY = "vmd-file-path";
@@ -58,6 +64,7 @@ export const App = (props: Props): JSX.Element => {
 			<EditorPane
 				store={props.store}
 				filePath={filePath}
+				setFilePath={setFilePath}
 				prefs={prefs}
 				setPrefs={setPrefs}
 				editor={editor}

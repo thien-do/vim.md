@@ -1,5 +1,5 @@
 import { toHTML } from "@vimdotmd/markdown";
-import { Editor } from "app/editor/editor";
+import { Editor } from "app/editor/state/state";
 import { useEffect, useState } from "react";
 
 // Update HTML on editor's value changes

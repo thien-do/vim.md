@@ -1,14 +1,14 @@
-import { Button, Pane } from "@moai/core";
+import { Button, dialogPrompt, Pane } from "@moai/core";
 import { PaneHeading } from "components/pane/heading/heading";
 import { Store } from "store/store";
-import { SetState, useStorageState } from "utils/state";
+import { useStorageState } from "utils/state";
 import s from "./explorer.module.css";
 import { ExplorerTree } from "./tree/tree";
+import { FilePathState } from "../app";
+import { pathUtils } from "utils/path";
 
-interface Props {
+interface Props extends FilePathState {
 	store: Store;
-	filePath: string | null;
-	setFilePath: SetState<string | null>;
 }
 
 const ROOT_PATH_KEY = "vdm-explorer-root-path";
@@ -17,7 +17,9 @@ export const Explorer = (props: Props): JSX.Element => {
 	const [path, setPath] = useStorageState<string>(ROOT_PATH_KEY);
 
 	const openFolder = async (): Promise<void> => {
-		setPath(await props.store.openFolder());
+		// @TODO: Implement openFolder using native file picker
+		// setPath(await props.store.openFolder());
+		setPath(await dialogPrompt("Enter folder path"));
 	};
 
 	const aside = (
@@ -31,7 +33,7 @@ export const Explorer = (props: Props): JSX.Element => {
 	const body = path ? (
 		<div className={s.container}>
 			<div style={{ marginTop: -1 }} />
-			<PaneHeading children={path.split("/").slice(-1)[0]} aside={aside} />
+			<PaneHeading children={pathUtils.getLast(path)} aside={aside} />
 			<ExplorerTree
 				rootPath={path}
 				store={props.store}

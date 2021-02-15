@@ -1,4 +1,4 @@
-import { Editor } from "app/editor/editor";
+import { Editor } from "app/editor/state/state";
 import { useEffect, useRef } from "react";
 
 type Ref = React.RefObject<HTMLDivElement>;

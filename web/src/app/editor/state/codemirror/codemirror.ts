@@ -5,8 +5,8 @@ import "codemirror/keymap/vim";
 import "codemirror/lib/codemirror.css";
 import "codemirror/mode/gfm/gfm";
 
-/** Static configuration to create new CM instance */
-const initialConfig: CodeMirror.EditorConfiguration = {
+/** Static configuration on creating new CM instance */
+const config: CodeMirror.EditorConfiguration = {
 	scrollbarStyle: "native",
 	mode: "gfm",
 	keyMap: "vim",
@@ -31,8 +31,7 @@ const initialConfig: CodeMirror.EditorConfiguration = {
 	indentUnit: 4,
 	tabSize: 4,
 
-	// This is only the initial value. It will be override via useEditorIndent
-	// effect at run-time
+	// This is only the initial value. It will be overriden at run-time
 	indentWithTabs: true,
 
 	// https://github.com/codemirror/CodeMirror/issues/988
@@ -44,8 +43,8 @@ const initialConfig: CodeMirror.EditorConfiguration = {
 	},
 };
 
-/** Dynamic configuration to apply on newly created CM instance */
-const applyConfig = (editor: CodeMirror.Editor): void => {
+/** Static event handlers to apply after having a CM instance */
+const addEventListeners = (editor: CodeMirror.Editor): void => {
 	// relative line number
 	// https://github.com/codemirror/CodeMirror/issues/4116#issuecomment-426877029
 	editor.on("cursorActivity", (editor) => {
@@ -59,13 +58,12 @@ const applyConfig = (editor: CodeMirror.Editor): void => {
 	(document as any).fonts.onloadingdone = () => editor.refresh();
 };
 
-// Default/global Vim configurations. This is only a static map from vim keymap
-// to CodeMirror's command names. The implementations of these commands are
-// defined statically at render-time. See "commands.ts" file for more detail.
-(function applyVimGlobalConfig() {
+/** Static configurations to apply to Vim */
+const configVim = (): void => {
+	// https://codemirror.net/doc/manual.html#vimapi
 	const Vim = (CodeMirror as any).Vim;
 
-	// Key map
+	// Simple key map
 	Vim.noremap("j", "gj");
 	Vim.noremap("gj", "j");
 	Vim.noremap("k", "gk");
@@ -74,6 +72,10 @@ const applyConfig = (editor: CodeMirror.Editor): void => {
 	Vim.map("jk", "<Esc>", "insert");
 
 	// Commands
+	// Note that this is only a static map from vim keymap to CodeMirror's
+	// command **names**. The actual implementations of these commands are
+	// defined at render-time.
+
 	const fn = (command: string) => (editor: CodeMirror.Editor) =>
 		editor.execCommand(command);
 
@@ -86,20 +88,35 @@ const applyConfig = (editor: CodeMirror.Editor): void => {
 	Vim.defineEx("library", "l", fn("toggleLibrary"));
 	Vim.defineEx("toolbar", "t", fn("toggleToolbar"));
 	Vim.defineEx("preferences", "pr", fn("togglePrefs"));
+
 	// Theme
 	Vim.defineEx("dark", null, fn("setThemeDark"));
 	Vim.defineEx("light", null, fn("setThemeLight"));
+
 	// Operation
 	Vim.defineEx("Write", "W", fn("save")); // ":w" is built-in
 	Vim.defineEx("help", "h", fn("openHelp"));
-	Vim.defineEx("quit", "q", fn("createDraft"));
+	Vim.defineEx("quit", "q", fn("quit"));
 	Vim.defineEx("wq", "wq", fn("saveAndQuit"));
+
 	// Debug
 	Vim.defineEx("syntax-test", null, fn("openSyntaxTest"));
-})();
+};
 
-export const initEditor = (element: HTMLElement): CodeMirror.Editor => {
-	const editor = CodeMirror(element, initialConfig);
-	applyConfig(editor);
+const init = (element: HTMLElement): CodeMirror.Editor => {
+	configVim();
+	const editor = CodeMirror(element, config);
+	addEventListeners(editor);
 	return editor;
 };
+
+/** Define run-time implementation for CodeMirror's commands (e.g. "save") */
+const setCommand = (
+	name: string,
+	fn: (editor: CodeMirror.Editor) => void
+): void => {
+	// See https://codemirror.net/doc/manual.html#commands
+	(CodeMirror.commands as any)[name] = fn;
+};
+
+export const CodeMirrorUtils = { init, setCommand };

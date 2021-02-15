@@ -5,6 +5,11 @@
 	cursor: pointer;
 }
 
+.container:not(.x) {
+	/* Turn off transition on purpose to make the hover feels faster */
+	transition: none;
+}
+
 .tab,
 .toggle {
 	flex: 0 0 auto;

@@ -1,27 +1,7 @@
-import { FontFamily, PrefsState } from "app/prefs/state/state";
-import { useEffect, useRef } from "react";
-import { Store } from "store/store";
-import { SetState } from "utils/state";
+import { FontFamily } from "app/prefs/state/state";
 import s from "./editor.module.css";
-import { initEditor } from "./init";
+import { EditorProps, useEditor } from "./state/state";
 import "./style/style";
-
-const ERRORS = {
-	EDITOR: "Editor is not initialized",
-	CONTAINER: "Container for editor is not defined",
-};
-
-export type Editor = CodeMirror.Editor | null;
-
-export interface EditorState {
-	editor: Editor;
-	setEditor: SetState<Editor>;
-}
-
-interface Props extends PrefsState, EditorState {
-	store: Store;
-	filePath: string | null;
-}
 
 const fontFamilyClasses: Record<FontFamily, [string, string]> = {
 	mono: ["mono", "mono-duo"],
@@ -29,26 +9,8 @@ const fontFamilyClasses: Record<FontFamily, [string, string]> = {
 	quattro: ["quattro", "quattro"],
 };
 
-export const EditorPane = (props: Props): JSX.Element => {
-	const container = useRef<HTMLDivElement>(null);
-
-	const { editor, setEditor } = props;
-	useEffect(() => {
-		if (editor !== null) return;
-		if (container.current === null) throw Error(ERRORS.CONTAINER);
-		setEditor(initEditor(container.current));
-	}, [editor, setEditor]);
-
-	const [{ filePath }, { read }] = [props, props.store];
-	useEffect(() => {
-		(async () => {
-			if (filePath === null) return;
-			if (editor === null) return;
-			const content = await read(filePath);
-			editor.setValue(content);
-		})();
-	}, [filePath, editor, read]);
-
+export const EditorPane = (props: EditorProps): JSX.Element => {
+	const container = useEditor(props);
 	const fontFamilyClass = fontFamilyClasses[props.prefs.fontFamily];
 	return (
 		<div
