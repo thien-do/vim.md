@@ -2,14 +2,16 @@
 	"name": "@vimdotmd/desktop",
 	"version": "1.0.0",
 	"description": "Desktop version of Vim.md",
-	"main": "dist/main.js",
+	"main": "src/main.js",
 	"author": "Vim.md Team <vimdotmd@gmail.com>",
 	"license": "MIT",
 	"scripts": {
-		"compile": "rm -rf ./dist && tsc",
+		"compile": "tsc",
 		"start": "yarn compile && NODE_ENV=development electron .",
-		"pack": "electron-builder --dir",
-		"dist": "electron-builder",
+		"clean": "rm -rf ./dist",
+		"pack": "yarn clean && yarn compile && electron-builder --dir",
+		"dist": "yarn clean && yarn compile && electron-builder",
+		"extract" :"npx asar extract ./dist/linux-unpacked/resources/app.asar ./dist/src",
 		"postinstall": "electron-builder install-app-deps"
 	},
 	"dependencies": {
@@ -29,10 +31,18 @@
 			"category": "Development"
 		},
 		"files": [
-			"../web/build",
-			"dist/**/*",
-			"public/**/*",
-			"package.json"
+			"package.json",
+			{
+				"from": "../web/build",
+				"to": "web"
+			},
+			{
+				"from": "src",
+				"to": "src",
+				"filter": [
+					"**/*.js"
+				]
+			}
 		]
 	}
 }

@@ -17,7 +17,7 @@ export const createWindow = () => {
 	const win = new BrowserWindow({
 		...getBounds(),
 		webPreferences: {
-			preload: path.resolve(root, "dist/preload.js"),
+			preload: path.resolve(root, "src/preload.js"),
 			contextIsolation: true,
 			nodeIntegration: false,
 		},
@@ -25,7 +25,7 @@ export const createWindow = () => {
 	win.loadURL(
 		process.env.NODE_ENV === "development"
 			? "http://localhost:3000"
-			: `file://${path.resolve(root, "public/index.html")}`
+			: `file://${path.resolve(root, "web/index.html")}`
 	);
 	win.on("close", () => void store.set("winBounds", win.getBounds()));
 	win.webContents.openDevTools();
