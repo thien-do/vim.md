@@ -6,12 +6,12 @@
 	"author": "Vim.md Team <vimdotmd@gmail.com>",
 	"license": "MIT",
 	"scripts": {
-		"compile": "tsc",
-		"start": "yarn compile && NODE_ENV=development electron .",
-		"clean": "rm -rf ./dist",
-		"pack": "yarn clean && yarn compile && electron-builder --dir",
-		"dist": "yarn clean && yarn compile && electron-builder",
-		"extract" :"npx asar extract ./dist/linux-unpacked/resources/app.asar ./dist/src",
+		"start": "yarn _compile && NODE_ENV=development electron .",
+		"dist": "yarn _clean && yarn _compile && electron-builder",
+		"_compile": "tsc",
+		"_clean": "rm -rf ./dist",
+		"_pack": "yarn _clean && yarn _compile && electron-builder --dir",
+		"_extract": "npx asar extract ./dist/linux-unpacked/resources/app.asar ./dist/src",
 		"postinstall": "electron-builder install-app-deps"
 	},
 	"dependencies": {

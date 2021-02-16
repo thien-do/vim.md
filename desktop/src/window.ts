@@ -2,7 +2,9 @@ import { BrowserWindow, Rectangle } from "electron";
 import Store from "electron-store";
 import path from "path";
 
-// dirname === desktop/dist
+// This is a little bit tricky:
+// - In dev: root/desktop
+// - In prod: root/desktop/dist/resources/app.asar (after extracted)
 const root = path.resolve(__dirname, "../");
 
 const store = new Store();
@@ -22,12 +24,14 @@ export const createWindow = () => {
 			nodeIntegration: false,
 		},
 	});
-	win.loadURL(
-		process.env.NODE_ENV === "development"
-			? "http://localhost:3000"
-			: `file://${path.resolve(root, "web/index.html")}`
-	);
+	const isDev = process.env.NODE_ENV === "development";
+
+	// The file at buildPath only exists in prod build. See package.json >
+	// build > files for more detail.
+	const buildPath = `file://${path.resolve(root, "web/index.html")}`;
+	win.loadURL(isDev ? "http://localhost:3000" : buildPath);
+
 	win.on("close", () => void store.set("winBounds", win.getBounds()));
-	win.webContents.openDevTools();
+	if (isDev) win.webContents.openDevTools();
 	win.setMenuBarVisibility(false);
 };
