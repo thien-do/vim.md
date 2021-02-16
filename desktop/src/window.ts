@@ -4,7 +4,6 @@ import path from "path";
 
 // dirname === desktop/dist
 const root = path.resolve(__dirname, "../");
-if (root.endsWith("desktop") === false) throw Error("Root should be desktop");
 
 const store = new Store();
 
@@ -26,7 +25,7 @@ export const createWindow = () => {
 	win.loadURL(
 		process.env.NODE_ENV === "development"
 			? "http://localhost:3000"
-			: `file://${path.resolve(root, "../web/build/index.html")}`
+			: `file://${path.resolve(root, "public/index.html")}`
 	);
 	win.on("close", () => void store.set("winBounds", win.getBounds()));
 	win.webContents.openDevTools();

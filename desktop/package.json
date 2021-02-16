@@ -3,14 +3,36 @@
 	"version": "1.0.0",
 	"description": "Desktop version of Vim.md",
 	"main": "dist/main.js",
+	"author": "Vim.md Team <vimdotmd@gmail.com>",
 	"license": "MIT",
 	"scripts": {
 		"compile": "rm -rf ./dist && tsc",
-		"start": "yarn compile && NODE_ENV=development electron ."
+		"start": "yarn compile && NODE_ENV=development electron .",
+		"pack": "electron-builder --dir",
+		"dist": "electron-builder",
+		"postinstall": "electron-builder install-app-deps"
 	},
 	"dependencies": {
+		"electron-store": "7.0.1"
+	},
+	"devDependencies": {
 		"electron": "11.2.2",
-		"electron-store": "7.0.1",
-		"typescript": "4.1.3"
+		"typescript": "4.1.3",
+		"electron-builder": "22.9.1"
+	},
+	"build": {
+		"appId": "md.vim.app",
+		"productName": "Vim.md",
+		"copyright": "Copyright © 2021 vim.md",
+		"linux": {
+			"target": "AppImage",
+			"category": "Development"
+		},
+		"files": [
+			"../web/build",
+			"dist/**/*",
+			"public/**/*",
+			"package.json"
+		]
 	}
 }
