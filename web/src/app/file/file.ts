@@ -1,27 +1,38 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { pathUtils } from "utils/path";
-import { SetState, useStorageState } from "utils/state";
+import { SetState } from "utils/state";
 
 interface File {
-	path: string;
+	path: string | null;
 	saved: boolean;
 }
 
 export interface FileState {
-	file: File | null;
-	setFile: SetState<File | null>;
+	file: File;
+	setFile: SetState<File>;
 }
 
-const STORAGE_KEY = "vmd-file-path";
+const PATH_KEY = "vmd-file-path";
+
+const getStorage = (): File => {
+	const path = window.localStorage.getItem(PATH_KEY);
+	return { path, saved: true };
+};
 
 export const useFile = (): FileState => {
-	const [file, setFile] = useStorageState<File>(STORAGE_KEY);
+	const [file, setFile] = useState<File>(getStorage);
+
+	// Save to storage
+	useEffect(() => {
+		const [s, p] = [window.localStorage, file.path];
+		p === null ? s.removeItem(PATH_KEY) : s.setItem(PATH_KEY, p)
+	}, [file.path]);
 
 	// Update window title
 	useEffect(() => {
-		const title = file ? pathUtils.getLast(file.path) : "Untitled";
+		const title = file.path ? pathUtils.getLast(file.path) : "Untitled";
 		const unsaved = file === null || file.saved === false;
-		const prefix = unsaved ? "• " : ""
+		const prefix = unsaved ? "• " : "";
 		window.document.title = `${prefix}${title} - vim.md`;
 	}, [file]);
 

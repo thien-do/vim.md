@@ -37,12 +37,27 @@ export interface TreeProps {
 	 * thus leads to a new render altogether.
 	 */
 	loadChildren?: (node: TreeNode) => Promise<void>;
-	/** Controlled selected nodes */
+	/**
+	 * Selected nodes in controlled mode
+	 */
 	selected: Set<string>;
+	/**
+	 * Handler to set selected nodes in controlled mode
+	 */
 	setSelected: (set: Set<string>) => void;
-	/** Controlled expanded nodes */
+	/**
+	 * Expanded nodes in controlled mode
+	 */
 	expanded: Set<string>;
+	/**
+	 * Handler to set expanded nodes in controlled mode
+	 */
 	setExpanded: (set: Set<string>) => void;
+	/**
+	 * Whether clicking on a parent's title will select or expand it. If set to
+	 * "select", clicking on the chevron arrow will expand it.
+	 */
+	parentMode: "select" | "expand"
 }
 
 const renderChild = (props: TreeProps) => (child: TreeNode) => (

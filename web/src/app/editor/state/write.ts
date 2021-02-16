@@ -13,7 +13,7 @@ export const useEditorWrite = (props: EditorProps): void => {
 
 	useEffect(() => {
 		const getPath = async (): Promise<string> => {
-			if (file !== null) return file.path;
+			if (file.path !== null) return file.path;
 			// New file -> Ask for path
 			// @TODO: Use store.pickFile
 			const newPath = await dialogPrompt("Path?");

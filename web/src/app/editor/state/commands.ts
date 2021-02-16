@@ -6,7 +6,7 @@ export const useEditorCommands = (props: EditorProps): void => {
 	const { setFile } = props;
 	useEffect(() => {
 		CodeMirrorUtils.setCommand("quit", () => {
-			setFile(null);
+			setFile({ path: null, saved: true });
 		});
 	}, [setFile]);
 };

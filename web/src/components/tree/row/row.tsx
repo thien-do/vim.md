@@ -10,7 +10,7 @@ const Tab = () => (
 	<div className={[Button.sizes.smallIcon.main, s.tab].join(" ")} />
 );
 
-const isLeaf = (node: TreeNode): boolean => {
+const getIsLeaf = (node: TreeNode): boolean => {
 	if (node.isLeaf === undefined) {
 		return node.children === undefined; // Sync
 	} else {
@@ -31,6 +31,7 @@ const toggle = async (props: Props): Promise<void> => {
 export const TreeItem = (props: Props): JSX.Element => {
 	const expanded = props.expanded.has(props.node.id);
 	const selected = props.selected.has(props.node.id);
+	const isLeaf = getIsLeaf(props.node);
 	return (
 		<div
 			className={[
@@ -40,15 +41,18 @@ export const TreeItem = (props: Props): JSX.Element => {
 			].join(" ")}
 			// @TODO: Handle a11y properly
 			onClick={() => {
-				// @TODO: Handle multi-select case (e.g. Cmd + Click to add)
-				props.setSelected(new Set([props.node.id]));
+				if (isLeaf || props.parentMode === "select") {
+					props.setSelected(new Set([props.node.id]));
+				} else {
+					toggle(props);
+				}
 			}}
 		>
 			{[...Array(props.level ?? 0)].map((_v, i) => (
 				<Tab key={i} />
 			))}
 			<div className={s.toggle}>
-				{isLeaf(props.node) === false ? (
+				{isLeaf === false ? (
 					<Button
 						icon={expanded ? ChevronDown : ChevronRight}
 						iconLabel={expanded ? "Collapse group" : "Expand group"}

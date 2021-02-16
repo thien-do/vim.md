@@ -87,12 +87,13 @@ export const ExplorerTree = (props: Props): JSX.Element | null => {
 			<Tree
 				expanded={expanded}
 				setExpanded={setExpanded}
-				selected={new Set(file === null ? [] : [file.path])}
+				selected={new Set(file.path === null ? [] : [file.path])}
 				setSelected={(set: Set<string>) => {
 					const path = Array.from(set)[0];
 					props.setFile({ path, saved: true });
 				}}
 				loadChildren={loadChildren}
+				parentMode="expand"
 				node={rootNode}
 			/>
 		</div>
