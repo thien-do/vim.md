@@ -1,12 +1,14 @@
 import { FileState } from "app/file/file";
+import { Prefs } from "app/prefs/state/state";
 import { Tree, TreeNode } from "components/tree/tree";
 import { TreeUtils } from "components/tree/utils";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Store, StoreFile } from "store/store";
 import s from "./tree.module.css";
 
 interface Props extends FileState {
 	store: Store;
+	prefs: Prefs;
 	rootPath: string;
 }
 
@@ -34,12 +36,24 @@ const toTreeNode = (parentPath: string) => (file: StoreFile): TreeNode => ({
 	children: undefined, // Don't know yet
 });
 
+const isMarkdown = (file: StoreFile): boolean =>
+	file.isDirectory || file.name.endsWith("md") || file.name.endsWith("mdx");
+
 export const ExplorerTree = (props: Props): JSX.Element | null => {
 	const [rootNode, setRootNode] = useState<null | TreeNode>(null);
 	const [expanded, setExpanded] = useState(() => getInitialSet(EXPANDED_KEY));
 
-	const { list } = props.store;
-	const { rootPath, file } = props;
+	const { rootPath, file, setFile } = props;
+	const { list: _list } = props.store;
+	const { fileType } = props.prefs;
+
+	const list: typeof _list = useCallback(
+		async (path) => {
+			const files = await _list(path);
+			return fileType === "all" ? files : files.filter(isMarkdown);
+		},
+		[_list, fileType]
+	);
 
 	// Save state to localStorage
 	useSetSave(EXPANDED_KEY, expanded);
@@ -69,7 +83,7 @@ export const ExplorerTree = (props: Props): JSX.Element | null => {
 		if (node.isLeaf === true) throw Error("Current node is a leaf");
 		if (rootNode === null) throw Error("Root node is null");
 		if (node.children !== undefined) return;
-		const files = await props.store.list(node.id);
+		const files = await list(node.id);
 		const children = files.map(toTreeNode(node.id));
 		const newRoot = TreeUtils.updateNode({
 			node: rootNode,
@@ -90,7 +104,7 @@ export const ExplorerTree = (props: Props): JSX.Element | null => {
 				selected={new Set(file.path === null ? [] : [file.path])}
 				setSelected={(set: Set<string>) => {
 					const path = Array.from(set)[0];
-					props.setFile({ path, saved: true });
+					setFile({ path, saved: true });
 				}}
 				loadChildren={loadChildren}
 				parentMode="expand"

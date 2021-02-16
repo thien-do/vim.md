@@ -1,5 +1,6 @@
 import { Button, Pane } from "@moai/core";
 import { FileState } from "app/file/file";
+import { Prefs } from "app/prefs/state/state";
 import { PaneHeading } from "components/pane/heading/heading";
 import { Store } from "store/store";
 import { pathUtils } from "utils/path";
@@ -8,6 +9,7 @@ import s from "./explorer.module.css";
 import { ExplorerTree } from "./tree/tree";
 
 interface Props extends FileState {
+	prefs: Prefs;
 	store: Store;
 }
 
@@ -34,6 +36,7 @@ export const Explorer = (props: Props): JSX.Element => {
 			<div style={{ marginTop: -1 }} />
 			<PaneHeading children={pathUtils.getLast(path)} aside={aside} />
 			<ExplorerTree
+				prefs={props.prefs}
 				rootPath={path}
 				store={props.store}
 				file={props.file}

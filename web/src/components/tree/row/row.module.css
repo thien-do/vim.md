@@ -5,8 +5,12 @@
 	cursor: pointer;
 }
 
+/* Turn off transition on purpose to make the hover feels faster */
 .container:not(.x) {
-	/* Turn off transition on purpose to make the hover feels faster */
+	transition: none;
+}
+/* Also turn off in the toggle button */
+.container:not(.x) .toggle button {
 	transition: none;
 }
 

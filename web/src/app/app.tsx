@@ -45,6 +45,7 @@ export const App = (props: Props): JSX.Element => {
 				file={file}
 				setFile={setFile}
 				store={props.store}
+				prefs={prefs}
 			/>
 		</div>
 	);
