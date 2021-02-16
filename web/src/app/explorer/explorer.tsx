@@ -1,11 +1,11 @@
-import { Button, dialogPrompt, Pane } from "@moai/core";
+import { Button, Pane } from "@moai/core";
+import { FileState } from "app/file/file";
 import { PaneHeading } from "components/pane/heading/heading";
 import { Store } from "store/store";
+import { pathUtils } from "utils/path";
 import { useStorageState } from "utils/state";
 import s from "./explorer.module.css";
 import { ExplorerTree } from "./tree/tree";
-import { pathUtils } from "utils/path";
-import { FileState } from "app/file/file";
 
 interface Props extends FileState {
 	store: Store;
@@ -17,9 +17,7 @@ export const Explorer = (props: Props): JSX.Element => {
 	const [path, setPath] = useStorageState<string>(ROOT_PATH_KEY);
 
 	const openFolder = async (): Promise<void> => {
-		// @TODO: Implement openFolder using native file picker
-		// setPath(await props.store.openFolder());
-		const path = await dialogPrompt("Enter folder path");
+		const path = await props.store.showOpenDialog();
 		if (typeof path === "string") setPath(path);
 	};
 

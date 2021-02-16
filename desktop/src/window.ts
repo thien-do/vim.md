@@ -1,4 +1,4 @@
-import { BrowserWindow, Rectangle } from "electron";
+import { BrowserWindow, ipcRenderer, Rectangle } from "electron";
 import Store from "electron-store";
 import path from "path";
 
@@ -15,7 +15,7 @@ const getBounds = (): Rectangle | undefined => {
 	return undefined;
 };
 
-export const createWindow = () => {
+export const createWindow = (): BrowserWindow => {
 	const win = new BrowserWindow({
 		...getBounds(),
 		webPreferences: {
@@ -34,4 +34,6 @@ export const createWindow = () => {
 	win.on("close", () => void store.set("winBounds", win.getBounds()));
 	if (isDev) win.webContents.openDevTools();
 	win.setMenuBarVisibility(false);
+
+	return win;
 };
