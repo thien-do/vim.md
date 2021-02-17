@@ -9,3 +9,7 @@
 	height: 100%;
 	overflow: auto;
 }
+
+.empty {
+	padding: 16px;
+}

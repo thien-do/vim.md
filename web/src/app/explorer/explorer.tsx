@@ -23,18 +23,28 @@ export const Explorer = (props: Props): JSX.Element => {
 		if (typeof path === "string") setPath(path);
 	};
 
-	const aside = (
-		<Button
-			style={Button.styles.flat}
-			onClick={openFolder}
-			children="Change…"
-		/>
-	);
+	const heading =
+		path === null ? (
+			<PaneHeading children="No folder opened" />
+		) : (
+			<PaneHeading
+				children={pathUtils.getLast(path)}
+				aside={
+					<Button
+						style={Button.styles.flat}
+						onClick={openFolder}
+						children="Change…"
+					/>
+				}
+			/>
+		);
 
-	const body = path ? (
-		<div className={s.container}>
-			<div style={{ marginTop: -1 }} />
-			<PaneHeading children={pathUtils.getLast(path)} aside={aside} />
+	const body =
+		path === null ? (
+			<div className={s.empty}>
+				<Button highlight onClick={openFolder} children="Open folder…" />
+			</div>
+		) : (
 			<ExplorerTree
 				prefs={props.prefs}
 				rootPath={path}
@@ -42,16 +52,17 @@ export const Explorer = (props: Props): JSX.Element => {
 				file={props.file}
 				setFile={props.setFile}
 			/>
-		</div>
-	) : (
-		<div>
-			<Button onClick={openFolder} children="Open folder…" />
-		</div>
-	);
+		);
 
 	return (
 		<div className={s.wrapper}>
-			<Pane noPadding fullHeight children={body} />
+			<Pane noPadding fullHeight>
+				<div className={s.container}>
+					<div style={{ marginTop: -1 }} />
+					{heading}
+					{body}
+				</div>
+			</Pane>
 		</div>
 	);
 };
