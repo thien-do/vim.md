@@ -1,6 +1,17 @@
+import { dialogConfirm } from "@moai/core";
 import { useEffect, useState } from "react";
 import { pathUtils } from "utils/path";
 import { SetState } from "utils/state";
+
+export const isGoodToGo = async (file: File): Promise<boolean> => {
+	// Saved
+	if (file.saved === true) return true;
+	// Unsaved
+	return dialogConfirm([
+		"Discard changes?",
+		"You haved unsaved changes that will be lost if continue.",
+	]);
+};
 
 interface File {
 	path: string | null;
@@ -25,7 +36,7 @@ export const useFile = (): FileState => {
 	// Save to storage
 	useEffect(() => {
 		const [s, p] = [window.localStorage, file.path];
-		p === null ? s.removeItem(PATH_KEY) : s.setItem(PATH_KEY, p)
+		p === null ? s.removeItem(PATH_KEY) : s.setItem(PATH_KEY, p);
 	}, [file.path]);
 
 	// Update window title

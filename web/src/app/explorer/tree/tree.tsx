@@ -1,4 +1,4 @@
-import { FileState } from "app/file/file";
+import { FileState, isGoodToGo } from "app/file/file";
 import { Prefs } from "app/prefs/state/state";
 import { Tree, TreeNode } from "components/tree/tree";
 import { TreeUtils } from "components/tree/utils";
@@ -102,7 +102,8 @@ export const ExplorerTree = (props: Props): JSX.Element | null => {
 				expanded={expanded}
 				setExpanded={setExpanded}
 				selected={new Set(file.path === null ? [] : [file.path])}
-				setSelected={(set: Set<string>) => {
+				setSelected={async (set: Set<string>) => {
+					if ((await isGoodToGo(file)) === false) return;
 					const path = Array.from(set)[0];
 					setFile({ path, saved: true });
 				}}
