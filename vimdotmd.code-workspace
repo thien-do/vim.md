@@ -4,9 +4,6 @@
 			"path": "."
 		},
 		{
-			"path": "../writer"
-		},
-		{
 			"path": "../../me/moai"
 		}
 	],
