@@ -4,69 +4,69 @@
  * @author Rose Pritchard
  */
 
-.dark .markdown code,
-.dark .markdown pre {
+.dark .markdown-body code,
+.dark .markdown-body pre {
 	color: #ccc;
 }
-.dark .markdown .token.comment,
-.dark .markdown .token.block-comment,
-.dark .markdown .token.prolog,
-.dark .markdown .token.doctype,
-.dark .markdown .token.cdata {
+.dark .markdown-body .token.comment,
+.dark .markdown-body .token.block-comment,
+.dark .markdown-body .token.prolog,
+.dark .markdown-body .token.doctype,
+.dark .markdown-body .token.cdata {
 	color: #999;
 }
-.dark .markdown .token.punctuation {
+.dark .markdown-body .token.punctuation {
 	color: #ccc;
 }
-.dark .markdown .token.tag,
-.dark .markdown .token.attr-name,
-.dark .markdown .token.namespace,
-.dark .markdown .token.deleted {
+.dark .markdown-body .token.tag,
+.dark .markdown-body .token.attr-name,
+.dark .markdown-body .token.namespace,
+.dark .markdown-body .token.deleted {
 	color: #e2777a;
 }
-.dark .markdown .token.function-name {
+.dark .markdown-body .token.function-name {
 	color: #6196cc;
 }
-.dark .markdown .token.boolean,
-.dark .markdown .token.number,
-.dark .markdown .token.function {
+.dark .markdown-body .token.boolean,
+.dark .markdown-body .token.number,
+.dark .markdown-body .token.function {
 	color: #f08d49;
 }
-.dark .markdown .token.property,
-.dark .markdown .token.class-name,
-.dark .markdown .token.constant,
-.dark .markdown .token.symbol {
+.dark .markdown-body .token.property,
+.dark .markdown-body .token.class-name,
+.dark .markdown-body .token.constant,
+.dark .markdown-body .token.symbol {
 	color: #f8c555;
 }
-.dark .markdown .token.selector,
-.dark .markdown .token.important,
-.dark .markdown .token.atrule,
-.dark .markdown .token.keyword,
-.dark .markdown .token.builtin {
+.dark .markdown-body .token.selector,
+.dark .markdown-body .token.important,
+.dark .markdown-body .token.atrule,
+.dark .markdown-body .token.keyword,
+.dark .markdown-body .token.builtin {
 	color: #cc99cd;
 }
-.dark .markdown .token.string,
-.dark .markdown .token.char,
-.dark .markdown .token.attr-value,
-.dark .markdown .token.regex,
-.dark .markdown .token.variable {
+.dark .markdown-body .token.string,
+.dark .markdown-body .token.char,
+.dark .markdown-body .token.attr-value,
+.dark .markdown-body .token.regex,
+.dark .markdown-body .token.variable {
 	color: #7ec699;
 }
-.dark .markdown .token.operator,
-.dark .markdown .token.entity,
-.dark .markdown .token.url {
+.dark .markdown-body .token.operator,
+.dark .markdown-body .token.entity,
+.dark .markdown-body .token.url {
 	color: #67cdcc;
 }
-.dark .markdown .token.important,
-.dark .markdown .token.bold {
+.dark .markdown-body .token.important,
+.dark .markdown-body .token.bold {
 	font-weight: bold;
 }
-.dark .markdown .token.italic {
+.dark .markdown-body .token.italic {
 	font-style: italic;
 }
-.dark .markdown .token.entity {
+.dark .markdown-body .token.entity {
 	cursor: help;
 }
-.dark .markdown .token.inserted {
+.dark .markdown-body .token.inserted {
 	color: green;
 }

@@ -3,36 +3,36 @@
  * Inspired by Github syntax coloring
  */
 
-.light .markdown code,
-.light .markdown pre {
+.light .markdown-body code,
+.light .markdown-body pre {
 	color: #24292e;
 }
-.light .markdown .token.rule,
-.light .markdown .token.keyword {
+.light .markdown-body .token.rule,
+.light .markdown-body .token.keyword {
 	color: #d73a49;
 }
-.light .markdown .token.class-name,
-.light .markdown .token.type-definition,
-.light .markdown .token.function {
+.light .markdown-body .token.class-name,
+.light .markdown-body .token.type-definition,
+.light .markdown-body .token.function {
 	color: #6f42c1;
 }
-.light .markdown .token.doctype,
-.light .markdown .token.doctype-tag,
-.light .markdown .token.attr-name,
-.light .markdown .token.property,
-.light .markdown .token.number,
-.light .markdown .token.operator,
-.light .markdown .token.boolean {
+.light .markdown-body .token.doctype,
+.light .markdown-body .token.doctype-tag,
+.light .markdown-body .token.attr-name,
+.light .markdown-body .token.property,
+.light .markdown-body .token.number,
+.light .markdown-body .token.operator,
+.light .markdown-body .token.boolean {
 	color: #005cc5;
 }
-.light .markdown .token.attr-value,
-.light .markdown .token.string {
+.light .markdown-body .token.attr-value,
+.light .markdown-body .token.string {
 	color: #032f62;
 }
-.light .markdown .token.comment {
+.light .markdown-body .token.comment {
 	color: #6a737d;
 }
-.light .markdown .token.selector,
-.light .markdown .token.tag {
+.light .markdown-body .token.selector,
+.light .markdown-body .token.tag {
 	color: #22863a;
 }
