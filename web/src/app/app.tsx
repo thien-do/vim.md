@@ -1,4 +1,4 @@
-import { useTheme } from "@moai/core";
+import { scrollbar, useTheme } from "@moai/core";
 import { Store } from "store/store";
 import s from "./app.module.css";
 import { EditorPane } from "./editor/editor";
@@ -56,11 +56,7 @@ export const App = (props: Props): JSX.Element => {
 			className={s.editor}
 			style={{ display: prefs.layout === "preview" ? "none" : "block" }}
 		>
-			<EditorPane
-				prefs={prefs}
-				editor={editor}
-				setEditor={setEditor}
-			/>
+			<EditorPane prefs={prefs} editor={editor} setEditor={setEditor} />
 		</div>
 	);
 
@@ -83,7 +79,7 @@ export const App = (props: Props): JSX.Element => {
 	);
 
 	return (
-		<div className={[s.container, toolbarCls].join(" ")}>
+		<div className={[scrollbar.custom, s.container, toolbarCls].join(" ")}>
 			{toolbar}
 			<div className={s.body}>
 				{explorer}
