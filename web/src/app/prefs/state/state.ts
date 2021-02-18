@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { SetState } from "utils/state";
+import { usePrefsInEditor } from "./editor";
 
 export type Layout = "editor" | "split" | "preview";
 export type LineLength = 64 | 72 | 80;
@@ -55,6 +56,8 @@ export const usePrefs = (): PrefsState => {
 	useEffect(() => {
 		localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
 	}, [prefs]);
+
+	usePrefsInEditor(setPrefs);
 
 	return { prefs, setPrefs };
 };

@@ -1,8 +1,8 @@
 import { scrollbar, useTheme } from "@moai/core";
+import { useState } from "react";
 import { Store } from "store/store";
 import s from "./app.module.css";
-import { EditorPane } from "./editor/editor";
-import { useEditor } from "./editor/state/state";
+import { EditorPane, Editor } from "./editor/editor";
 import { Explorer } from "./explorer/explorer";
 import { useFile } from "./file/file";
 import { PrefsPane } from "./prefs/pane/pane";
@@ -20,9 +20,10 @@ export const App = (props: Props): JSX.Element => {
 
 	// State
 	const { theme, setTheme } = useTheme();
-	const { file, setFile } = useFile();
+	const [editor, setEditor] = useState<Editor>(null);
+
 	const { prefs, setPrefs } = usePrefs();
-	const { editor, setEditor } = useEditor({ prefs, setPrefs, file, setFile, store }) // prettier-ignore
+	const { file, setFile } = useFile({ store, editor });
 
 	// Render
 	const toolbarCls = prefs.toolbarVisible ? "" : s.woToolbar;

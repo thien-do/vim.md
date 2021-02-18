@@ -1,14 +1,13 @@
 import { toast } from "@moai/core";
-import { isGoodToGo } from "app/file/file";
+import { CodeMirrorUtils } from "app/editor/codemirror/codemirror";
+import { FileProps, isGoodToGo } from "app/file/file";
 import { useEffect } from "react";
 import { pathUtils } from "utils/path";
-import { CodeMirrorUtils } from "./codemirror/codemirror";
-import { EditorProps } from "./state";
 
 /**
  * Write editor content into file
  */
-export const useEditorWrite = (props: EditorProps): void => {
+export const useFileWrite = (props: FileProps): void => {
 	const { file, setFile } = props;
 	const { write, showSaveDialog } = props.store;
 
@@ -26,11 +25,9 @@ export const useEditorWrite = (props: EditorProps): void => {
 		const quit = () => void setFile({ path: null, saved: true });
 
 		CodeMirrorUtils.setCommand("save", save);
-
 		CodeMirrorUtils.setCommand("quit", async () => {
 			if (await isGoodToGo(file)) quit();
 		});
-
 		CodeMirrorUtils.setCommand("saveAndQuit", async (cm) => {
 			await save(cm);
 			quit();

@@ -1,8 +1,8 @@
 import { FontFamily, Prefs } from "app/prefs/state/state";
 import { useEffect, useRef } from "react";
+import { SetState } from "utils/state";
 import s from "./editor.module.css";
-import { CodeMirrorUtils } from "./state/codemirror/codemirror";
-import { EditorState } from "./state/state";
+import { CodeMirrorUtils } from "./codemirror/codemirror";
 import "./style/style";
 
 const fontFamilyClasses: Record<FontFamily, [string, string]> = {
@@ -11,8 +11,12 @@ const fontFamilyClasses: Record<FontFamily, [string, string]> = {
 	quattro: ["quattro", "quattro"],
 };
 
-interface Props extends EditorState {
+export type Editor = CodeMirror.Editor | null;
+
+interface Props {
 	prefs: Prefs;
+	editor: Editor;
+	setEditor: SetState<Editor>;
 }
 
 export const EditorPane = (props: Props): JSX.Element => {

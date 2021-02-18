@@ -1,9 +1,11 @@
+import { CodeMirrorUtils } from "app/editor/codemirror/codemirror";
 import { useEffect } from "react";
-import { CodeMirrorUtils } from "./codemirror/codemirror";
-import { EditorProps } from "./state";
+import { PrefsState } from "./state";
 
-export const useEditorPrefs = (props: EditorProps): void => {
-	const { setPrefs } = props;
+/**
+ * Bind pref changes to editor's commands
+ */
+export const usePrefsInEditor = (setPrefs: PrefsState["setPrefs"]): void => {
 	useEffect(() => {
 		CodeMirrorUtils.setCommand("toggleExplorer", () => {
 			setPrefs((p) => ({ ...p, explorerVisible: !p.explorerVisible }));

@@ -1,9 +1,14 @@
 import { dialogConfirm } from "@moai/core";
+import { Editor } from "app/editor/editor";
 import { useEffect, useState } from "react";
+import { Store } from "store/store";
 import { pathUtils } from "utils/path";
 import { SetState } from "utils/state";
+import { useFileRead } from "./read";
+import { useFileWrite } from "./write";
+import { useFileUnload } from "./unload";
 
-const confirmUnsaved = async (): Promise<boolean> =>
+export const confirmUnsaved = async (): Promise<boolean> =>
 	dialogConfirm([
 		"Discard changes?",
 		"You haved unsaved changes that will be lost if continue.",
@@ -24,6 +29,11 @@ export interface FileState {
 	setFile: SetState<File>;
 }
 
+export interface FileProps extends FileState {
+	editor: Editor;
+	store: Store;
+}
+
 const PATH_KEY = "vmd-file-path";
 
 const getStorage = (): File => {
@@ -31,7 +41,12 @@ const getStorage = (): File => {
 	return { path, saved: true };
 };
 
-export const useFile = (): FileState => {
+interface Props {
+	editor: Editor;
+	store: Store;
+}
+
+export const useFile = ({ editor, store }: Props): FileState => {
 	const [file, setFile] = useState<File>(getStorage);
 
 	// Save to storage
@@ -48,24 +63,10 @@ export const useFile = (): FileState => {
 		window.document.title = `${prefix}${title} - vim.md`;
 	}, [file]);
 
-	// Avoid closing window when having unsaved changes
-	useEffect(() => {
-		if (file.saved) return;
-		const forced = { current: false };
-		const handler = (event: BeforeUnloadEvent): void | string => {
-			if (forced.current) return;
-			(async () => {
-				if ((await confirmUnsaved()) === false) return;
-				forced.current = true;
-				(window as any).backend.winClose();
-			})();
-			event.preventDefault();
-			event.returnValue = "You have unsaved changes";
-			return "You have unsaved changes";
-		};
-		window.addEventListener("beforeunload", handler);
-		return () => window.removeEventListener("beforeunload", handler);
-	}, [file.saved]);
+	const props = { file, setFile, editor, store };
+	useFileUnload(props);
+	useFileRead(props);
+	useFileWrite(props);
 
 	return { file, setFile };
 };

@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { Editor, EditorProps } from "./state";
+import { FileProps } from "./file";
 
 /**
  * Read file content into editor
  */
-export const useEditorRead = (props: EditorProps, editor: Editor): void => {
-	const { file, setFile } = props;
+export const useFileRead = (props: FileProps): void => {
+	const { file, setFile, editor } = props;
 	const { read } = props.store;
 
 	const path = file?.path ?? null;
