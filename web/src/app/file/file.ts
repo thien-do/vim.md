@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 import { pathUtils } from "utils/path";
 import { SetState } from "utils/state";
 
-export const isGoodToGo = async (file: File): Promise<boolean> => {
-	// Saved
-	if (file.saved === true) return true;
-	// Unsaved
-	return dialogConfirm([
+const confirmUnsaved = async (): Promise<boolean> =>
+	dialogConfirm([
 		"Discard changes?",
 		"You haved unsaved changes that will be lost if continue.",
 	]);
+
+export const isGoodToGo = async (file: File): Promise<boolean> => {
+	if (file.saved === true) return true;
+	return confirmUnsaved();
 };
 
 interface File {
@@ -46,6 +47,25 @@ export const useFile = (): FileState => {
 		const prefix = unsaved ? "• " : "";
 		window.document.title = `${prefix}${title} - vim.md`;
 	}, [file]);
+
+	// Avoid closing window when having unsaved changes
+	useEffect(() => {
+		if (file.saved) return;
+		const forced = { current: false };
+		const handler = (event: BeforeUnloadEvent): void | string => {
+			if (forced.current) return;
+			(async () => {
+				if ((await confirmUnsaved()) === false) return;
+				forced.current = true;
+				(window as any).backend.winClose();
+			})();
+			event.preventDefault();
+			event.returnValue = "You have unsaved changes";
+			return "You have unsaved changes";
+		};
+		window.addEventListener("beforeunload", handler);
+		return () => window.removeEventListener("beforeunload", handler);
+	}, [file.saved]);
 
 	return { file, setFile };
 };

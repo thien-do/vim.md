@@ -24,3 +24,8 @@ ipcMain.handle("showSaveDialog", async (_event, options) => {
 	if (win.current === null) throw Error("Window is not defined");
 	return await dialog.showSaveDialog(win.current, options);
 });
+
+ipcMain.handle("winClose", async () => {
+	if (win.current === null) throw Error("Window is not defined");
+	win.current.close()
+});
