@@ -3,7 +3,7 @@ import { PrefsState } from "app/prefs/state/state";
 import { useState } from "react";
 import { Store } from "store/store";
 import { SetState } from "utils/state";
-import { useEditorCommands } from "./commands";
+import { useEditorPrefs } from "./prefs";
 import { useEditorRead } from "./read";
 import { useEditorWrite } from "./write";
 
@@ -22,6 +22,6 @@ export const useEditor = (props: EditorProps): EditorState => {
 	const [editor, setEditor] = useState<Editor>(null);
 	useEditorRead(props, editor);
 	useEditorWrite(props);
-	useEditorCommands(props);
+	useEditorPrefs(props);
 	return { editor, setEditor };
 };

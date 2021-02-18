@@ -86,10 +86,6 @@ const configVim = (): void => {
 	Vim.defineEx("toolbar", "t", fn("toggleToolbar"));
 	Vim.defineEx("preferences", "pr", fn("togglePrefs"));
 
-	// Theme
-	Vim.defineEx("dark", null, fn("setThemeDark"));
-	Vim.defineEx("light", null, fn("setThemeLight"));
-
 	// Operation
 	Vim.defineEx("Write", "W", fn("save")); // ":w" is built-in
 	Vim.defineEx("help", "h", fn("openHelp"));

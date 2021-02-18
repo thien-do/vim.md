@@ -1,4 +1,5 @@
 import { toast } from "@moai/core";
+import { isGoodToGo } from "app/file/file";
 import { useEffect } from "react";
 import { pathUtils } from "utils/path";
 import { CodeMirrorUtils } from "./codemirror/codemirror";
@@ -12,7 +13,7 @@ export const useEditorWrite = (props: EditorProps): void => {
 	const { write, showSaveDialog } = props.store;
 
 	useEffect(() => {
-		CodeMirrorUtils.setCommand("save", async (cm) => {
+		const save = async (cm: CodeMirror.Editor) => {
 			const path = file.path === null ? await showSaveDialog() : file.path;
 			// "path" is null when pickSaveFile is cancelled
 			if (path === null) return;
@@ -20,6 +21,19 @@ export const useEditorWrite = (props: EditorProps): void => {
 			// This also updates the path in case of new file
 			setFile({ path, saved: true });
 			toast(toast.types.success, `Saved at ${pathUtils.getLast(path)}`);
+		};
+
+		const quit = () => void setFile({ path: null, saved: true });
+
+		CodeMirrorUtils.setCommand("save", save);
+
+		CodeMirrorUtils.setCommand("quit", async () => {
+			if (await isGoodToGo(file)) quit();
+		});
+
+		CodeMirrorUtils.setCommand("saveAndQuit", async (cm) => {
+			await save(cm);
+			quit();
 		});
 	}, [file, write, setFile, showSaveDialog]);
 };
