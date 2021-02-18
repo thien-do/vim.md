@@ -1,6 +1,6 @@
 {
 	"name": "vimdotmd",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "Desktop version of Vim.md",
 	"main": "src/main.js",
 	"author": "Vim.md Team <vimdotmd@gmail.com>",
@@ -24,7 +24,7 @@
 	},
 	"build": {
 		"appId": "md.vim.app",
-		"buildVersion": "beta-1",
+		"buildVersion": "beta-2",
 		"productName": "Vim.md",
 		"copyright": "Copyright © 2021 vim.md",
 		"linux": {

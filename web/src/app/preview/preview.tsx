@@ -1,5 +1,5 @@
 import { background, border } from "@moai/core";
-import { Editor } from "app/editor/state/state";
+import { Editor } from "app/editor/editor";
 import { Prefs, Template } from "app/prefs/state/state";
 import { usePreviewHtml } from "./effects/html";
 import { usePreviewScroll } from "./effects/scroll";
