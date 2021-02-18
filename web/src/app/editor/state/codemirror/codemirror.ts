@@ -80,12 +80,9 @@ const configVim = (): void => {
 		editor.execCommand(command);
 
 	// Layout
-	Vim.defineEx("edit", "e", fn("toggleLibrary"));
-	Vim.defineEx("editor", "ed", fn("showEditor"));
-	Vim.defineEx("preview", "p", fn("showPreview"));
-	Vim.defineEx("split", "sp", fn("showSplit"));
-	Vim.defineEx("vsplit", "vsp", fn("showSplit"));
-	Vim.defineEx("library", "l", fn("toggleLibrary"));
+	Vim.defineEx("preview", "p", fn("togglePreview"));
+	Vim.defineEx("split", "sp", fn("toggleSplit"));
+	Vim.defineEx("explorer", "e", fn("toggleExplorer"));
 	Vim.defineEx("toolbar", "t", fn("toggleToolbar"));
 	Vim.defineEx("preferences", "pr", fn("togglePrefs"));
 
