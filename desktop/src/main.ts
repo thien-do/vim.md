@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, ipcMain, screen } from "electron";
+import { app, BrowserWindow, dialog, ipcMain } from "electron";
 import { createWindow } from "./window";
 
 const win: { current: BrowserWindow | null } = { current: null };

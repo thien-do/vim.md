@@ -1,11 +1,11 @@
 .container {
-    /* @TODO: get titlebar height from host */
+	/* @TODO: get titlebar height from host */
 	height: 28px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
 	-webkit-app-region: drag;
-    user-select: none;
+	user-select: none;
 }
