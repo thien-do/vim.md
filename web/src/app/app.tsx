@@ -87,7 +87,7 @@ export const App = (props: Props): JSX.Element => {
 	);
 
 	return (
-		<div className={[s.container, toolbarCls].join(" ")}>
+		<div className={[scrollbar.custom, s.container, toolbarCls].join(" ")}>
 			{title}
 			{toolbar}
 			<div className={s.body}>
