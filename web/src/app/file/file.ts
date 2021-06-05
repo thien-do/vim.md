@@ -2,7 +2,6 @@ import { dialogConfirm } from "@moai/core";
 import { Editor } from "app/editor/editor";
 import { useEffect, useState } from "react";
 import { Store } from "store/store";
-import { pathUtils } from "utils/path";
 import { SetState } from "utils/state";
 import { useFileRead } from "./read";
 import { useFileWrite } from "./write";
@@ -19,7 +18,7 @@ export const isGoodToGo = async (file: File): Promise<boolean> => {
 	return confirmUnsaved();
 };
 
-interface File {
+export interface File {
 	path: string | null;
 	saved: boolean;
 }
@@ -54,14 +53,6 @@ export const useFile = ({ editor, store }: Props): FileState => {
 		const [s, p] = [window.localStorage, file.path];
 		p === null ? s.removeItem(PATH_KEY) : s.setItem(PATH_KEY, p);
 	}, [file.path]);
-
-	// Update window title
-	useEffect(() => {
-		const title = file.path ? pathUtils.getLast(file.path) : "Untitled";
-		const unsaved = file === null || file.saved === false;
-		const prefix = unsaved ? "• " : "";
-		window.document.title = `${prefix}${title} - vim.md`;
-	}, [file]);
 
 	const props = { file, setFile, editor, store };
 	useFileUnload(props);

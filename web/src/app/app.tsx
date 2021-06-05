@@ -10,6 +10,7 @@ import { usePrefs } from "./prefs/state/state";
 import { Preview } from "./preview/preview";
 import { ToolbarToggle } from "./toolbar/toggle/toggle";
 import { Toolbar } from "./toolbar/toolbar";
+import { Title } from "./title/title";
 
 interface Props {
 	store: Store;
@@ -61,7 +62,7 @@ export const App = (props: Props): JSX.Element => {
 		</div>
 	);
 
-	/* avoid render Preview if not necessary to improve performance */
+	/* Avoid render Preview if not necessary to improve performance */
 	const preview = prefs.layout !== "editor" && (
 		<div className={s.preview}>
 			<Preview editor={editor} prefs={prefs} />
@@ -79,8 +80,15 @@ export const App = (props: Props): JSX.Element => {
 		</div>
 	);
 
+	const title = (
+		<div className={s.title}>
+			<Title prefs={prefs} file={file} />
+		</div>
+	);
+
 	return (
-		<div className={[scrollbar.custom, s.container, toolbarCls].join(" ")}>
+		<div className={[s.container, toolbarCls].join(" ")}>
+			{title}
 			{toolbar}
 			<div className={s.body}>
 				{explorer}

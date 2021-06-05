@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, ipcMain } from "electron";
+import { app, BrowserWindow, dialog, ipcMain, screen } from "electron";
 import { createWindow } from "./window";
 
 const win: { current: BrowserWindow | null } = { current: null };
@@ -27,5 +27,5 @@ ipcMain.handle("showSaveDialog", async (_event, options) => {
 
 ipcMain.handle("winClose", async () => {
 	if (win.current === null) throw Error("Window is not defined");
-	win.current.close()
+	win.current.close();
 });
