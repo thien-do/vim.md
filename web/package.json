@@ -4,12 +4,12 @@
 	"private": true,
 	"homepage": ".",
 	"dependencies": {
-		"@moai/core": "1.0.0-rc13",
-		"@moai/icon": "0.36.0",
-		"@vimdotmd/markdown": "1.8.0",
-		"codemirror": "5.61.1",
-		"react": "17.0.2",
-		"react-dom": "17.0.2"
+		"@moai/core": "^1.0.0-rc13",
+		"@vimdotmd/markdown": "^1.8.0",
+		"codemirror": "^5.61.1",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"react-icons": "^4.2.0"
 	},
 	"scripts": {
 		"start": "BROWSER=NONE react-scripts start",

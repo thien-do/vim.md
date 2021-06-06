@@ -1,15 +1,15 @@
 import { Switcher, SwitcherOption } from "@moai/core";
-import { Moon, Sun } from "@moai/icon/hrs";
 import { PrefsState, Theme } from "app/prefs/state/state";
 import { PaneLabel } from "components/pane/label/label";
+import { RiMoonLine, RiSunLine } from "react-icons/ri";
 import s from "./theme.module.css";
 
 interface Props extends PrefsState {}
 
 const getThemeOptions = (): SwitcherOption<Theme>[] => [
-	{ value: "light", label: "Light", icon: Sun },
+	{ value: "light", label: "Light", icon: RiSunLine },
 	{ value: "system", label: "System" },
-	{ value: "dark", label: "Dark", icon: Moon },
+	{ value: "dark", label: "Dark", icon: RiMoonLine },
 ];
 
 export const PrefsTheme = (props: Props): JSX.Element => (
@@ -20,7 +20,7 @@ export const PrefsTheme = (props: Props): JSX.Element => (
 				<Switcher<Theme>
 					value={props.prefs.theme}
 					setValue={(theme) => props.setPrefs((prefs) => ({ ...prefs, theme }))}
-					fill={true}
+					fill
 					options={getThemeOptions()}
 				/>
 			</div>
