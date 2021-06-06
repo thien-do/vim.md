@@ -2,9 +2,10 @@ import { FileState, isGoodToGo } from "app/file/file";
 import { Prefs } from "app/prefs/state/state";
 import { Tree, TreeNode } from "components/tree/tree";
 import { TreeUtils } from "components/tree/utils";
-import { useCallback, useEffect, useState } from "react";
-import { Store, StoreFile } from "store/interface";
-import s from "./tree.module.css";
+import { useEffect, useState } from "react";
+import { Store } from "store/interface";
+import { useExpanded } from "./expanded";
+import { loadPathNodes } from "./load";
 
 interface Props extends FileState {
 	store: Store;
@@ -12,105 +13,65 @@ interface Props extends FileState {
 	rootPath: string;
 }
 
-const EXPANDED_KEY = "vdm-explorer-expanded";
-
-const useSetSave = (key: string, set: Set<string>): void => {
-	useEffect(() => {
-		const array = Array.from(set);
-		window.localStorage.setItem(key, JSON.stringify(array));
-	}, [set, key]);
-};
-
-const getInitialSet = (key: string): Set<string> => {
-	const stored = window.localStorage.getItem(key);
-	if (stored === null) return new Set();
-	const array = JSON.parse(stored);
-	if (Array.isArray(array) === true) return new Set(array);
-	throw Error(`Stored "${key}" is not an array`);
-};
-
-const toTreeNode = (parentPath: string) => (file: StoreFile): TreeNode => ({
-	id: `${parentPath}/${file.name}`,
-	label: file.name,
-	isLeaf: file.isDirectory === false,
-	children: undefined, // Don't know yet
-});
-
-const isMarkdown = (file: StoreFile): boolean =>
-	file.isDirectory || file.name.endsWith("md") || file.name.endsWith("mdx");
+const addItemToSet = (item: string) => (prev: Set<string>): Set<string> => {
+	if (prev.has(item)) return prev;
+	const next = new Set(prev);
+	next.add(item);
+	return next;
+}
 
 export const ExplorerTree = (props: Props): JSX.Element | null => {
 	const [rootNode, setRootNode] = useState<null | TreeNode>(null);
-	const [expanded, setExpanded] = useState(() => getInitialSet(EXPANDED_KEY));
+	const { expanded, setExpanded } = useExpanded();
 
 	const { rootPath, file, setFile } = props;
-	const { list: _list } = props.store;
-	const { fileType } = props.prefs;
-
-	const list: typeof _list = useCallback(
-		async (path) => {
-			const files = await _list(path);
-			return fileType === "all" ? files : files.filter(isMarkdown);
-		},
-		[_list, fileType]
-	);
-
-	// Save state to localStorage
-	useSetSave(EXPANDED_KEY, expanded);
+	const [{ list }, { fileType }] = [props.store, props.prefs];
 
 	// Reset state when rootPath is changed
 	useEffect(() => {
-		if (rootPath === null) return void setRootNode(null);
-		(async () => {
-			const files = await list(rootPath);
-			setRootNode({
-				id: rootPath,
-				label: rootPath.split("/").slice(-1)[0],
-				children: files.map(toTreeNode(rootPath)),
-				isLeaf: false,
-			});
-			// Expand root by default
-			setExpanded((prev) => {
-				const next = new Set(prev);
-				next.add(rootPath);
-				return next;
-			});
-		})();
-	}, [rootPath, list, setRootNode]);
+		if (rootPath === null) {
+			setRootNode(null);
+			setExpanded(new Set());
+			return;
+		}
+		loadPathNodes(rootPath, { fileType, list }).then((children) => {
+			const label = rootPath.split("/").slice(-1)[0];
+			setRootNode({ id: rootPath, label, children, isLeaf: false });
+			// Ensure root is expanded AND don't lost other expanded states
+			setExpanded(addItemToSet(rootPath));
+		});
+	}, [rootPath, list, setRootNode, setExpanded, fileType]);
 
-	// Load children into a node
+	if (rootNode === null) return null;
+
 	const loadChildren = async (node: TreeNode): Promise<void> => {
 		if (node.isLeaf === true) throw Error("Current node is a leaf");
 		if (rootNode === null) throw Error("Root node is null");
 		if (node.children !== undefined) return;
-		const files = await list(node.id);
-		const children = files.map(toTreeNode(node.id));
 		const newRoot = TreeUtils.updateNode({
 			node: rootNode,
 			id: node.id,
 			key: "children",
-			value: children,
+			value: await loadPathNodes(node.id, { list, fileType }),
 		});
 		setRootNode(newRoot);
 	};
 
-	if (rootNode === null) return null;
+	const setSelected = async (set: Set<string>) => {
+		if ((await isGoodToGo(file)) === false) return;
+		const path = Array.from(set)[0];
+		setFile({ path, saved: true });
+	};
 
 	return (
-		<div className={s.container}>
-			<Tree
-				expanded={expanded}
-				setExpanded={setExpanded}
-				selected={new Set(file.path === null ? [] : [file.path])}
-				setSelected={async (set: Set<string>) => {
-					if ((await isGoodToGo(file)) === false) return;
-					const path = Array.from(set)[0];
-					setFile({ path, saved: true });
-				}}
-				loadChildren={loadChildren}
-				parentMode="expand"
-				node={rootNode}
-			/>
-		</div>
+		<Tree
+			expanded={expanded}
+			setExpanded={setExpanded}
+			selected={new Set(file.path === null ? [] : [file.path])}
+			setSelected={setSelected}
+			loadChildren={loadChildren}
+			parentMode="expand"
+			node={rootNode}
+		/>
 	);
 };
