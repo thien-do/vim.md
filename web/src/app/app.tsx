@@ -1,6 +1,6 @@
 import { scrollbar } from "@moai/core";
 import { useState } from "react";
-import { Store } from "store/store";
+import { Store } from "store/interface";
 import s from "./app.module.css";
 import { EditorPane, Editor } from "./editor/editor";
 import { Explorer } from "./explorer/explorer";

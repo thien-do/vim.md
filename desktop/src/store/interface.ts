@@ -1,3 +1,9 @@
+/**
+ * IMPORTANT: These 2 files must be identical
+ * - desktop/src/store/interface.ts
+ * - web/src/store/interface.ts
+ */
+
 export interface StoreFile {
 	isDirectory: boolean;
 	name: string;

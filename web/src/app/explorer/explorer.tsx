@@ -2,7 +2,7 @@ import { Button, Pane } from "@moai/core";
 import { FileState } from "app/file/file";
 import { Prefs } from "app/prefs/state/state";
 import { PaneHeading } from "components/pane/heading/heading";
-import { Store } from "store/store";
+import { Store } from "store/interface";
 import { pathUtils } from "utils/path";
 import { useStorageState } from "utils/state";
 import s from "./explorer.module.css";

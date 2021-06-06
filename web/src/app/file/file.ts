@@ -1,7 +1,7 @@
 import { Dialog } from "@moai/core";
 import { Editor } from "app/editor/editor";
 import { useEffect, useState } from "react";
-import { Store } from "store/store";
+import { Store } from "store/interface";
 import { SetState } from "utils/state";
 import { useFileRead } from "./read";
 import { useFileWrite } from "./write";

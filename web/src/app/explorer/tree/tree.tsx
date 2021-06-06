@@ -3,7 +3,7 @@ import { Prefs } from "app/prefs/state/state";
 import { Tree, TreeNode } from "components/tree/tree";
 import { TreeUtils } from "components/tree/utils";
 import { useCallback, useEffect, useState } from "react";
-import { Store, StoreFile } from "store/store";
+import { Store, StoreFile } from "store/interface";
 import s from "./tree.module.css";
 
 interface Props extends FileState {
