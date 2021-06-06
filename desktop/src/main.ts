@@ -27,5 +27,5 @@ ipcMain.handle("showSaveDialog", async (_event, options) => {
 
 ipcMain.handle("winClose", async () => {
 	if (win.current === null) throw Error("Window is not defined");
-	win.current.close()
+	win.current.close();
 });

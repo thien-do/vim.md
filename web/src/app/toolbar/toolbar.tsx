@@ -1,4 +1,4 @@
-import { Button, DivPx, Pane, Switcher } from "@moai/core";
+import { Button, Pane, Switcher } from "@moai/core";
 import { Layout, PrefsState } from "app/prefs/state/state";
 import { RiFolderLine, RiQuestionLine, RiSettingsLine } from "react-icons/ri";
 import { ToolbarToggle } from "./toggle/toggle";
@@ -13,23 +13,24 @@ const Left = (props: Props): JSX.Element => (
 		<div className={s.toggle}>
 			<ToolbarToggle prefs={props.prefs} setPrefs={props.setPrefs} />
 		</div>
-		<DivPx size={16} />
-		<Button
-			icon={RiFolderLine}
-			children="Explorer"
-			selected={props.prefs.explorerVisible}
-			onClick={() => {
-				props.setPrefs((prefs) => ({
-					...prefs,
-					explorerVisible: !prefs.explorerVisible,
-				}));
-			}}
-		/>
+		<div className={s.interactive}>
+			<Button
+				icon={RiFolderLine}
+				children="Explorer"
+				selected={props.prefs.explorerVisible}
+				onClick={() => {
+					props.setPrefs((prefs) => ({
+						...prefs,
+						explorerVisible: !prefs.explorerVisible,
+					}));
+				}}
+			/>
+		</div>
 	</div>
 );
 
 const Center = (props: Props): JSX.Element => (
-	<div className={s.center}>
+	<div className={[s.center, s.interactive].join(" ")}>
 		<Switcher<Layout>
 			options={[
 				{ value: "editor", label: "Editor" },
@@ -47,19 +48,22 @@ const Center = (props: Props): JSX.Element => (
 
 const Right = (props: Props): JSX.Element => (
 	<div className={s.right}>
-		<Button icon={RiQuestionLine} children="Help" />
-		<DivPx size={16} />
-		<Button
-			icon={RiSettingsLine}
-			children="Preferences"
-			selected={props.prefs.prefsVisible}
-			onClick={() => {
-				props.setPrefs((prefs) => ({
-					...prefs,
-					prefsVisible: !prefs.prefsVisible,
-				}));
-			}}
-		/>
+		<div className={s.interactive}>
+			<Button icon={RiQuestionLine} children="Help" />
+		</div>
+		<div className={s.interactive}>
+			<Button
+				icon={RiSettingsLine}
+				children="Preferences"
+				selected={props.prefs.prefsVisible}
+				onClick={() => {
+					props.setPrefs((prefs) => ({
+						...prefs,
+						prefsVisible: !prefs.prefsVisible,
+					}));
+				}}
+			/>
+		</div>
 	</div>
 );
 

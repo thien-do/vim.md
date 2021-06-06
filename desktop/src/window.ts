@@ -23,6 +23,8 @@ export const createWindow = (): BrowserWindow => {
 			contextIsolation: true,
 			nodeIntegration: false,
 		},
+		autoHideMenuBar: true,
+		titleBarStyle: "hidden",
 		// https://github.com/electron-userland/electron-builder/issues/2269#issuecomment-342168989
 		icon: path.resolve(root, "build/icons/512x512.png"),
 	});
@@ -35,7 +37,6 @@ export const createWindow = (): BrowserWindow => {
 
 	win.on("close", () => void store.set("winBounds", win.getBounds()));
 	if (isDev) win.webContents.openDevTools();
-	win.setMenuBarVisibility(false);
 
 	return win;
 };

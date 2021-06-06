@@ -5,18 +5,23 @@
 	flex-direction: column;
 }
 
+.title {
+	flex: 0 0 auto;
+	/* Hide toolbar's top border */
+	z-index: 1;
+}
+
 .toolbarToggle {
 	position: absolute;
-	top: 16px;
+	/* 16: intended padding, 28: titlebar's height */
+	top: calc(16px + 28px);
 	left: 16px;
-	/* Larger than .toolbar's z-index */
-	z-index: 8;
+	/* Higher than all CodeMirror's z-index */
+	z-index: 7;
 }
 
 .toolbar {
 	flex: 0 0 auto;
-	/* Largest z-index of CodeMirror is 6 */
-	z-index: 7;
 }
 
 .body {
