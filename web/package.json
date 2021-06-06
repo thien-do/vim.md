@@ -4,12 +4,12 @@
 	"private": true,
 	"homepage": ".",
 	"dependencies": {
-		"@moai/core": "0.206.0",
-		"@moai/icon": "0.36.0",
-		"@vimdotmd/markdown": "1.8.0",
-		"codemirror": "5.59.2",
-		"react-dom": "17.0.1",
-		"react": "17.0.1"
+		"@moai/core": "^1.0.0-rc13",
+		"@vimdotmd/markdown": "^1.8.0",
+		"codemirror": "^5.61.1",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"react-icons": "^4.2.0"
 	},
 	"scripts": {
 		"start": "BROWSER=NONE react-scripts start",
@@ -24,10 +24,10 @@
 		"defaults"
 	],
 	"devDependencies": {
-		"@types/codemirror": "0.0.108",
-		"@types/react-dom": "17.0.1",
-		"@types/react": "17.0.2",
-		"react-scripts": "4.0.2",
-		"typescript": "4.1.5"
+		"@types/codemirror": "5.60.0",
+		"@types/react": "17.0.9",
+		"@types/react-dom": "17.0.6",
+		"react-scripts": "4.0.3",
+		"typescript": "4.3.2"
 	}
 }

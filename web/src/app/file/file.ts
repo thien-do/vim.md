@@ -1,4 +1,4 @@
-import { dialogConfirm } from "@moai/core";
+import { Dialog } from "@moai/core";
 import { Editor } from "app/editor/editor";
 import { useEffect, useState } from "react";
 import { Store } from "store/store";
@@ -8,7 +8,7 @@ import { useFileWrite } from "./write";
 import { useFileUnload } from "./unload";
 
 export const confirmUnsaved = async (): Promise<boolean> =>
-	dialogConfirm([
+	Dialog.confirm([
 		"Discard changes?",
 		"You haved unsaved changes that will be lost if continue.",
 	]);

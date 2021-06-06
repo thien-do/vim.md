@@ -6,8 +6,8 @@ body,
 }
 
 :root:not(.x) {
-	--highlight-0: var(--gray-0);
-	--highlight-1: var(--gray-1);
+	/* Gray */
+	/* --highlight-1: var(--gray-1);
 	--highlight-2: var(--gray-2);
 	--highlight-3: var(--gray-3);
 	--highlight-4: var(--gray-4);
@@ -15,5 +15,35 @@ body,
 	--highlight-6: var(--gray-6);
 	--highlight-7: var(--gray-7);
 	--highlight-8: var(--gray-8);
-	--highlight-9: var(--gray-9);
+	--highlight-9: var(--gray-9); */
+
+	/* Purple */
+	/* --highlight-0: #f5f3ff;
+	--highlight-1: #ede9fe;
+	--highlight-2: #ddd6fe;
+	--highlight-3: #c4b5fd;
+	--highlight-4: #a78bfa;
+	--highlight-5: #8b5cf6;
+	--highlight-6: #7c3aed;
+	--highlight-7: #6d28d9;
+	--highlight-8: #5b21b6;
+	--highlight-9: #4c1d95; */
+
+	/* Indigo */
+	--highlight-0: #eef2ff;
+	--highlight-1: #e0e7ff;
+	--highlight-2: #c7d2fe;
+	--highlight-3: #a5b4fc;
+	--highlight-4: #818cf8;
+	--highlight-5: #6366f1;
+	--highlight-6: #4f46e5;
+	--highlight-7: #4338ca;
+	--highlight-8: #3730a3;
+	--highlight-9: #312e81;
+
+	/* Need to win z-index from CodeMirror (6) */
+	--z-sticky-1: 7;
+	--z-sticky-2: 8;
+	--z-overlay-base: 9;
+	--z-overlay-top: 10;
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { SetState } from "utils/state";
 import { usePrefsInEditor } from "./editor";
+import { usePrefsTheme } from "./theme";
 
 export type Layout = "editor" | "split" | "preview";
 export type LineLength = 64 | 72 | 80;
@@ -11,8 +12,10 @@ export type FontSize =
     | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl" | "10xl";
 export type FileType = "all" | "md";
 export type Template = "github" | "serif" | "blank";
+export type Theme = "light" | "system" | "dark";
 
 export interface Prefs {
+	theme: Theme;
 	toolbarVisible: boolean;
 	explorerVisible: boolean;
 	prefsVisible: boolean;
@@ -26,6 +29,7 @@ export interface Prefs {
 }
 
 const defaultPrefs: Prefs = {
+	theme: "system",
 	toolbarVisible: true,
 	explorerVisible: false,
 	prefsVisible: false,
@@ -58,6 +62,7 @@ export const usePrefs = (): PrefsState => {
 	}, [prefs]);
 
 	usePrefsInEditor(setPrefs);
+	usePrefsTheme(prefs.theme);
 
 	return { prefs, setPrefs };
 };
