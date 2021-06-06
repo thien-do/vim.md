@@ -1,8 +1,6 @@
 import CodeMirror from "codemirror";
-import "codemirror/addon/dialog/dialog.css";
 import "codemirror/addon/selection/active-line";
 import "codemirror/keymap/vim";
-import "codemirror/lib/codemirror.css";
 import "codemirror/mode/gfm/gfm";
 
 /** Static configuration on creating new CM instance */

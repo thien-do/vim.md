@@ -1,4 +1,4 @@
-import { scrollbar, useTheme } from "@moai/core";
+import { scrollbar } from "@moai/core";
 import { useState } from "react";
 import { Store } from "store/store";
 import s from "./app.module.css";
@@ -19,9 +19,7 @@ export const App = (props: Props): JSX.Element => {
 	const { store } = props;
 
 	// State
-	const { theme, setTheme } = useTheme();
 	const [editor, setEditor] = useState<Editor>(null);
-
 	const { prefs, setPrefs } = usePrefs();
 	const { file, setFile } = useFile({ store, editor });
 
@@ -73,8 +71,6 @@ export const App = (props: Props): JSX.Element => {
 			<PrefsPane
 				prefs={prefs}
 				setPrefs={setPrefs}
-				theme={theme}
-				setTheme={setTheme}
 			/>
 		</div>
 	);

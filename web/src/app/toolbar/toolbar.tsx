@@ -1,6 +1,6 @@
 import { Button, DivPx, Pane, Switcher } from "@moai/core";
-import { Adjustments, Collection, QuestionMarkCircle } from "@moai/icon/hrs";
 import { Layout, PrefsState } from "app/prefs/state/state";
+import { RiFolderLine, RiQuestionLine, RiSettingsLine } from "react-icons/ri";
 import { ToolbarToggle } from "./toggle/toggle";
 import s from "./toolbar.module.css";
 
@@ -15,7 +15,7 @@ const Left = (props: Props): JSX.Element => (
 		</div>
 		<DivPx size={16} />
 		<Button
-			icon={Collection}
+			icon={RiFolderLine}
 			children="Explorer"
 			selected={props.prefs.explorerVisible}
 			onClick={() => {
@@ -47,10 +47,10 @@ const Center = (props: Props): JSX.Element => (
 
 const Right = (props: Props): JSX.Element => (
 	<div className={s.right}>
-		<Button icon={QuestionMarkCircle} children="Help" />
+		<Button icon={RiQuestionLine} children="Help" />
 		<DivPx size={16} />
 		<Button
-			icon={Adjustments}
+			icon={RiSettingsLine}
 			children="Preferences"
 			selected={props.prefs.prefsVisible}
 			onClick={() => {

@@ -1,5 +1,5 @@
 import { Button } from "@moai/core";
-import { ChevronDown, ChevronRight } from "@moai/icon/hrs";
+import { RiArrowDownSLine, RiArrowRightSLine } from "react-icons/ri";
 import { TreeNode, TreeProps } from "../tree";
 import s from "./row.module.css";
 
@@ -54,7 +54,7 @@ export const TreeItem = (props: Props): JSX.Element => {
 			<div className={s.toggle}>
 				{isLeaf === false ? (
 					<Button
-						icon={expanded ? ChevronDown : ChevronRight}
+						icon={expanded ? RiArrowDownSLine : RiArrowRightSLine}
 						iconLabel={expanded ? "Collapse group" : "Expand group"}
 						onClick={() => toggle(props)}
 						style={Button.styles.flat}

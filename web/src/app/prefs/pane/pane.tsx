@@ -1,4 +1,4 @@
-import { Pane, ThemeState } from "@moai/core";
+import { Pane } from "@moai/core";
 import { PrefsApp } from "../app/app";
 import { PrefsEditor } from "../editor/editor";
 import { PrefsExplorer } from "../explorer/explorer";
@@ -6,7 +6,7 @@ import { PrefsPreview } from "../preview/preview";
 import { PrefsState } from "../state/state";
 import s from "./pane.module.css";
 
-interface Props extends PrefsState, ThemeState {}
+interface Props extends PrefsState {}
 
 export const PrefsPane = (props: Props): JSX.Element => (
 	<div className={s.wrapper}>
