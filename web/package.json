@@ -4,7 +4,7 @@
 	"private": true,
 	"homepage": ".",
 	"dependencies": {
-		"@moai/core": "1.0.0-rc12",
+		"@moai/core": "1.0.0-rc13",
 		"@moai/icon": "0.36.0",
 		"@vimdotmd/markdown": "1.8.0",
 		"codemirror": "5.61.1",

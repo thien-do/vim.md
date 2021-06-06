@@ -1,0 +1,114 @@
+.CodeMirror {
+	height: 100%;
+	overflow: hidden;
+
+	font-family: inherit;
+	color: inherit;
+	background-color: transparent;
+}
+
+/* hack hack super hack */
+.CodeMirror-dialog input,
+.CodeMirror-dialog-bottom > span[style*="font-family: monospace"] {
+	font: inherit;
+	font-family: inherit !important;
+}
+.CodeMirror-dialog-bottom span[style*="color: rgb(136, 136, 136)"] {
+    color: var(--border-strong) !important;
+}
+.CodeMirror-dialog-bottom {
+	border: none;
+	padding: 8px 16px;
+
+	background-color: var(--background-strong);
+	border-top: solid 1px var(--border-weak);
+}
+
+/* Prevent layout lagging when switching from single to several digits */
+.CodeMirror-linenumber {
+	margin-left: -24px;
+	min-width: 48px;
+}
+
+.CodeMirror-lines {
+	--char-width: calc((1em / 20) * 12.8);
+	--char-count-adjusted: calc(var(--line-length) + 2); /* 2 is margin */
+	width: 100%;
+	max-width: calc(var(--char-width) * var(--char-count-adjusted));
+	margin-left: auto;
+	margin-right: auto;
+	padding: 96px 24px;
+}
+
+.CodeMirror-overlayscroll-horizontal {
+	height: 16px;
+}
+
+.CodeMirror-overlayscroll-vertical {
+	width: 16px;
+}
+
+.CodeMirror-overlayscroll-horizontal div,
+.CodeMirror-overlayscroll-vertical div {
+	border-radius: 0;
+}
+
+/* Selection */
+.CodeMirror-focused .CodeMirror-selected,
+.CodeMirror-selected {
+	background-color: var(--border-weak);
+}
+
+/* Cursor inside a selection */
+.cm-animate-fat-cursor,
+.cm-fat-cursor .CodeMirror-cursor {
+	background-color: var(--border-strong);
+}
+
+/* Insert cursor */
+.CodeMirror-cursor {
+	border-left: solid 3px var(--highlight-5);
+}
+
+/* Text */
+.cm-s-default .cm-header,
+.cm-s-default .cm-variable-2,
+.cm-s-default .cm-link {
+	color: inherit;
+}
+.cm-s-default .cm-builtin,
+.cm-s-default .cm-meta,
+.cm-s-default .cm-tag,
+.cm-s-default .cm-attribute,
+.cm-s-default .cm-quote,
+.cm-s-default .cm-variable-3,
+.cm-s-default .cm-type,
+.cm-s-default .cm-string,
+.cm-s-default .cm-comment {
+	color: var(--text-muted);
+}
+.light .cm-searching {
+	background-color: #FCD34D;
+}
+.dark .cm-searching {
+	background-color: #B45309;
+}
+.CodeMirror-activeline-background {
+	background: none;
+}
+
+/* Gutter */
+.CodeMirror-gutters {
+	background: none;
+	border: none;
+}
+
+/* Gutter line numbers */
+.CodeMirror-linenumber {
+	color: var(--border-strong);
+}
+
+/* Gutter current line */
+.CodeMirror-activeline .CodeMirror-linenumber {
+	color: var(--text-muted);
+}

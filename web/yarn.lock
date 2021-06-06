@@ -1382,10 +1382,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@moai/core@1.0.0-rc12":
-  version "1.0.0-rc12"
-  resolved "https://registry.yarnpkg.com/@moai/core/-/core-1.0.0-rc12.tgz#c30242a96d7c67c1ad58a014249410f3ed65cd10"
-  integrity sha512-Zo0RklXj/muLMVB4QDTBTwZyDJEw6H0b2gfmasIGp4dwA/vcUp7pUj3F2DRZjemPWSXSO/orbRDqiaM2q+NuMA==
+"@moai/core@1.0.0-rc13":
+  version "1.0.0-rc13"
+  resolved "https://registry.yarnpkg.com/@moai/core/-/core-1.0.0-rc13.tgz#eb84030c646ce0cc0474a097796538f4538490c3"
+  integrity sha512-sYb0ly+TjpuY2z4/i+HIwOXpSsv7KlgE+PSbRbzZKRXHlj9Vi5ZApLySaIwOHZsXSaanCZh7bRkdMsKJdPMgKw==
   dependencies:
     "@popperjs/core" "^2.9.2"
     "@tippyjs/react" "^4.2.5"
