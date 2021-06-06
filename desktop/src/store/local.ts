@@ -43,6 +43,7 @@ const showSaveDialog: Store["showSaveDialog"] = async () => {
 };
 
 export const localStore: Store = {
+	titleBarHeight: 28,
 	read,
 	write,
 	list,

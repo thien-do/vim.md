@@ -2,6 +2,7 @@ import { Button, Pane } from "@moai/core";
 import { FileState } from "app/file/file";
 import { Prefs } from "app/prefs/state/state";
 import { PaneHeading } from "components/pane/heading/heading";
+import { useEffect } from "react";
 import { Store } from "store/interface";
 import { pathUtils } from "utils/path";
 import { useStorageState } from "utils/state";
@@ -18,8 +19,20 @@ const ROOT_PATH_KEY = "vdm-explorer-root-path";
 export const Explorer = (props: Props): JSX.Element => {
 	const [path, setPath] = useStorageState<string>(ROOT_PATH_KEY);
 
+	// See the comment at Store["showOpenDialog"]
+	const open = props.store.showOpenDialog;
+	const fixedPath: string | null = typeof open === "string" ? open : null;
+	const isFixedPath = typeof fixedPath === "string";
+
+	useEffect(() => {
+		if (typeof fixedPath === "string") setPath(fixedPath);
+	}, [fixedPath, setPath]);
+
 	const openFolder = async (): Promise<void> => {
-		const path = await props.store.showOpenDialog();
+		const open = props.store.showOpenDialog;
+		if (typeof open === "string")
+			throw Error("Store doesn't support open a folder");
+		const path = await open();
 		if (typeof path === "string") setPath(path);
 	};
 
@@ -30,11 +43,13 @@ export const Explorer = (props: Props): JSX.Element => {
 			<PaneHeading
 				children={pathUtils.getLast(path)}
 				aside={
-					<Button
-						style={Button.styles.flat}
-						onClick={openFolder}
-						children="Change…"
-					/>
+					isFixedPath ? null : (
+						<Button
+							style={Button.styles.flat}
+							onClick={openFolder}
+							children="Change…"
+						/>
+					)
 				}
 			/>
 		);

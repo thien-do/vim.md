@@ -13,8 +13,7 @@
 
 .toolbarToggle {
 	position: absolute;
-	/* 16: intended padding, 28: titlebar's height */
-	top: calc(16px + 28px);
+	/* the "top" will be set inline */
 	left: 16px;
 	/* Higher than all CodeMirror's z-index */
 	z-index: 7;

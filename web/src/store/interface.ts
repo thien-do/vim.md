@@ -11,6 +11,10 @@ export interface StoreFile {
 
 export interface Store {
 	/**
+	 * Height of title bar, or null if none (e.g. browser)
+	 */
+	titleBarHeight: number | null;
+	/**
 	 * Return content of file at @param path
 	 */
 	read: (path: string) => Promise<string>;
@@ -23,13 +27,18 @@ export interface Store {
 	 */
 	list: (path: string) => Promise<StoreFile[]>;
 	/**
-	 * Open OS's folder picker and return the picked folder path. "null" means
-	 * the operation is cancelled.
+	 * This depends on whether the host allows us to open an abitrary folder to
+	 * work or not:
+	 * - If it does not support (e.g. Browser) then this is a
+	 *   fixed string that should be used as the "root" folder's name.
+	 * - If it does support (e.g. OS) then this is a function that opens the
+	 *   native file picker and return the picked path (or "null" if the user
+	 *   cancels it).
 	 */
-	showOpenDialog: () => Promise<string | null>;
+	showOpenDialog: (() => Promise<string | null>) | string;
 	/**
-	 * Open OS's file save dialog and return the chosen path. "null" means the
-	 * operation is cancelled.
+	 * Open OS's file save dialog and return the chosen path. "null" in the
+	 * result means the operation is cancelled.
 	 */
 	showSaveDialog: () => Promise<string | null>;
 }

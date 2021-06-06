@@ -11,6 +11,7 @@
 		"noFallthroughCasesInSwitch": false,
 		"allowJs": false,
 		"allowSyntheticDefaultImports": true,
-		"baseUrl": "./src"
+		"baseUrl": "./src",
+		"strict": true
 	}
 }

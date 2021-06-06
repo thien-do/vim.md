@@ -28,7 +28,10 @@ export const App = (props: Props): JSX.Element => {
 	const toolbarCls = prefs.toolbarVisible ? "" : s.woToolbar;
 	const toolbar = (
 		<>
-			<div className={s.toolbarToggle}>
+			<div
+				className={s.toolbarToggle}
+				style={{ top: 16 + (store.titleBarHeight ?? 0) }}
+			>
 				<ToolbarToggle prefs={prefs} setPrefs={setPrefs} />
 			</div>
 			{prefs.toolbarVisible && (
@@ -69,14 +72,11 @@ export const App = (props: Props): JSX.Element => {
 
 	const prefsPane = prefs.prefsVisible && (
 		<div className={s.prefs}>
-			<PrefsPane
-				prefs={prefs}
-				setPrefs={setPrefs}
-			/>
+			<PrefsPane prefs={prefs} setPrefs={setPrefs} />
 		</div>
 	);
 
-	const title = (
+	const title = store.titleBarHeight !== null && (
 		<div className={s.title}>
 			<Title prefs={prefs} file={file} />
 		</div>

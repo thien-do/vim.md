@@ -6,9 +6,9 @@ import { App } from "./app/app";
 import "./index.css";
 import { Store } from "./store/interface";
 import "./theme/theme";
+import { localStore } from "./store/local";
 
-const store: Store | undefined = (window as any).backend?.store;
-if (store === undefined) throw Error("Store is not defined");
+const store: Store = (window as any).backend?.store ?? localStore;
 
 render(
 	<StrictMode>
