@@ -1,6 +1,6 @@
 import { Button, Pane, Switcher } from "@moai/core";
 import { Layout, PrefsState } from "app/prefs/state/state";
-import { RiFolderLine, RiQuestionLine, RiSettingsLine } from "react-icons/ri";
+import { RiFileListLine, RiQuestionLine, RiSettingsLine } from "react-icons/ri";
 import { ToolbarToggle } from "./toggle/toggle";
 import s from "./toolbar.module.css";
 
@@ -15,7 +15,7 @@ const Left = (props: Props): JSX.Element => (
 		</div>
 		<div className={s.interactive}>
 			<Button
-				icon={RiFolderLine}
+				icon={RiFileListLine}
 				children="Explorer"
 				selected={props.prefs.explorerVisible}
 				onClick={() => {

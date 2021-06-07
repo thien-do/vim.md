@@ -1,4 +1,5 @@
-import { Button, Pane } from "@moai/core";
+import { Button, Pane, ButtonGroup } from "@moai/core";
+import { AiOutlineFileAdd, AiOutlineFolder } from "react-icons/ai";
 import { FileState } from "app/file/file";
 import { Prefs } from "app/prefs/state/state";
 import { PaneHeading } from "components/pane/heading/heading";
@@ -31,10 +32,33 @@ export const Explorer = (props: Props): JSX.Element => {
 	const openFolder = async (): Promise<void> => {
 		const open = props.store.showOpenDialog;
 		if (typeof open === "string")
-			throw Error("Store doesn't support open a folder");
+			throw Error("Store doesn't support opening a folder");
 		const path = await open();
 		if (typeof path === "string") setPath(path);
 	};
+
+	const addNewFile = async (): Promise<void> => {
+		const save = props.store.showSaveDialog;
+		if (typeof open === "string")
+			throw Error("Store doesn't support saving a file");
+		const newPath = await save();
+		if (typeof newPath === "string") {
+			await props.store.write(newPath, "");
+		}
+	}
+
+	const changeFolderButton = <Button
+		style={Button.styles.flat}
+		onClick={openFolder}
+		icon={AiOutlineFolder}
+		iconLabel="Change Folder"
+	/>
+	const addFileButton = <Button
+		style={Button.styles.flat}
+		onClick={addNewFile}
+		icon={AiOutlineFileAdd}
+		iconLabel="New File"
+	/>
 
 	const heading =
 		path === null ? (
@@ -44,11 +68,12 @@ export const Explorer = (props: Props): JSX.Element => {
 				children={pathUtils.getLast(path)}
 				aside={
 					isFixedPath ? null : (
-						<Button
-							style={Button.styles.flat}
-							onClick={openFolder}
-							children="Change…"
-						/>
+						<ButtonGroup>
+							{[
+								{ fill: false, element: addFileButton },
+								{ fill: false, element: changeFolderButton }
+							]}
+						</ButtonGroup>
 					)
 				}
 			/>
