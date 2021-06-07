@@ -1,35 +1,6 @@
-import fs from "fs";
 import { ipcRenderer } from "electron";
-
-interface StoreFile {
-	isDirectory: boolean;
-	name: string;
-}
-
-export interface Store {
-	/**
-	 * Return content of file at @param path
-	 */
-	read: (path: string) => Promise<string>;
-	/**
-	 * Write @param content as file at @param path
-	 */
-	write: (path: string, content: string) => Promise<void>;
-	/**
-	 * List files in the directory at @param path
-	 */
-	list: (path: string) => Promise<StoreFile[]>;
-	/**
-	 * Open OS's folder picker and return the picked folder path. "null" means
-	 * the operation is cancelled.
-	 */
-	showOpenDialog: () => Promise<string | null>;
-	/**
-	 * Open OS's file save dialog and return the chosen path. "null" means the
-	 * operation is cancelled.
-	 */
-	showSaveDialog: () => Promise<string | null>;
-}
+import fs from "fs";
+import { Store } from "./interface";
 
 const read: Store["read"] = async (path) => {
 	let content = fs.readFileSync(path, "utf8");
@@ -71,7 +42,8 @@ const showSaveDialog: Store["showSaveDialog"] = async () => {
 	return filePath ?? null;
 };
 
-export const store: Store = {
+export const localStore: Store = {
+	titleBarHeight: 28,
 	read,
 	write,
 	list,
