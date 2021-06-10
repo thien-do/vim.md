@@ -24,8 +24,8 @@
 		"typescript": "4.3.2"
 	},
 	"build": {
-		"appId": "md.vim.app",
-		"buildVersion": "beta-2",
+		"appId": "md.vim.desktop",
+		"buildVersion": "0.1",
 		"productName": "Vim.md",
 		"copyright": "Copyright © 2021 vim.md",
 		"linux": {
@@ -33,8 +33,17 @@
 			"category": "Development"
 		},
 		"mac": {
+			"type": "distribution",
 			"category": "public.app-category.developer-tools",
-			"target": "dmg"
+			"target": "mas",
+			"provisioningProfile": "./embedded.provisionprofile"
+		},
+		"mas": {
+			"type": "distribution",
+			"category": "public.app-category.developer-tools",
+			"hardenedRuntime": false,
+			"entitlements": "build/entitlements.mas.plist",
+			"entitlementsInherit": "build/entitlements.mas.inherit.plist"
 		},
 		"dmg": {
 			"sign": false
