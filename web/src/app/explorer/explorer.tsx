@@ -4,15 +4,14 @@ import { FileState } from "app/file/file";
 import { Prefs } from "app/prefs/state/state";
 import { PaneHeading } from "components/pane/heading/heading";
 import { useEffect } from "react";
-import { Store } from "store/interface";
 import { pathUtils } from "utils/path";
 import { useStorageState } from "utils/state";
 import s from "./explorer.module.css";
 import { ExplorerTree } from "./tree/tree";
+import { storage as store } from "../../utils/storage";
 
 interface Props extends FileState {
 	prefs: Prefs;
-	store: Store;
 }
 
 const ROOT_PATH_KEY = "vdm-explorer-root-path";
@@ -21,7 +20,7 @@ export const Explorer = (props: Props): JSX.Element => {
 	const [path, setPath] = useStorageState<string>(ROOT_PATH_KEY);
 
 	// See the comment at Store["showOpenDialog"]
-	const open = props.store.showOpenDialog;
+	const open = store.showOpenDialog;
 	const fixedPath: string | null = typeof open === "string" ? open : null;
 	const isFixedPath = typeof fixedPath === "string";
 
@@ -30,7 +29,7 @@ export const Explorer = (props: Props): JSX.Element => {
 	}, [fixedPath, setPath]);
 
 	const openFolder = async (): Promise<void> => {
-		const open = props.store.showOpenDialog;
+		const open = store.showOpenDialog;
 		if (typeof open === "string")
 			throw Error("Store doesn't support opening a folder");
 		const path = await open();
@@ -38,12 +37,12 @@ export const Explorer = (props: Props): JSX.Element => {
 	};
 
 	const addNewFile = async (): Promise<void> => {
-		const save = props.store.showSaveDialog;
+		const save = store.showSaveDialog;
 		if (typeof open === "string")
 			throw Error("Store doesn't support saving a file");
 		const newPath = await save();
 		if (typeof newPath === "string") {
-			await props.store.write(newPath, "");
+			await store.write(newPath, "");
 		}
 	}
 
@@ -88,7 +87,7 @@ export const Explorer = (props: Props): JSX.Element => {
 			<ExplorerTree
 				prefs={props.prefs}
 				rootPath={path}
-				store={props.store}
+				store={store}
 				file={props.file}
 				setFile={props.setFile}
 			/>
