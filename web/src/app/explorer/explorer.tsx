@@ -1,13 +1,11 @@
-import { Button, Pane, ButtonGroup } from "@moai/core";
-import { AiOutlineFileAdd, AiOutlineFolder } from "react-icons/ai";
+import { Pane } from "@moai/core";
 import { FileState } from "app/file/file";
 import { Prefs } from "app/prefs/state/state";
-import { PaneHeading } from "components/pane/heading/heading";
 import { useEffect } from "react";
 import { Store } from "store/interface";
-import { pathUtils } from "utils/path";
 import { useStorageState } from "utils/state";
 import s from "./explorer.module.css";
+import { ExplorerToolbar } from "./toolbar/toolbar";
 import { ExplorerTree } from "./tree/tree";
 
 interface Props extends FileState {
@@ -20,89 +18,32 @@ const ROOT_PATH_KEY = "vdm-explorer-root-path";
 export const Explorer = (props: Props): JSX.Element => {
 	const [path, setPath] = useStorageState<string>(ROOT_PATH_KEY);
 
-	// See the comment at Store["showOpenDialog"]
 	const open = props.store.showOpenDialog;
-	const fixedPath: string | null = typeof open === "string" ? open : null;
-	const isFixedPath = typeof fixedPath === "string";
 
+	// See the comment at Store["showOpenDialog"]
 	useEffect(() => {
+		const fixedPath: string | null = typeof open === "string" ? open : null;
 		if (typeof fixedPath === "string") setPath(fixedPath);
-	}, [fixedPath, setPath]);
+	}, [open, setPath]);
 
-	const openFolder = async (): Promise<void> => {
-		const open = props.store.showOpenDialog;
-		if (typeof open === "string")
-			throw Error("Store doesn't support opening a folder");
-		const path = await open();
-		if (typeof path === "string") setPath(path);
-	};
-
-	const addNewFile = async (): Promise<void> => {
-		const save = props.store.showSaveDialog;
-		if (typeof open === "string")
-			throw Error("Store doesn't support saving a file");
-		const newPath = await save();
-		if (typeof newPath === "string") {
-			await props.store.write(newPath, "");
-		}
-	}
-
-	const changeFolderButton = <Button
-		style={Button.styles.flat}
-		onClick={openFolder}
-		icon={AiOutlineFolder}
-		iconLabel="Change Folder"
-	/>
-	const addFileButton = <Button
-		style={Button.styles.flat}
-		onClick={addNewFile}
-		icon={AiOutlineFileAdd}
-		iconLabel="New File"
-	/>
-
-	const heading =
-		path === null ? (
-			<PaneHeading children="No folder opened" />
-		) : (
-			<PaneHeading
-				children={pathUtils.getLast(path)}
-				aside={
-					isFixedPath ? null : (
-						<ButtonGroup>
-							{[
-								{ fill: false, element: addFileButton },
-								{ fill: false, element: changeFolderButton }
-							]}
-						</ButtonGroup>
-					)
-				}
-			/>
-		);
-
-	const body =
-		path === null ? (
-			<div className={s.empty}>
-				<Button highlight onClick={openFolder} children="Open folder…" />
-			</div>
-		) : (
-			<ExplorerTree
-				prefs={props.prefs}
-				rootPath={path}
-				store={props.store}
-				file={props.file}
-				setFile={props.setFile}
-			/>
-		);
+	const container = (
+		<div className={s.container}>
+			<ExplorerToolbar path={path} setPath={setPath} store={props.store} />
+			{path !== null && (
+				<ExplorerTree
+					prefs={props.prefs}
+					rootPath={path}
+					store={props.store}
+					file={props.file}
+					setFile={props.setFile}
+				/>
+			)}
+		</div>
+	);
 
 	return (
 		<div className={s.wrapper}>
-			<Pane noPadding fullHeight>
-				<div className={s.container}>
-					<div style={{ marginTop: -1 }} />
-					{heading}
-					{body}
-				</div>
-			</Pane>
+			<Pane noPadding fullHeight children={container} />
 		</div>
 	);
 };
