@@ -1,6 +1,7 @@
 import { ipcRenderer } from "electron";
 import fs from "fs";
-import { Store } from "./interface";
+import nodePath from "path";
+import { Store, StoreFile } from "./interface";
 
 const read: Store["read"] = async (path) => {
 	let content = fs.readFileSync(path, "utf8");
@@ -11,13 +12,19 @@ const write: Store["write"] = async (path, content) => {
 	fs.writeFileSync(path, content, "utf8");
 };
 
-const list: Store["list"] = async (path) => {
-	let items = fs.readdirSync(path).map(function (value) {
-		let stat = fs.statSync(path + "/" + value);
-		return {
-			isDirectory: stat.isDirectory(),
-			name: value,
-		};
+const list: Store["list"] = async (path, extensions) => {
+	let files: string[] = fs.readdirSync(path);
+	// Filter by extensions
+	if (extensions !== undefined) {
+		files = files.filter((name): boolean => {
+			return extensions.has(nodePath.extname(name));
+		});
+	}
+	// Convert to our format
+	const items: StoreFile[] = fs.readdirSync(path).map((name) => {
+		const stat = fs.statSync(path + "/" + name);
+		const isDirectory = stat.isDirectory();
+		return { isDirectory, name };
 	});
 	return items;
 };
