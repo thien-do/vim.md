@@ -2,9 +2,9 @@ import { FileState, isGoodToGo } from "app/file/file";
 import { Prefs } from "app/prefs/state/state";
 import { Tree, TreeNode } from "components/tree/tree";
 import { TreeUtils } from "components/tree/utils";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Store, StoreFile } from "store/interface";
-import s from "./tree.module.css";
+import s from "./body.module.css";
 
 interface Props extends FileState {
 	store: Store;
@@ -29,31 +29,24 @@ const getInitialSet = (key: string): Set<string> => {
 	throw Error(`Stored "${key}" is not an array`);
 };
 
-const toTreeNode = (parentPath: string) => (file: StoreFile): TreeNode => ({
-	id: `${parentPath}/${file.name}`,
-	label: file.name,
-	isLeaf: file.isDirectory === false,
-	children: undefined, // Don't know yet
-});
+const toTreeNode =
+	(parentPath: string) =>
+	(file: StoreFile): TreeNode => ({
+		id: `${parentPath}/${file.name}`,
+		label: file.name,
+		isLeaf: file.isDirectory === false,
+		children: undefined, // Don't know yet
+	});
 
-const isMarkdown = (file: StoreFile): boolean =>
-	file.isDirectory || file.name.endsWith("md") || file.name.endsWith("mdx");
+const MARKDOWN_EXTENSIONS: Set<string> = new Set(["md", "mdx"]);
 
-export const ExplorerTree = (props: Props): JSX.Element | null => {
+export const ExplorerBody = (props: Props): JSX.Element | null => {
 	const [rootNode, setRootNode] = useState<null | TreeNode>(null);
 	const [expanded, setExpanded] = useState(() => getInitialSet(EXPANDED_KEY));
 
 	const { rootPath, file, setFile } = props;
-	const { list: _list } = props.store;
+	const { list } = props.store;
 	const { fileType } = props.prefs;
-
-	const list: typeof _list = useCallback(
-		async (path) => {
-			const files = await _list(path);
-			return fileType === "all" ? files : files.filter(isMarkdown);
-		},
-		[_list, fileType]
-	);
 
 	// Save state to localStorage
 	useSetSave(EXPANDED_KEY, expanded);
@@ -62,7 +55,10 @@ export const ExplorerTree = (props: Props): JSX.Element | null => {
 	useEffect(() => {
 		if (rootPath === null) return void setRootNode(null);
 		(async () => {
-			const files = await list(rootPath);
+			const files = await list(
+				rootPath,
+				fileType === "all" ? "all" : MARKDOWN_EXTENSIONS
+			);
 			setRootNode({
 				id: rootPath,
 				label: rootPath.split("/").slice(-1)[0],
@@ -76,17 +72,20 @@ export const ExplorerTree = (props: Props): JSX.Element | null => {
 				return next;
 			});
 		})();
-	}, [rootPath, list, setRootNode]);
+	}, [rootPath, list, setRootNode, fileType]);
 
 	// Load children into a node
 	const loadChildren = async (node: TreeNode): Promise<void> => {
 		if (node.isLeaf === true) throw Error("Current node is a leaf");
 		if (rootNode === null) throw Error("Root node is null");
 		if (node.children !== undefined) return;
-		const files = await list(node.id);
+		const files = await list(
+			node.id,
+			fileType === "all" ? "all" : MARKDOWN_EXTENSIONS
+		);
 		const children = files.map(toTreeNode(node.id));
 		const newRoot = TreeUtils.updateNode({
-			node: rootNode,
+			current: rootNode,
 			id: node.id,
 			key: "children",
 			value: children,

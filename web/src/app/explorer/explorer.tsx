@@ -6,7 +6,7 @@ import { Store } from "store/interface";
 import { useStorageState } from "utils/state";
 import s from "./explorer.module.css";
 import { ExplorerToolbar } from "./toolbar/toolbar";
-import { ExplorerTree } from "./tree/tree";
+import { ExplorerBody } from "./body/body";
 
 interface Props extends FileState {
 	prefs: Prefs;
@@ -17,7 +17,6 @@ const ROOT_PATH_KEY = "vdm-explorer-root-path";
 
 export const Explorer = (props: Props): JSX.Element => {
 	const [path, setPath] = useStorageState<string>(ROOT_PATH_KEY);
-
 	const open = props.store.showOpenDialog;
 
 	// See the comment at Store["showOpenDialog"]
@@ -30,7 +29,7 @@ export const Explorer = (props: Props): JSX.Element => {
 		<div className={s.container}>
 			<ExplorerToolbar path={path} setPath={setPath} store={props.store} />
 			{path !== null && (
-				<ExplorerTree
+				<ExplorerBody
 					prefs={props.prefs}
 					rootPath={path}
 					store={props.store}
