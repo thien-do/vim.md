@@ -13,6 +13,7 @@ interface Props {
 	rootPath: string | null;
 	setRootPath: null | SetState<string | null>;
 	rootNode: TreeNode | null;
+	setRootNode: SetState<TreeNode | null>;
 }
 
 const openFolder = async (props: Props): Promise<void> => {
@@ -31,13 +32,13 @@ const createFile = async (props: Props): Promise<void> => {
 	// Create the file on file system
 	await props.store.write(path, "");
 	// Add the file to our explorer
-	debugger;
 	const current = props.rootNode;
 	if (current === null) throw Error("No folder is opened");
-	const { extension, directory, name } = pathUtils.splitPath(path);
-	const label = `${name}.${extension}`;
-	const target: TreeNode = { id: path, label, isLeaf: false };
-	addTreeChild({ current, parentId: directory, target });
+	const { fullName, directory } = pathUtils.splitPath(path);
+	const [label, parentId] = [fullName, directory];
+	const target: TreeNode = { id: path, label, isLeaf: true };
+	const rootNode = addTreeChild({ current, parentId, target });
+	props.setRootNode(rootNode);
 };
 
 const Aside = (props: Props): JSX.Element => (

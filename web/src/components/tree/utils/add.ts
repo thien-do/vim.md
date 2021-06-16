@@ -15,6 +15,9 @@ interface Params {
 	target: TreeNode;
 }
 
+const compareNode = (a: TreeNode, b: TreeNode): number =>
+	a.id.localeCompare(b.id);
+
 const handleParent = ({ current, target }: Params): TreeNode => {
 	// Can't add to leaf
 	if (isTreeLeaf(current)) throw Error(ERRORS.addToLeaf(current.id));
@@ -24,6 +27,7 @@ const handleParent = ({ current, target }: Params): TreeNode => {
 	if (current.children === undefined) return { ...current };
 	// Branch is expanded
 	const children = [...current.children, target];
+	children.sort(compareNode);
 	return { ...current, children };
 };
 
@@ -40,13 +44,14 @@ const handleGrandParent = ({ current, target, parentId }: Params): TreeNode => {
 		return addTreeChild({ current: child, parentId, target });
 	});
 	const olds = new Set(current.children); // Performance optimize
-	const handled = children.every((child) => olds.has(child));
+	const handled = children.some((child) => olds.has(child) === false);
 
 	// None of the existing children handled us
 	if (handled === false) {
 		const label = pathUtils.oneStepCloser(parentId, current.id);
 		const id = `${current.id}/${label}`;
 		children.push({ id, label, children: [], isLeaf: false });
+		children.sort(compareNode);
 	}
 	return { ...current, children };
 };

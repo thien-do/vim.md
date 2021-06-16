@@ -3,7 +3,7 @@
  * output: {
  *   directory: "a/b/c/d",
  *   name: "e",
- *   extension: "txt",
+ *   extension: ".txt",
  *   fullName: "e.txt"
  * }
  */
@@ -15,12 +15,17 @@ const splitPath = (
 	fullName: string;
 	extension: string;
 } => {
-	const lastDot = path.lastIndexOf(".");
-	const extension = path.slice(lastDot + 1);
 	const lastSlash = path.lastIndexOf("/");
-	const name = path.slice(lastSlash + 1, lastDot);
 	const fullName = path.slice(lastSlash + 1);
 	const directory = path.slice(0, lastSlash);
+
+	const lastDot = path.lastIndexOf(".");
+	const noExt = lastDot === -1 || lastDot < lastSlash;
+	const extension = noExt ? "" : path.slice(lastDot);
+	const name = noExt
+		? fullName
+		: fullName.slice(0, fullName.lastIndexOf(extension));
+
 	return { extension, name, directory, fullName };
 };
 

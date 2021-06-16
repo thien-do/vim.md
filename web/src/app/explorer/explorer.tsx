@@ -21,6 +21,7 @@ export const Explorer = (props: Props): JSX.Element => {
 		<div className={s.container}>
 			<ExplorerToolbar
 				rootNode={root.node}
+				setRootNode={root.setNode}
 				rootPath={root.path}
 				setRootPath={root.setPath}
 				store={props.store}
