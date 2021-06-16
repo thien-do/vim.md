@@ -50,7 +50,9 @@ const handleGrandParent = ({ current, target, parentId }: Params): TreeNode => {
 	if (handled === false) {
 		const label = pathUtils.oneStepCloser(parentId, current.id);
 		const id = `${current.id}/${label}`;
-		children.push({ id, label, children: [], isLeaf: false });
+		let parent: TreeNode = { id, label, children: [], isLeaf: false };
+		parent = addTreeChild({ current: parent, parentId, target });
+		children.push(parent);
 		children.sort(compareNode);
 	}
 	return { ...current, children };
