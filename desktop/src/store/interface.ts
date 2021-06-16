@@ -23,9 +23,10 @@ export interface Store {
 	 */
 	write: (path: string, content: string) => Promise<void>;
 	/**
-	 * List files in the directory at @param path
+	 * List files in the directory at @param path, filter only files with
+	 * @param extensions. If "all" is provided then return all files.
 	 */
-	list: (path: string) => Promise<StoreFile[]>;
+	list: (path: string, extensions: "all" | Set<string>) => Promise<StoreFile[]>;
 	/**
 	 * This depends on whether the host allows us to open an abitrary folder to
 	 * work or not:

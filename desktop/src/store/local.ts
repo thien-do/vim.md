@@ -1,25 +1,35 @@
 import { ipcRenderer } from "electron";
-import fs from "fs";
-import { Store } from "./interface";
+import fs from "fs/promises";
+import nodePath from "path";
+import { Store, StoreFile } from "./interface";
 
 const read: Store["read"] = async (path) => {
-	let content = fs.readFileSync(path, "utf8");
+	let content = await fs.readFile(path, "utf8");
 	return content;
 };
 
 const write: Store["write"] = async (path, content) => {
-	fs.writeFileSync(path, content, "utf8");
+	await fs.writeFile(path, content, "utf8");
 };
 
-const list: Store["list"] = async (path) => {
-	let items = fs.readdirSync(path).map(function (value) {
-		let stat = fs.statSync(path + "/" + value);
-		return {
-			isDirectory: stat.isDirectory(),
-			name: value,
-		};
+const list: Store["list"] = async (path, extensions) => {
+	const names = await fs.readdir(path);
+	// Convert to our format
+	const files: StoreFile[] = await Promise.all(
+		names.map(async (name) => {
+			const stat = await fs.stat(path + "/" + name);
+			const isDirectory = stat.isDirectory();
+			return { isDirectory, name };
+		})
+	);
+	// Filter by extensions (after converting so we know if it's a folder)
+	if (extensions === "all") return files;
+	const filtered = files.filter((file): boolean => {
+		if (file.isDirectory) return true;
+		const extension = nodePath.extname(file.name).replace(".", "")
+		return extensions.has(extension);
 	});
-	return items;
+	return filtered;
 };
 
 const showOpenDialog: Store["showOpenDialog"] = async () => {

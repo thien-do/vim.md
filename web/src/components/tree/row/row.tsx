@@ -1,6 +1,7 @@
 import { Button } from "@moai/core";
 import { RiArrowDownSLine, RiArrowRightSLine } from "react-icons/ri";
-import { TreeNode, TreeProps } from "../tree";
+import { TreeProps } from "../tree";
+import { isTreeLeaf } from "../utils/leaf";
 import s from "./row.module.css";
 
 interface Props extends TreeProps {}
@@ -9,14 +10,6 @@ interface Props extends TreeProps {}
 const Tab = () => (
 	<div className={[Button.sizes.smallIcon.main, s.tab].join(" ")} />
 );
-
-const getIsLeaf = (node: TreeNode): boolean => {
-	if (node.isLeaf === undefined) {
-		return node.children === undefined; // Sync
-	} else {
-		return node.isLeaf; // Async
-	}
-};
 
 const toggle = async (props: Props): Promise<void> => {
 	const expanded = new Set(props.expanded);
@@ -31,7 +24,7 @@ const toggle = async (props: Props): Promise<void> => {
 export const TreeItem = (props: Props): JSX.Element => {
 	const expanded = props.expanded.has(props.node.id);
 	const selected = props.selected.has(props.node.id);
-	const isLeaf = getIsLeaf(props.node);
+	const isLeaf = isTreeLeaf(props.node);
 	return (
 		<div
 			className={[

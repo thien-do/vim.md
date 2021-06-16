@@ -1,83 +1,47 @@
-import { Button, Pane } from "@moai/core";
+import { Pane } from "@moai/core";
 import { FileState } from "app/file/file";
 import { Prefs } from "app/prefs/state/state";
-import { PaneHeading } from "components/pane/heading/heading";
-import { useEffect } from "react";
 import { Store } from "store/interface";
-import { pathUtils } from "utils/path";
-import { useStorageState } from "utils/state";
+import { ExplorerBody } from "./body/body";
 import s from "./explorer.module.css";
-import { ExplorerTree } from "./tree/tree";
+import { useExplorerRoot } from "./root";
+import { ExplorerToolbar } from "./toolbar/toolbar";
 
 interface Props extends FileState {
 	prefs: Prefs;
 	store: Store;
 }
 
-const ROOT_PATH_KEY = "vdm-explorer-root-path";
-
 export const Explorer = (props: Props): JSX.Element => {
-	const [path, setPath] = useStorageState<string>(ROOT_PATH_KEY);
+	const { prefs, store } = props;
 
-	// See the comment at Store["showOpenDialog"]
-	const open = props.store.showOpenDialog;
-	const fixedPath: string | null = typeof open === "string" ? open : null;
-	const isFixedPath = typeof fixedPath === "string";
+	const root = useExplorerRoot({ prefs, store });
 
-	useEffect(() => {
-		if (typeof fixedPath === "string") setPath(fixedPath);
-	}, [fixedPath, setPath]);
-
-	const openFolder = async (): Promise<void> => {
-		const open = props.store.showOpenDialog;
-		if (typeof open === "string")
-			throw Error("Store doesn't support open a folder");
-		const path = await open();
-		if (typeof path === "string") setPath(path);
-	};
-
-	const heading =
-		path === null ? (
-			<PaneHeading children="No folder opened" />
-		) : (
-			<PaneHeading
-				children={pathUtils.getLast(path)}
-				aside={
-					isFixedPath ? null : (
-						<Button
-							style={Button.styles.flat}
-							onClick={openFolder}
-							children="Change…"
-						/>
-					)
-				}
-			/>
-		);
-
-	const body =
-		path === null ? (
-			<div className={s.empty}>
-				<Button highlight onClick={openFolder} children="Open folder…" />
-			</div>
-		) : (
-			<ExplorerTree
-				prefs={props.prefs}
-				rootPath={path}
+	const container = (
+		<div className={s.container}>
+			<ExplorerToolbar
+				rootNode={root.node}
+				setRootNode={root.setNode}
+				rootPath={root.path}
+				setRootPath={root.setPath}
 				store={props.store}
-				file={props.file}
-				setFile={props.setFile}
 			/>
-		);
+			{root.node !== null && (
+				<ExplorerBody
+					prefs={props.prefs}
+					store={props.store}
+					file={props.file}
+					setFile={props.setFile}
+					rootNode={root.node}
+					setRootNode={root.setNode}
+				/>
+			)}
+		</div>
+	);
 
 	return (
 		<div className={s.wrapper}>
-			<Pane noPadding fullHeight>
-				<div className={s.container}>
-					<div style={{ marginTop: -1 }} />
-					{heading}
-					{body}
-				</div>
-			</Pane>
+			<Pane noPadding fullHeight children={container} />
 		</div>
 	);
 };
