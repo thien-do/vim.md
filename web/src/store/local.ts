@@ -8,7 +8,12 @@ const toFile = (key: string): StoreFile => ({
 	name: key.replace("docs/root/", ""),
 });
 
-const list: Store["list"] = async () => {
+// for localstorage, we would list all found documents, not filter by extension
+// at all
+const list: Store["list"] = async (path, _extensions) => {
+	// This is just a sanity check to improve our code
+	if (path !== "root")
+		throw Error('Path must always be "root" in case of local storage');
 	const keys = Object.keys(window.localStorage);
 	const files = keys.filter(isFile).map(toFile);
 	return files;
@@ -27,7 +32,7 @@ const write: Store["write"] = async (path, content) => {
 
 const showSaveDialog: Store["showSaveDialog"] = async () => {
 	const name = await Dialog.prompt("Enter a name to save");
-	const path = `root/${name}`
+	const path = `root/${name}`;
 	return path;
 };
 
