@@ -1,5 +1,7 @@
 import { Button } from "@moai/core";
 import { PaneHeading } from "components/pane/heading/heading";
+import { TreeNode } from "components/tree/tree";
+import { addTreeChild } from "components/tree/utils/add";
 import { RiFileAddLine, RiFolderLine } from "react-icons/ri";
 import { Store } from "store/interface";
 import { pathUtils } from "utils/path";
@@ -8,27 +10,39 @@ import s from "./toolbar.module.css";
 
 interface Props {
 	store: Store;
-	path: string | null;
-	setPath: SetState<string | null>;
+	rootPath: string | null;
+	setRootPath: null | SetState<string | null>;
+	rootNode: TreeNode | null;
 }
 
 const openFolder = async (props: Props): Promise<void> => {
-	const open = props.store.showOpenDialog;
-	if (typeof open === "string")
+	if (typeof props.store.showOpenDialog === "string")
 		throw Error("Store doesn't support opening a folder");
-	const path = await open();
-	if (typeof path === "string") props.setPath(path);
+	const path = await props.store.showOpenDialog();
+	if (path === null) return; // Cancel
+	if (props.setRootPath === null)
+		throw Error("setRootPath is null because of fixed root mode");
+	props.setRootPath(path);
 };
 
 const createFile = async (props: Props): Promise<void> => {
 	const path = await props.store.showSaveDialog();
 	if (path === null) return;
+	// Create the file on file system
 	await props.store.write(path, "");
+	// Add the file to our explorer
+	debugger;
+	const current = props.rootNode;
+	if (current === null) throw Error("No folder is opened");
+	const { extension, directory, name } = pathUtils.splitPath(path);
+	const label = `${name}.${extension}`;
+	const target: TreeNode = { id: path, label, isLeaf: false };
+	addTreeChild({ current, parentId: directory, target });
 };
 
 const Aside = (props: Props): JSX.Element => (
 	<div className={s.aside}>
-		{props.path !== null && (
+		{props.rootPath !== null && (
 			<Button
 				style={Button.styles.flat}
 				onClick={() => createFile(props)}
@@ -36,7 +50,7 @@ const Aside = (props: Props): JSX.Element => (
 				iconLabel="New File"
 			/>
 		)}
-		{typeof props.store.showOpenDialog !== "string" && (
+		{props.setRootPath !== null && (
 			<Button
 				style={Button.styles.flat}
 				onClick={() => openFolder(props)}
@@ -49,6 +63,8 @@ const Aside = (props: Props): JSX.Element => (
 
 export const ExplorerToolbar = (props: Props): JSX.Element => (
 	<PaneHeading aside={<Aside {...props} />}>
-		{props.path === null ? "No folder opened" : pathUtils.getLast(props.path)}
+		{props.rootPath === null
+			? "No folder opened"
+			: pathUtils.splitPath(props.rootPath).fullName}
 	</PaneHeading>
 );

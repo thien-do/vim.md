@@ -10,7 +10,9 @@ interface Props {
 }
 
 const getTitle = (file: File): string => {
-	const title = file.path ? pathUtils.getLast(file.path) : "Untitled";
+	const title = file.path
+		? pathUtils.splitPath(file.path).fullName
+		: "Untitled";
 	const unsaved = file === null || file.saved === false;
 	const prefix = unsaved ? "• " : "";
 	return `${prefix}${title}`;

@@ -19,7 +19,8 @@ export const useFileWrite = (props: FileProps): void => {
 			await write(path, cm.getValue());
 			// This also updates the path in case of new file
 			setFile({ path, saved: true });
-			toast(toast.types.success, `Saved at ${pathUtils.getLast(path)}`);
+			const name = pathUtils.splitPath(path).fullName;
+			toast(toast.types.success, `Saved at ${name}`);
 		};
 
 		const quit = () => void setFile({ path: null, saved: true });
