@@ -25,8 +25,11 @@ export const useExplorerRoot = (params: Params): State => {
 	const open = store.showOpenDialog;
 	const fixedPath = typeof open === "string" ? open : null;
 
-	const [path, setPath] = useStorageState<string>(STORAGE_PATH_KEY);
+	const [_path, _setPath] = useStorageState<string>(STORAGE_PATH_KEY);
 	const [node, setNode] = useState<null | TreeNode>(null);
+
+	const path = fixedPath ?? _path;
+	const setPath = fixedPath ? null : _setPath;
 
 	// Reset node when path is changed
 	const [{ list }, { fileType }] = [store, prefs];
@@ -38,10 +41,5 @@ export const useExplorerRoot = (params: Params): State => {
 		});
 	}, [path, list, setNode, fileType]);
 
-	return {
-		path: fixedPath ?? path,
-		setPath: fixedPath ? null : setPath,
-		node,
-		setNode,
-	};
+	return { path, setPath, node, setNode };
 };

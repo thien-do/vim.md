@@ -31,7 +31,12 @@ const write: Store["write"] = async (path, content) => {
 };
 
 const showSaveDialog: Store["showSaveDialog"] = async () => {
-	const name = await Dialog.prompt("Enter a name to save");
+	const name = await Dialog.prompt(
+		<>
+			<Dialog.Title>ahihi</Dialog.Title>
+			"Enter a name to save"
+		</>
+	);
 	const path = `root/${name}`;
 	return path;
 };
