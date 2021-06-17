@@ -1,6 +1,5 @@
 import { scrollbar } from "@moai/core";
 import { useState } from "react";
-import { Store } from "store/interface";
 import s from "./app.module.css";
 import { EditorPane, Editor } from "./editor/editor";
 import { Explorer } from "./explorer/explorer";
@@ -11,13 +10,9 @@ import { Preview } from "./preview/preview";
 import { ToolbarToggle } from "./toolbar/toggle/toggle";
 import { Toolbar } from "./toolbar/toolbar";
 import { Title } from "./title/title";
+import { backend } from "backend/backend";
 
-interface Props {
-	store: Store;
-}
-
-export const App = (props: Props): JSX.Element => {
-	const { store } = props;
+export const App = (): JSX.Element => {
 
 	// State
 	const [editor, setEditor] = useState<Editor>(null);

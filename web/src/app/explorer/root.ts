@@ -1,13 +1,12 @@
 import { Prefs } from "app/prefs/state/state";
+import { Backend } from "backend/interface";
 import { TreeNode } from "components/tree/tree";
 import { useEffect, useState } from "react";
-import { Store } from "store/interface";
-import { pathUtils } from "utils/path";
 import { SetState, useStorageState } from "utils/state";
 import { listFilesAsNodes } from "./file";
 
 interface Params {
-	store: Store;
+	backend: Backend;
 	prefs: Prefs;
 }
 
@@ -21,8 +20,8 @@ interface State {
 const STORAGE_PATH_KEY = "vdm-explorer-root-path";
 
 export const useExplorerRoot = (params: Params): State => {
-	const { store, prefs } = params;
-	const open = store.showOpenDialog;
+	const { backend, prefs } = params;
+	const open = backend.storage.showOpenDialog;
 	const fixedPath = typeof open === "string" ? open : null;
 
 	const [_path, _setPath] = useStorageState<string>(STORAGE_PATH_KEY);
@@ -32,14 +31,16 @@ export const useExplorerRoot = (params: Params): State => {
 	const setPath = fixedPath ? null : _setPath;
 
 	// Reset node when path is changed
-	const [{ list }, { fileType }] = [store, prefs];
+	const list = backend.storage.list;
+	const fileType = prefs.fileType;
+	const parse = backend.path.parse;
 	useEffect(() => {
 		if (path === null) return void setNode(null);
 		listFilesAsNodes({ path, fileType, list }).then((children) => {
-			const label = pathUtils.splitPath(path).fullName;
+			const label = parse(path).name;
 			setNode({ id: path, label, children, isLeaf: false });
 		});
-	}, [path, list, setNode, fileType]);
+	}, [path, parse, list, setNode, fileType]);
 
 	return { path, setPath, node, setNode };
 };
