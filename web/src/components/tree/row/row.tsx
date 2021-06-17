@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@moai/core";
 import { RiArrowDownSLine, RiArrowRightSLine, RiMoreFill } from "react-icons/ri";
 import { TreeProps } from "../tree";
@@ -22,6 +23,7 @@ const toggle = async (props: Props): Promise<void> => {
 };
 
 export const TreeItem = (props: Props): JSX.Element => {
+	const [isMouseOn, setMouseOn] = useState<boolean>(false);
 	const expanded = props.expanded.has(props.node.id);
 	const selected = props.selected.has(props.node.id);
 	const isLeaf = isTreeLeaf(props.node);
@@ -40,6 +42,8 @@ export const TreeItem = (props: Props): JSX.Element => {
 					toggle(props);
 				}
 			}}
+			onMouseEnter={() => setMouseOn(true)}
+			onMouseLeave={() => setMouseOn(false)}
 		>
 			{[...Array(props.level ?? 0)].map((_v, i) => (
 				<Tab key={i} />
@@ -58,7 +62,7 @@ export const TreeItem = (props: Props): JSX.Element => {
 				)}
 			</div>
 			<div className={s.label}>{props.node.label}</div>
-			{isLeaf &&
+			{isLeaf && isMouseOn &&
 				<div className={s.action}>
 					<Button
 						icon={RiMoreFill}
