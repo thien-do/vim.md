@@ -6,7 +6,7 @@ import { FileProps } from "./file";
  */
 export const useFileRead = (props: FileProps): void => {
 	const { file, setFile, editor } = props;
-	const { read } = props.store;
+	const { read } = props.backend.storage;
 
 	const path = file?.path ?? null;
 	useEffect(() => {

@@ -1,21 +1,21 @@
 import { ipcRenderer } from "electron";
 import fs from "fs/promises";
 import nodePath from "path";
-import { Store, StoreFile } from "./interface";
+import { BackendFile, BackendStorage } from "./interface";
 
-const read: Store["read"] = async (path) => {
+const read: BackendStorage["read"] = async (path) => {
 	let content = await fs.readFile(path, "utf8");
 	return content;
 };
 
-const write: Store["write"] = async (path, content) => {
+const write: BackendStorage["write"] = async (path, content) => {
 	await fs.writeFile(path, content, "utf8");
 };
 
-const list: Store["list"] = async (path, extensions) => {
+const list: BackendStorage["list"] = async (path, extensions) => {
 	const names = await fs.readdir(path);
 	// Convert to our format
-	const files: StoreFile[] = await Promise.all(
+	const files: BackendFile[] = await Promise.all(
 		names.map(async (name) => {
 			const stat = await fs.stat(path + "/" + name);
 			const isDirectory = stat.isDirectory();
@@ -26,13 +26,13 @@ const list: Store["list"] = async (path, extensions) => {
 	if (extensions === "all") return files;
 	const filtered = files.filter((file): boolean => {
 		if (file.isDirectory) return true;
-		const extension = nodePath.extname(file.name).replace(".", "")
+		const extension = nodePath.extname(file.name).replace(".", "");
 		return extensions.has(extension);
 	});
 	return filtered;
 };
 
-const showOpenDialog: Store["showOpenDialog"] = async () => {
+const showOpenDialog: BackendStorage["showOpenDialog"] = async () => {
 	const { canceled, filePaths } = await ipcRenderer.invoke("showOpenDialog", {
 		properties: ["openDirectory", "createDirectory"],
 	});
@@ -40,7 +40,7 @@ const showOpenDialog: Store["showOpenDialog"] = async () => {
 	return filePaths[0] ?? null;
 };
 
-const showSaveDialog: Store["showSaveDialog"] = async () => {
+const showSaveDialog: BackendStorage["showSaveDialog"] = async () => {
 	const { canceled, filePath } = await ipcRenderer.invoke("showSaveDialog", {
 		properties: [
 			"createDirectory",
@@ -52,8 +52,8 @@ const showSaveDialog: Store["showSaveDialog"] = async () => {
 	return filePath ?? null;
 };
 
-export const localStore: Store = {
-	titleBarHeight: 28,
+export const localBackendStorage: BackendStorage = {
+	// titleBarHeight: 28,
 	read,
 	write,
 	list,

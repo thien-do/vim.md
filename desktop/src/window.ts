@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcRenderer, Rectangle } from "electron";
+import { BrowserWindow, Rectangle } from "electron";
 import Store from "electron-store";
 import path from "path";
 

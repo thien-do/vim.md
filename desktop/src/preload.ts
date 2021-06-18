@@ -1,9 +1,9 @@
 import { contextBridge, ipcRenderer } from "electron";
-import { localStore } from "./store/local";
+import { localBackend } from "./backend/local";
 
 process.once("loaded", () => {
 	contextBridge.exposeInMainWorld("backend", {
-		store: localStore,
+		backend: localBackend,
 		winClose: async () => {
 			await ipcRenderer.invoke("winClose");
 		},

@@ -1,73 +1,44 @@
-import { pathUtils } from "utils/path";
 import { TreeNode } from "../tree";
 import { isTreeLeaf } from "./leaf";
 
-const ERRORS = {
-	addToLeaf: (id: string) =>
-		`"${id}" is a leaf. It should be a branch to receive new node.`,
-	parentIsLeaf: (id: string) =>
-		`"${id}" is a leaf. It should be a branch to go further.`,
-};
-
 interface Params {
-	current: TreeNode;
-	parentId: string;
-	target: TreeNode;
+	/** Start from here */
+	node: TreeNode;
+	/** Id of the parent node to add to */
+	id: string;
+	/** The new node to be added */
+	addNode: TreeNode;
+	/** If set, sort the "children" of "id" after add node */
+	sort: boolean;
 }
 
 const compareNode = (a: TreeNode, b: TreeNode): number =>
 	a.id.localeCompare(b.id);
 
-const handleParent = ({ current, target }: Params): TreeNode => {
-	// Can't add to leaf
-	if (isTreeLeaf(current)) throw Error(ERRORS.addToLeaf(current.id));
-	// Branch is not expanded. We intentionally return a clone here to
-	// indicate that we did handle but choose to skip it, to avoid the
-	// parent creating new child
-	if (current.children === undefined) return { ...current };
-	// Branch is expanded
-	const children = [...current.children, target];
-	children.sort(compareNode);
-	return { ...current, children };
-};
-
-const handleGrandParent = ({ current, target, parentId }: Params): TreeNode => {
-	// Can't go further if it's a leaf
-	if (isTreeLeaf(current)) throw Error(ERRORS.parentIsLeaf(current.id));
-	// Branch is not expanded. We intentionally return a clone here to
-	// indicate that we did handle but choose to skip it, to avoid the
-	// parent creating new child
-	if (current.children === undefined) return { ...current };
-
-	// Try with existing children
-	const children = current.children.map((child) => {
-		return addTreeChild({ current: child, parentId, target });
-	});
-	const olds = new Set(current.children); // Performance optimize
-	const handled = children.some((child) => olds.has(child) === false);
-
-	// None of the existing children handled us
-	if (handled === false) {
-		const label = pathUtils.oneStepCloser(parentId, current.id);
-		const id = `${current.id}/${label}`;
-		let parent: TreeNode = { id, label, children: [], isLeaf: false };
-		parent = addTreeChild({ current: parent, parentId, target });
-		children.push(parent);
-		children.sort(compareNode);
-	}
-	return { ...current, children };
-};
-
 /**
- * Add a "node" as children of "parent", starting from "current", recursively.
+ * Add a node in the tree.
+ *
+ * - If "id" is leaf: throws error
+ * - If "id" does not exist: throws error
+ * - If "id" is not loaded (false isLeaf and undefined children): skip
+ *
+ * This is a naive implementation that simply traverses all nodes O(n) to
+ * check for "id". If your "id"s can represent the path, use the optimized
+ * version which can skip branches O(logN).
  */
-export const addTreeChild = (params: Params): TreeNode => {
-	const { current, parentId } = params;
-	if (current.id === parentId) {
-		return handleParent(params);
-	} else if (parentId.startsWith(current.id)) {
-		return handleGrandParent(params);
+export const addTreeNode = ({ node, id, addNode, sort }: Params): TreeNode => {
+	if (node.id === id) {
+		if (isTreeLeaf(node)) throw Error("Cannot add node to a leaf");
+		if (node.children === undefined) return node; // Skip as not loaded
+		const children: TreeNode[] = [...node.children, addNode];
+		if (sort) children.sort(compareNode);
+		return { ...node, children };
 	} else {
-		return current;
+		if (isTreeLeaf(node)) return node;
+		if (node.children === undefined) return node; // Skip as not loaded
+		const children = node.children.map((child) => {
+			return addTreeNode({ node: child, id, addNode, sort });
+		});
+		return { ...node, children };
 	}
 };
