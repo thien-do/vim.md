@@ -1,5 +1,5 @@
-import { BackendStorage, BackendFile } from "./interface";
-import { Dialog, Paragraph } from "@moai/core";
+import { Dialog } from "@moai/core";
+import { BackendFile, BackendStorage } from "./interface";
 
 const isFile = (key: string): boolean => key.startsWith("docs/root");
 
