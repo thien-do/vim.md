@@ -1,7 +1,7 @@
 import { ipcRenderer } from "electron";
 import fs from "fs/promises";
 import nodePath from "path";
-import { BackendFile, BackendStorage } from "../interface";
+import { BackendFile, BackendStorage } from "./interface";
 
 const read: BackendStorage["read"] = async (path) => {
 	let content = await fs.readFile(path, "utf8");

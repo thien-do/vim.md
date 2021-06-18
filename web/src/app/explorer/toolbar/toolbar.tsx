@@ -2,7 +2,7 @@ import { Button } from "@moai/core";
 import { Backend } from "backend/interface";
 import { PaneHeading } from "components/pane/heading/heading";
 import { TreeNode } from "components/tree/tree";
-import { addTreeChild } from "components/tree/utils/add";
+import { addFileToTree } from "./add";
 import { RiFileAddLine, RiFolderLine } from "react-icons/ri";
 import { SetState } from "utils/state";
 import s from "./toolbar.module.css";
@@ -37,9 +37,8 @@ const createFile = async (props: Props): Promise<void> => {
 	// Add the file to our explorer
 	const current = props.rootNode;
 	if (current === null) throw Error("No folder is opened");
-	const { base: label, dir: parentId } = backend.path.parse(path);
-	const target: TreeNode = { id: path, label, isLeaf: true };
-	const rootNode = addTreeChild({ current, parentId, target });
+	const pathUtils = backend.path;
+	const rootNode = addFileToTree({ node: current, path, pathUtils });
 	props.setRootNode(rootNode);
 };
 

@@ -2,14 +2,14 @@ import { toast } from "@moai/core";
 import { CodeMirrorUtils } from "app/editor/codemirror/codemirror";
 import { FileProps, isGoodToGo } from "app/file/file";
 import { useEffect } from "react";
-import { pathUtils } from "utils/path";
 
 /**
  * Write editor content into file
  */
 export const useFileWrite = (props: FileProps): void => {
 	const { file, setFile } = props;
-	const { write, showSaveDialog } = props.store;
+	const { write, showSaveDialog } = props.backend.storage;
+	const { parse } = props.backend.path;
 
 	useEffect(() => {
 		const save = async (cm: CodeMirror.Editor) => {
@@ -19,7 +19,7 @@ export const useFileWrite = (props: FileProps): void => {
 			await write(path, cm.getValue());
 			// This also updates the path in case of new file
 			setFile({ path, saved: true });
-			const name = pathUtils.splitPath(path).fullName;
+			const name = parse(path).base;
 			toast(toast.types.success, `Saved at ${name}`);
 		};
 
@@ -33,5 +33,5 @@ export const useFileWrite = (props: FileProps): void => {
 			await save(cm);
 			quit();
 		});
-	}, [file, write, setFile, showSaveDialog]);
+	}, [file, write, setFile, parse, showSaveDialog]);
 };
