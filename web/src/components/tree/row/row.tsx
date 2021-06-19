@@ -27,6 +27,7 @@ export const TreeItem = (props: Props): JSX.Element => {
 	const expanded = props.expanded.has(props.node.id);
 	const selected = props.selected.has(props.node.id);
 	const isLeaf = isTreeLeaf(props.node);
+	const shouldShowHoverAction = selected || (isLeaf && isMouseOn);
 	return (
 		<div
 			className={[
@@ -62,7 +63,7 @@ export const TreeItem = (props: Props): JSX.Element => {
 				)}
 			</div>
 			<div className={s.label}>{props.node.label}</div>
-			{isLeaf && isMouseOn &&
+			{shouldShowHoverAction &&
 				<div className={s.action}>
 					<Button
 						icon={RiMoreFill}
