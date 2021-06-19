@@ -1,11 +1,14 @@
-import { useState } from "react";
-import { Button } from "@moai/core";
+import React, { useState } from "react";
+import { Button, Popover, Menu } from "@moai/core";
 import { RiArrowDownSLine, RiArrowRightSLine, RiMoreFill } from "react-icons/ri";
 import { TreeProps } from "../tree";
 import { isTreeLeaf } from "../utils/leaf";
 import s from "./row.module.css";
 
 interface Props extends TreeProps { }
+interface ActionBarProps {
+	onClickDelete?: (e?: React.MouseEvent | undefined) => void;
+}
 
 // For indentation, like in source code
 const Tab = () => (
@@ -22,12 +25,50 @@ const toggle = async (props: Props): Promise<void> => {
 	props.setExpanded(expanded);
 };
 
+const ActionBar = (props: ActionBarProps) => {
+	let popoverInst: any;
+	return (
+		<div className={s.action}>
+			<Popover
+				target={(popover) => {
+					popoverInst = popover;
+					return <Button
+						onClick={(e) => {
+							e.stopPropagation();
+							popover.toggle()
+						}}
+						selected={popover.opened}
+						icon={RiMoreFill}
+						iconLabel="More"
+						style={Button.styles.flat}
+						size={Button.sizes.smallIcon}
+					/>
+				}}
+				placement="bottom-start"
+				content={() => <Menu items={[
+					{
+						label: "Delete", fn: () => {
+							popoverInst.toggle();
+							props.onClickDelete?.()
+						}
+					}
+				]} />}
+			/>
+		</div>
+	)
+}
+
 export const TreeItem = (props: Props): JSX.Element => {
 	const [isMouseOn, setMouseOn] = useState<boolean>(false);
 	const expanded = props.expanded.has(props.node.id);
 	const selected = props.selected.has(props.node.id);
 	const isLeaf = isTreeLeaf(props.node);
 	const shouldShowHoverAction = selected || (isLeaf && isMouseOn);
+
+	const onClickDelete = (e: React.MouseEvent | undefined) => {
+		// use delete function from backend
+	}
+
 	return (
 		<div
 			className={[
@@ -63,16 +104,7 @@ export const TreeItem = (props: Props): JSX.Element => {
 				)}
 			</div>
 			<div className={s.label}>{props.node.label}</div>
-			{shouldShowHoverAction &&
-				<div className={s.action}>
-					<Button
-						icon={RiMoreFill}
-						iconLabel="More"
-						style={Button.styles.flat}
-						size={Button.sizes.smallIcon}
-					/>
-				</div>
-			}
+			{shouldShowHoverAction && <ActionBar onClickDelete={onClickDelete} />}
 		</div>
 	);
 };
