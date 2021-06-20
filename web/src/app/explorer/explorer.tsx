@@ -1,4 +1,4 @@
-import { Pane } from "@moai/core";
+import { Pane, Dialog } from "@moai/core";
 import { FileState } from "app/file/file";
 import { Prefs } from "app/prefs/state/state";
 import { Store } from "store/interface";
@@ -20,13 +20,17 @@ export const Explorer = (props: Props): JSX.Element => {
 	
 	const removeFile = async (path: string | null): Promise<void> => {
 		if (!path) return;
-		try {	
-			// Remove file from file system
-			await props.store.remove(path);
-			// Remove file in our explorere
-			root.setNode(removeTreeNode({ current: root.node as TreeNode, id: path }));
+		try {
+			const yes = await Dialog.confirm("Do you want to delete this file?");
+			if (yes) {
+				// Remove file from file system
+				await props.store.remove(path);
+				// Remove file in our explorere
+				root.setNode(removeTreeNode({ current: root.node as TreeNode, id: path }))
+				// TODO: Reset editor
+			};
 		} catch (error) {
-
+			Dialog.alert("Error while deleting file!")
 		}
 	}
 
