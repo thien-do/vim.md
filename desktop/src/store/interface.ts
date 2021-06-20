@@ -23,6 +23,10 @@ export interface Store {
 	 */
 	write: (path: string, content: string) => Promise<void>;
 	/**
+	 * Remove file at @param path.
+	 */
+	remove: (path: string) => Promise<void>;
+	/**
 	 * List files in the directory at @param path, filter only files with
 	 * @param extensions. If "all" is provided then return all files.
 	 */

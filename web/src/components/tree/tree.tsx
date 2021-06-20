@@ -58,6 +58,8 @@ export interface TreeProps {
 	 * "select", clicking on the chevron arrow will expand it.
 	 */
 	parentMode: "select" | "expand"
+
+	removeFile: (path: string | null) => void;
 }
 
 const renderChild = (props: TreeProps) => (child: TreeNode) => (

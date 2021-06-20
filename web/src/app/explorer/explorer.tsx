@@ -6,6 +6,8 @@ import { ExplorerBody } from "./body/body";
 import s from "./explorer.module.css";
 import { useExplorerRoot } from "./root";
 import { ExplorerToolbar } from "./toolbar/toolbar";
+import { removeTreeNode } from "components/tree/utils/remove";
+import { TreeNode } from "components/tree/tree";
 
 interface Props extends FileState {
 	prefs: Prefs;
@@ -14,8 +16,19 @@ interface Props extends FileState {
 
 export const Explorer = (props: Props): JSX.Element => {
 	const { prefs, store } = props;
-
 	const root = useExplorerRoot({ prefs, store });
+	
+	const removeFile = async (path: string | null): Promise<void> => {
+		if (!path) return;
+		try {	
+			// Remove file from file system
+			await props.store.remove(path);
+			// Remove file in our explorere
+			root.setNode(removeTreeNode({ current: root.node as TreeNode, id: path }));
+		} catch (error) {
+
+		}
+	}
 
 	const container = (
 		<div className={s.container}>
@@ -34,6 +47,7 @@ export const Explorer = (props: Props): JSX.Element => {
 					setFile={props.setFile}
 					rootNode={root.node}
 					setRootNode={root.setNode}
+					removeFile={removeFile}
 				/>
 			)}
 		</div>

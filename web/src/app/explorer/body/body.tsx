@@ -13,6 +13,7 @@ interface Props extends FileState {
 	prefs: Prefs;
 	rootNode: TreeNode;
 	setRootNode: SetState<TreeNode | null>;
+	removeFile: (path: string | null) => void;
 }
 
 const EXPANDED_KEY = "vdm-explorer-expanded";
@@ -59,6 +60,7 @@ export const ExplorerBody = (props: Props): JSX.Element | null => {
 				loadChildren={loadChildren(props)}
 				parentMode="expand"
 				node={props.rootNode}
+				removeFile={props.removeFile}
 			/>
 		</div>
 	);

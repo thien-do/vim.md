@@ -12,6 +12,10 @@ const write: Store["write"] = async (path, content) => {
 	await fs.writeFile(path, content, "utf8");
 };
 
+const remove: Store["remove"] = async (path) => {
+	return await fs.unlink(path);
+}
+
 const list: Store["list"] = async (path, extensions) => {
 	const names = await fs.readdir(path);
 	// Convert to our format
@@ -56,6 +60,7 @@ export const localStore: Store = {
 	titleBarHeight: 28,
 	read,
 	write,
+	remove,
 	list,
 	showOpenDialog,
 	showSaveDialog,

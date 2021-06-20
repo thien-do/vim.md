@@ -64,8 +64,8 @@ export const TreeItem = (props: Props): JSX.Element => {
 	const isLeaf = isTreeLeaf(props.node);
 	const shouldShowHoverAction = isLeaf && selected;
 
-	const onClickDelete = (e: React.MouseEvent | undefined) => {
-		// use delete function from backend
+	const onClickDelete = () => {
+		props.removeFile(props.node.id);
 	}
 
 	return (

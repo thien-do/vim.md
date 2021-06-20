@@ -25,6 +25,10 @@ const write: Store["write"] = async (path, content) => {
 	window.localStorage.setItem(`docs/${path}`, content);
 };
 
+const remove: Store["remove"] = async (path) => {
+	window.localStorage.removeItem(`docs/${path}`);
+}
+
 const showSaveDialog: Store["showSaveDialog"] = async () => {
 	const name = await Dialog.prompt("Enter a name to save");
 	const path = `root/${name}`
@@ -36,6 +40,7 @@ export const localStore: Store = {
 	list,
 	read,
 	write,
+	remove,
 	showOpenDialog: "root",
 	showSaveDialog,
 };
