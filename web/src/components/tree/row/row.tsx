@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Popover, Menu } from "@moai/core";
 import { RiArrowDownSLine, RiArrowRightSLine, RiMoreFill } from "react-icons/ri";
 import { TreeProps } from "../tree";
@@ -59,11 +59,10 @@ const ActionBar = (props: ActionBarProps) => {
 }
 
 export const TreeItem = (props: Props): JSX.Element => {
-	const [isMouseOn, setMouseOn] = useState<boolean>(false);
 	const expanded = props.expanded.has(props.node.id);
 	const selected = props.selected.has(props.node.id);
 	const isLeaf = isTreeLeaf(props.node);
-	const shouldShowHoverAction = selected || (isLeaf && isMouseOn);
+	const shouldShowHoverAction = isLeaf && selected;
 
 	const onClickDelete = (e: React.MouseEvent | undefined) => {
 		// use delete function from backend
@@ -84,8 +83,6 @@ export const TreeItem = (props: Props): JSX.Element => {
 					toggle(props);
 				}
 			}}
-			onMouseEnter={() => setMouseOn(true)}
-			onMouseLeave={() => setMouseOn(false)}
 		>
 			{[...Array(props.level ?? 0)].map((_v, i) => (
 				<Tab key={i} />
