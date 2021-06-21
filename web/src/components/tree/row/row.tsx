@@ -7,7 +7,7 @@ import s from "./row.module.css";
 
 interface Props extends TreeProps { }
 interface ActionBarProps {
-	onClickDelete?: (e?: React.MouseEvent | undefined) => void;
+	onDeleteFile?: (e?: React.MouseEvent | undefined) => void;
 }
 
 // For indentation, like in source code
@@ -49,7 +49,7 @@ const ActionBar = (props: ActionBarProps) => {
 					{
 						label: "Delete", fn: () => {
 							popoverInst.toggle();
-							props.onClickDelete?.()
+							props.onDeleteFile?.()
 						}
 					}
 				]} />}
@@ -64,9 +64,9 @@ export const TreeItem = (props: Props): JSX.Element => {
 	const isLeaf = isTreeLeaf(props.node);
 	const shouldShowHoverAction = isLeaf && selected;
 
-	const onClickDelete = () => {
+	const onDeleteFileHandler = (): void => {
 		props.removeFile(props.node.id);
-	}
+	};
 
 	return (
 		<div
@@ -101,7 +101,7 @@ export const TreeItem = (props: Props): JSX.Element => {
 				)}
 			</div>
 			<div className={s.label}>{props.node.label}</div>
-			{shouldShowHoverAction && <ActionBar onClickDelete={onClickDelete} />}
+			{shouldShowHoverAction && <ActionBar onDeleteFile={onDeleteFileHandler} />}
 		</div>
 	);
 };
