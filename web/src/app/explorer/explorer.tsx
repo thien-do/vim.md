@@ -1,7 +1,7 @@
 import { Pane, Dialog } from "@moai/core";
 import { FileState } from "app/file/file";
 import { Prefs } from "app/prefs/state/state";
-import { Store } from "store/interface";
+import { Backend } from "backend/interface";
 import { ExplorerBody } from "./body/body";
 import s from "./explorer.module.css";
 import { useExplorerRoot } from "./root";
@@ -11,19 +11,20 @@ import { TreeNode } from "components/tree/tree";
 
 interface Props extends FileState {
 	prefs: Prefs;
-	store: Store;
+	backend: Backend;
 }
 
 export const Explorer = (props: Props): JSX.Element => {
-	const { prefs, store } = props;
-	const root = useExplorerRoot({ prefs, store });
+	const { prefs, backend } = props;
+
+	const root = useExplorerRoot({ prefs, backend });
 
 	const removeFile = async (path: string): Promise<void> => {
 		try {
 			const yes = await Dialog.confirm("Do you want to delete this file?");
 			if (yes) {
 				// Remove file from file system
-				await props.store.remove(path);
+				await props.backend.storage.remove(path);
 				// Remove file in our explorere
 				root.setNode(removeTreeNode({ node: root.node as TreeNode, id: path }));
 				// TODO: Reset editor
@@ -40,17 +41,17 @@ export const Explorer = (props: Props): JSX.Element => {
 				setRootNode={root.setNode}
 				rootPath={root.path}
 				setRootPath={root.setPath}
-				store={props.store}
+				backend={backend}
 			/>
 			{root.node !== null && (
 				<ExplorerBody
 					prefs={props.prefs}
-					store={props.store}
 					file={props.file}
 					setFile={props.setFile}
 					rootNode={root.node}
 					setRootNode={root.setNode}
 					removeFile={removeFile}
+					storage={backend.storage}
 				/>
 			)}
 		</div>

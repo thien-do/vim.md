@@ -1,19 +1,16 @@
-/**
- * IMPORTANT: These 2 files must be identical
- * - desktop/src/store/interface.ts
- * - web/src/store/interface.ts
- */
-
-export interface StoreFile {
-	isDirectory: boolean;
-	name: string;
-}
-
-export interface Store {
+export interface BackendUIConfig {
 	/**
 	 * Height of title bar, or null if none (e.g. browser)
 	 */
 	titleBarHeight: number | null;
+}
+
+export interface BackendFile {
+	isDirectory: boolean;
+	name: string;
+}
+
+export interface BackendStorage {
 	/**
 	 * Return content of file at @param path
 	 */
@@ -30,7 +27,10 @@ export interface Store {
 	 * List files in the directory at @param path, filter only files with
 	 * @param extensions. If "all" is provided then return all files.
 	 */
-	list: (path: string, extensions: "all" | Set<string>) => Promise<StoreFile[]>;
+	list: (
+		path: string,
+		extensions: "all" | Set<string>
+	) => Promise<BackendFile[]>;
 	/**
 	 * This depends on whether the host allows us to open an abitrary folder to
 	 * work or not:
@@ -46,4 +46,29 @@ export interface Store {
 	 * result means the operation is cancelled.
 	 */
 	showSaveDialog: () => Promise<string | null>;
+}
+
+// NodeJS's path / ParsedPath
+export interface BackendPath {
+	/** The root of the path such as '/' or 'c:\' */
+	root: string;
+	/** The full directory path such as '/home/user/dir' or 'c:\path\dir' */
+	dir: string;
+	/** The file name including extension (if any) such as 'index.html' */
+	base: string;
+	/** The file extension (if any) such as '.html' */
+	ext: string;
+	/** The file name without extension (if any) such as 'index' */
+	name: string;
+}
+
+export interface BackendPathUtils {
+	/** Parse a path into parts like "dir", "name" and "ext" */
+	parse: (path: string) => BackendPath;
+}
+
+export interface Backend {
+	storage: BackendStorage;
+	path: BackendPathUtils;
+	ui: BackendUIConfig;
 }

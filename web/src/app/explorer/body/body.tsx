@@ -1,15 +1,15 @@
 import { FileState, isGoodToGo } from "app/file/file";
 import { Prefs } from "app/prefs/state/state";
+import { BackendStorage } from "backend/interface";
 import { Tree, TreeNode } from "components/tree/tree";
 import { updateTreeNode } from "components/tree/utils/update";
-import { Store } from "store/interface";
 import { useSetState } from "utils/set";
 import { SetState } from "utils/state";
 import { listFilesAsNodes } from "../file";
 import s from "./body.module.css";
 
 interface Props extends FileState {
-	store: Store;
+	storage: BackendStorage;
 	prefs: Prefs;
 	rootNode: TreeNode;
 	setRootNode: SetState<TreeNode | null>;
@@ -24,7 +24,7 @@ const loadChildren =
 	async (node: TreeNode): Promise<void> => {
 		const { rootNode, setRootNode } = props;
 		const { fileType } = props.prefs;
-		const { list } = props.store;
+		const { list } = props.storage;
 
 		if (node.isLeaf === true) throw Error("Current node is a leaf");
 		if (rootNode === null) throw Error("Root node is null");

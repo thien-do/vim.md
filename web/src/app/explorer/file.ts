@@ -1,10 +1,10 @@
 import { FileType } from "app/prefs/state/state";
+import { BackendFile, BackendStorage } from "backend/interface";
 import { TreeNode } from "components/tree/tree";
-import { Store, StoreFile } from "store/interface";
 
 const toTreeNode =
 	(parentId: string) =>
-	(file: StoreFile): TreeNode => ({
+	(file: BackendFile): TreeNode => ({
 		id: `${parentId}/${file.name}`,
 		label: file.name,
 		isLeaf: file.isDirectory === false,
@@ -16,7 +16,7 @@ const MARKDOWN_EXTENSIONS: Set<string> = new Set(["md", "mdx"]);
 export const listFilesAsNodes = async (params: {
 	path: string;
 	fileType: FileType;
-	list: Store["list"];
+	list: BackendStorage["list"];
 }): Promise<TreeNode[]> => {
 	const { path, fileType, list } = params;
 	const extensions = fileType === "all" ? "all" : MARKDOWN_EXTENSIONS;
