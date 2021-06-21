@@ -15,6 +15,7 @@
 		"postinstall": "electron-builder install-app-deps"
 	},
 	"dependencies": {
+		"dotenv": "^10.0.0",
 		"electron-store": "8.0.0"
 	},
 	"devDependencies": {
@@ -35,8 +36,14 @@
 		"mac": {
 			"type": "distribution",
 			"category": "public.app-category.developer-tools",
-			"target": "mas",
-			"provisioningProfile": "./embedded.provisionprofile"
+			"target": [
+				"mas"
+			],
+			"provisioningProfile": "./embedded.provisionprofile",
+			"hardenedRuntime": true,
+			"entitlements": "build/entitlements.mac.plist",
+			"entitlementsInherit": "build/entitlements.mac.plist",
+			"gatekeeperAssess": false
 		},
 		"mas": {
 			"type": "distribution",
