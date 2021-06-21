@@ -17,7 +17,7 @@ interface Props extends FileState {
 export const Explorer = (props: Props): JSX.Element => {
 	const { prefs, store } = props;
 	const root = useExplorerRoot({ prefs, store });
-	
+
 	const removeFile = async (path: string): Promise<void> => {
 		try {
 			const yes = await Dialog.confirm("Do you want to delete this file?");
@@ -25,7 +25,7 @@ export const Explorer = (props: Props): JSX.Element => {
 				// Remove file from file system
 				await props.store.remove(path);
 				// Remove file in our explorere
-				root.setNode(removeTreeNode({ current: root.node as TreeNode, id: path }))
+				root.setNode(removeTreeNode({ node: root.node as TreeNode, id: path }));
 				// TODO: Reset editor
 			};
 		} catch (error) {
