@@ -13,6 +13,7 @@ const write: Store["write"] = async (path, content) => {
 };
 
 const remove: Store["remove"] = async (path) => {
+	if (!path) throw Error("Cannot remove an empty path");
 	return await fs.unlink(path);
 }
 

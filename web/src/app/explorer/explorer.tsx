@@ -18,8 +18,7 @@ export const Explorer = (props: Props): JSX.Element => {
 	const { prefs, store } = props;
 	const root = useExplorerRoot({ prefs, store });
 	
-	const removeFile = async (path: string | null): Promise<void> => {
-		if (!path) return;
+	const removeFile = async (path: string): Promise<void> => {
 		try {
 			const yes = await Dialog.confirm("Do you want to delete this file?");
 			if (yes) {

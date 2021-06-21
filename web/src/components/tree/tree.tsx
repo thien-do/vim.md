@@ -59,7 +59,7 @@ export interface TreeProps {
 	 */
 	parentMode: "select" | "expand"
 
-	removeFile: (path: string | null) => void;
+	removeFile: (path: string) => void;
 }
 
 const renderChild = (props: TreeProps) => (child: TreeNode) => (

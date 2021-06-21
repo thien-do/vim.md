@@ -13,7 +13,7 @@ interface Props extends FileState {
 	prefs: Prefs;
 	rootNode: TreeNode;
 	setRootNode: SetState<TreeNode | null>;
-	removeFile: (path: string | null) => void;
+	removeFile: (path: string) => void;
 }
 
 const EXPANDED_KEY = "vdm-explorer-expanded";
