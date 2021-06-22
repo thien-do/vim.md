@@ -15,7 +15,7 @@ interface Props extends FileState {
 }
 
 export const Explorer = (props: Props): JSX.Element => {
-	const { prefs, backend } = props;
+	const { prefs, backend, file, setFile } = props;
 
 	const root = useExplorerRoot({ prefs, backend });
 
@@ -25,12 +25,15 @@ export const Explorer = (props: Props): JSX.Element => {
 			if (yes) {
 				// Remove file from file system
 				await props.backend.storage.remove(path);
-				// Remove file in our explorere
+				// Remove file in our explorer
 				root.setNode(removeTreeNode({ node: root.node as TreeNode, id: path }));
-				// TODO: Reset editor
+				// If delete current file, set file path as null
+				if (file.path === path) {
+					setFile({ path: null, saved: true });
+				}
 			};
 		} catch (error) {
-			Dialog.alert("Error while deleting file!")
+			Dialog.alert("Error while deleting file!");
 		}
 	}
 
