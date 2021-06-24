@@ -37,7 +37,7 @@
 			"type": "distribution",
 			"category": "public.app-category.developer-tools",
 			"target": [
-				"mas"
+				"dmg"
 			],
 			"provisioningProfile": "./embedded.provisionprofile",
 			"hardenedRuntime": true,

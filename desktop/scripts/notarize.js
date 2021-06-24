@@ -1,15 +1,15 @@
-require('dotenv').config();
-const { notarize } = require('electron-notarize');
+require("dotenv").config();
+const { notarize } = require("electron-notarize");
 
 exports.default = async function notarizing(context) {
-  const { electronPlatformName, appOutDir } = context;
-  if (electronPlatformName !== 'darwin') {
-    return;
-  }
+	const { electronPlatformName, appOutDir } = context;
+	if (electronPlatformName !== "darwin") {
+		return;
+	}
 
-  const appName = context.packager.appInfo.productFilename;
+	const appName = context.packager.appInfo.productFilename;
 
-  return await notarize({
+	return await notarize({
 		appBundleId: "md.vim.desktop",
 		appPath: `${appOutDir}/${appName}.app`,
 		appleId: process.env.APPLEID,
