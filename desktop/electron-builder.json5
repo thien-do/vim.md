@@ -1,0 +1,54 @@
+{
+	appId: "md.vim.desktop",
+	buildVersion: "3",
+	productName: "Vim.md",
+	copyright: "Copyright © 2021 vim.md",
+	linux: {
+		target: "AppImage",
+		category: "Development",
+	},
+	mac: {
+		category: "public.app-category.developer-tools",
+		entitlements: "build/entitlements.mac.plist",
+		entitlementsInherit: "build/entitlements.mac.plist",
+		// Avoid assessing the sign. It will always throw error due to
+		// unnotarized id. See:
+		// - https://github.com/electron-userland/electron-builder/issues/3870
+		// - https://github.com/electron-userland/electron-builder/issues/3828
+		// - https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/
+		// - https://github.com/electron/electron-osx-sign/issues/196
+		gatekeeperAssess: false,
+		// https://github.com/electron/electron-notarize#prerequisites
+		hardenedRuntime: true,
+		darkModeSupport: true,
+		target: ["mas"],
+		type: "distribution",
+	},
+	afterSign: "scripts/notarize.js",
+	mas: {
+		// provisioningProfile: "./build/dev.provisionprofile",
+		provisioningProfile: "./build/prod.provisionprofile",
+		entitlements: "build/entitlements.mas.plist",
+		entitlementsInherit: "build/entitlements.mas.inherit.plist",
+	},
+	dmg: {
+		// The dmg doesn't need to be signed and actually doing so would throw
+		// error since it's signed but not notarized. See:
+		// - https://github.com/electron-userland/electron-builder/issues/3870
+		// - https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/
+		sign: false,
+	},
+	files: [
+		"package.json",
+		"build",
+		{
+			from: "../web/build",
+			to: "web",
+		},
+		{
+			from: "src",
+			to: "src",
+			filter: ["**/*.js"],
+		},
+	],
+}
