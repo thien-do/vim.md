@@ -7,7 +7,7 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "yarn _compile && NODE_ENV=development electron .",
-		"dist": "yarn _clean && yarn _compile && electron-builder",
+		"dist": "yarn _clean && yarn _compile && electron-builder --config electron-builder.json5",
 		"_compile": "tsc",
 		"_clean": "rm -rf ./dist",
 		"_pack": "yarn _clean && yarn _compile && electron-builder --dir",
@@ -15,60 +15,13 @@
 		"postinstall": "electron-builder install-app-deps"
 	},
 	"dependencies": {
-		"dotenv": "^10.0.0",
 		"electron-store": "8.0.0"
 	},
 	"devDependencies": {
-		"electron": "13.1.1",
-		"electron-builder": "22.10.5",
+		"dotenv": "^10.0.0",
+		"electron": "^13.1.4",
+		"electron-builder": "^22.11.7",
 		"electron-notarize": "^1.0.0",
-		"typescript": "4.3.2"
-	},
-	"build": {
-		"appId": "md.vim.desktop",
-		"buildVersion": "0.1",
-		"productName": "Vim.md",
-		"copyright": "Copyright © 2021 vim.md",
-		"linux": {
-			"target": "AppImage",
-			"category": "Development"
-		},
-		"mac": {
-			"type": "distribution",
-			"category": "public.app-category.developer-tools",
-			"target": [
-				"dmg"
-			],
-			"provisioningProfile": "./embedded.provisionprofile",
-			"hardenedRuntime": true,
-			"entitlements": "build/entitlements.mac.plist",
-			"entitlementsInherit": "build/entitlements.mac.plist",
-			"gatekeeperAssess": false
-		},
-		"mas": {
-			"type": "distribution",
-			"category": "public.app-category.developer-tools",
-			"hardenedRuntime": false,
-			"entitlements": "build/entitlements.mas.plist",
-			"entitlementsInherit": "build/entitlements.mas.inherit.plist"
-		},
-		"dmg": {
-			"sign": false
-		},
-		"files": [
-			"package.json",
-			"build",
-			{
-				"from": "../web/build",
-				"to": "web"
-			},
-			{
-				"from": "src",
-				"to": "src",
-				"filter": [
-					"**/*.js"
-				]
-			}
-		]
+		"typescript": "^4.3.4"
 	}
 }
