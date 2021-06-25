@@ -1,13 +1,16 @@
+import { FileType } from "app/prefs/state/state";
 import { Backend } from "backend/interface";
 import { PaneHeading } from "components/pane/heading/heading";
 import { TreeNode } from "components/tree/tree";
 import { SetState } from "utils/state";
 import { ExplorerToolbarAdd } from "./add";
 import { ExplorerToolbarOpen } from "./open";
+import { ExplorerToolbarRefresh } from "./refresh";
 import s from "./toolbar.module.css";
 
 export interface ExplorerToolbarProps {
 	backend: Backend;
+	fileType: FileType;
 	rootPath: string | null;
 	setRootPath: null | SetState<string | null>;
 	rootNode: TreeNode | null;
@@ -17,6 +20,7 @@ export interface ExplorerToolbarProps {
 const Aside = (props: ExplorerToolbarProps): JSX.Element => (
 	<div className={s.aside}>
 		<ExplorerToolbarAdd {...props} />
+		<ExplorerToolbarRefresh {...props} />
 		<ExplorerToolbarOpen {...props} />
 	</div>
 );
