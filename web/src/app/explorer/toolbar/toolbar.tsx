@@ -20,8 +20,8 @@ export interface ExplorerToolbarProps {
 const Aside = (props: ExplorerToolbarProps): JSX.Element => (
 	<div className={s.aside}>
 		<ExplorerToolbarAdd {...props} />
-		<ExplorerToolbarOpen {...props} />
 		<ExplorerToolbarRefresh {...props} />
+		<ExplorerToolbarOpen {...props} />
 	</div>
 );
 
