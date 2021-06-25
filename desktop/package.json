@@ -1,6 +1,6 @@
 {
 	"name": "vimdotmd",
-	"version": "0.2.0",
+	"version": "1.0.0",
 	"description": "Desktop version of Vim.md",
 	"main": "src/main.js",
 	"author": "Vim.md Team <vimdotmd@gmail.com>",

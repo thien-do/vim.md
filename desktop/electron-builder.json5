@@ -1,6 +1,6 @@
 {
 	appId: "md.vim.desktop",
-	buildVersion: "0.1",
+	buildVersion: "2",
 	productName: "Vim.md",
 	copyright: "Copyright © 2021 vim.md",
 	linux: {
@@ -18,14 +18,16 @@
 		// - https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/
 		// - https://github.com/electron/electron-osx-sign/issues/196
 		gatekeeperAssess: false,
+		// https://github.com/electron/electron-notarize#prerequisites
 		hardenedRuntime: true,
-		provisioningProfile: "./embedded.provisionprofile",
 		darkModeSupport: true,
-		target: ["dmg"],
+		target: ["mas-dev"],
 		type: "distribution",
 	},
 	afterSign: "scripts/notarize.js",
 	mas: {
+		provisioningProfile: "./build/dev.provisionprofile",
+		// provisioningProfile: "./build/prod.provisionprofile",
 		entitlements: "build/entitlements.mas.plist",
 		entitlementsInherit: "build/entitlements.mas.inherit.plist",
 	},
