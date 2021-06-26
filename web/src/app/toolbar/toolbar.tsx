@@ -2,7 +2,7 @@ import { Button, Pane, Switcher } from "@moai/core";
 import { Layout, PrefsState } from "app/prefs/state/state";
 import { BackendUIConfig } from "backend/interface";
 import { RiFolderLine, RiQuestionLine, RiSettingsLine } from "react-icons/ri";
-import { ToolbarToggle } from "./toggle/toggle";
+import { TitleToolbar } from "../title/toolbar/toolbar";
 import s from "./toolbar.module.css";
 
 interface Props extends PrefsState {
@@ -15,7 +15,7 @@ const Left = (props: Props): JSX.Element => (
 		push the Explorer button correctly */}
 		{props.ui.titleBar === null && (
 			<div className={s.toggle}>
-				<ToolbarToggle
+				<TitleToolbar
 					size={Button.sizes.medium}
 					prefs={props.prefs}
 					setPrefs={props.setPrefs}

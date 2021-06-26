@@ -11,7 +11,10 @@ const toggle: PrefsUpdate = (prefs) => ({
 	toolbarVisible: !prefs.toolbarVisible,
 });
 
-export const ToolbarToggle = (props: Props): JSX.Element => {
+/**
+ * Button to toggle the Toolbar. Currently only used in Title.
+ */
+export const TitleToolbar = (props: Props): JSX.Element => {
 	const { prefs, setPrefs, size } = props;
 	return (
 		<Tooltip content="Toggle toolbar">
