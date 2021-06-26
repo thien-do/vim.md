@@ -1,6 +1,5 @@
 .wrapper {
 	margin: -1px -1px 0;
-	-webkit-app-region: drag;
 }
 
 .container {
@@ -25,8 +24,4 @@
 
 .toggle {
 	visibility: hidden;
-}
-
-.interactive {
-	-webkit-app-region: no-drag;
 }

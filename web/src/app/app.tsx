@@ -1,4 +1,4 @@
-import { scrollbar } from "@moai/core";
+import { Button, scrollbar } from "@moai/core";
 import { useState } from "react";
 import s from "./app.module.css";
 import { EditorPane, Editor } from "./editor/editor";
@@ -23,15 +23,18 @@ export const App = (): JSX.Element => {
 	const toolbarCls = prefs.toolbarVisible ? "" : s.woToolbar;
 	const toolbar = (
 		<>
-			<div
-				className={s.toolbarToggle}
-				style={{ top: 16 + (backend.ui.titleBarHeight ?? 0) }}
-			>
-				<ToolbarToggle prefs={prefs} setPrefs={setPrefs} />
-			</div>
+			{backend.ui.titleBar === null && (
+				<div className={s.toolbarToggle}>
+					<ToolbarToggle
+						size={Button.sizes.medium}
+						prefs={prefs}
+						setPrefs={setPrefs}
+					/>
+				</div>
+			)}
 			{prefs.toolbarVisible && (
 				<div className={s.toolbar}>
-					<Toolbar prefs={prefs} setPrefs={setPrefs} />
+					<Toolbar ui={backend.ui} prefs={prefs} setPrefs={setPrefs} />
 				</div>
 			)}
 		</>
@@ -66,9 +69,9 @@ export const App = (): JSX.Element => {
 		</div>
 	);
 
-	const title = backend.ui.titleBarHeight !== null && (
+	const title = backend.ui.titleBar !== null && (
 		<div className={s.title}>
-			<Title backend={backend} prefs={prefs} file={file} />
+			<Title backend={backend} prefs={prefs} setPrefs={setPrefs} file={file} />
 		</div>
 	);
 

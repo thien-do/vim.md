@@ -1,12 +1,12 @@
-import { background } from "@moai/core";
+import { background, Button } from "@moai/core";
 import { File } from "app/file/file";
-import { Prefs } from "app/prefs/state/state";
+import { PrefsState } from "app/prefs/state/state";
 import { Backend } from "backend/interface";
+import { ToolbarToggle } from "../toolbar/toggle/toggle";
 import s from "./title.module.css";
 
-interface Props {
+interface Props extends PrefsState {
 	file: File;
-	prefs: Prefs;
 	backend: Backend;
 }
 
@@ -20,16 +20,23 @@ const getTitle = (props: Props): string => {
 };
 
 export const Title = (props: Props): JSX.Element => {
-	const height = props.backend.ui.titleBarHeight;
-	if (height === null) throw Error("Backend does not have titleBarHeight");
+	const titleBar = props.backend.ui.titleBar;
+	if (titleBar === null) throw Error("Backend does not have titleBar");
+
 	return (
 		<div
-			className={[
-				s.container,
-				props.prefs.toolbarVisible ? background.strong : "",
+			className={[s.container, 
+	props.prefs.toolbarVisible ? background.strong : "",
 			].join(" ")}
-			style={{ height }}
+			style={{ height: titleBar.height }}
 		>
+			<div className={s.toggle} style={{ left: titleBar.left }}>
+				<ToolbarToggle
+					size={Button.sizes.small}
+					prefs={props.prefs}
+					setPrefs={props.setPrefs}
+				/>
+			</div>
 			<div className={s.title} children={getTitle(props)} />
 		</div>
 	);

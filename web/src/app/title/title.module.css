@@ -1,8 +1,19 @@
 .container {
 	display: flex;
 	justify-content: center;
-	align-items: flex-end;
+	align-items: center;
+	position: relative;
 
 	-webkit-app-region: drag;
 	user-select: none;
+}
+
+.toggle {
+	position: absolute;
+	height: 100%;
+	top: 0;
+	display: flex;
+	align-items: center;
+
+	-webkit-app-region: no-drag;
 }
