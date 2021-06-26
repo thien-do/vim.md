@@ -12,8 +12,8 @@
 		"react-icons": "^4.2.0"
 	},
 	"scripts": {
-		"start": "BROWSER=NONE react-scripts start",
-		"build": "react-scripts build"
+		"start": "yarn && BROWSER=NONE react-scripts start",
+		"build": "yarn && react-scripts build"
 	},
 	"eslintConfig": {
 		"extends": [

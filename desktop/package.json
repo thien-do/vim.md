@@ -6,8 +6,8 @@
 	"author": "Vim.md Team <vimdotmd@gmail.com>",
 	"license": "MIT",
 	"scripts": {
-		"start": "yarn _compile && NODE_ENV=development electron .",
-		"dist": "yarn _clean && yarn _compile && electron-builder --config electron-builder.json5",
+		"start": "yarn && yarn _compile && NODE_ENV=development electron .",
+		"build": "yarn && yarn _clean && yarn _compile && electron-builder --config electron-builder.json5",
 		"_compile": "tsc",
 		"_clean": "rm -rf ./dist",
 		"_pack": "yarn _clean && yarn _compile && electron-builder --dir",
