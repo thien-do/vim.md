@@ -68,7 +68,7 @@ export const App = (): JSX.Element => {
 
 	const title = backend.ui.titleBarHeight !== null && (
 		<div className={s.title}>
-			<Title path={backend.path} prefs={prefs} file={file} />
+			<Title backend={backend} prefs={prefs} file={file} />
 		</div>
 	);
 
