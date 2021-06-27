@@ -13,7 +13,7 @@ const write: BackendStorage["write"] = async (path, content) => {
 };
 
 const remove: BackendStorage["remove"] = async (path) => {
-	if (!path) throw Error("Cannot remove an empty path");
+	//TODO: verify if path is inside of current folder
 	return await fs.unlink(path);
 }
 
