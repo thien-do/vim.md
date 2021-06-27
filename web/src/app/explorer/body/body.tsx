@@ -8,6 +8,7 @@ import { SetState } from "utils/state";
 import { listFilesAsNodes } from "../file";
 import s from "./body.module.css";
 
+
 interface Props extends FileState {
 	storage: BackendStorage;
 	prefs: Prefs;
@@ -21,24 +22,24 @@ const EXPANDED_KEY = "vdm-explorer-expanded";
 // Load children into a node
 const loadChildren =
 	(props: Props) =>
-	async (node: TreeNode): Promise<void> => {
-		const { rootNode, setRootNode } = props;
-		const { fileType } = props.prefs;
-		const { list } = props.storage;
+		async (node: TreeNode): Promise<void> => {
+			const { rootNode, setRootNode } = props;
+			const { fileType } = props.prefs;
+			const { list } = props.storage;
 
-		if (node.isLeaf === true) throw Error("Current node is a leaf");
-		if (rootNode === null) throw Error("Root node is null");
-		if (node.children !== undefined) return;
-		const path = node.id;
+			if (node.isLeaf === true) throw Error("Current node is a leaf");
+			if (rootNode === null) throw Error("Root node is null");
+			if (node.children !== undefined) return;
+			const path = node.id;
 
-		const newRoot = updateTreeNode({
-			current: rootNode,
-			id: node.id,
-			key: "children",
-			value: await listFilesAsNodes({ path, fileType, list }),
-		});
-		setRootNode(newRoot);
-	};
+			const newRoot = updateTreeNode({
+				current: rootNode,
+				id: node.id,
+				key: "children",
+				value: await listFilesAsNodes({ path, fileType, list }),
+			});
+			setRootNode(newRoot);
+		};
 
 export const ExplorerBody = (props: Props): JSX.Element | null => {
 	const { file, setFile, rootNode } = props;
@@ -60,7 +61,10 @@ export const ExplorerBody = (props: Props): JSX.Element | null => {
 				loadChildren={loadChildren(props)}
 				parentMode="expand"
 				node={props.rootNode}
-				removeFile={props.removeFile}
+				actions={[{
+					type: "remove",
+					handler: props.removeFile
+				}]}
 			/>
 		</div>
 	);

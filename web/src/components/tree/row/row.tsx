@@ -1,11 +1,11 @@
 import React from "react";
 import { Button, Popover, Menu } from "@moai/core";
 import { RiArrowDownSLine, RiArrowRightSLine, RiMoreFill } from "react-icons/ri";
-import { TreeProps } from "../tree";
+import { TreeProps, TreeFileAction } from "../tree";
 import { isTreeLeaf } from "../utils/leaf";
 import s from "./row.module.css";
 
-interface Props extends TreeProps { }
+interface Props extends TreeProps<TreeFileAction> { }
 interface ActionBarProps {
 	onDeleteFile?: (e?: React.MouseEvent | undefined) => void;
 }
@@ -65,7 +65,7 @@ export const TreeItem = (props: Props): JSX.Element => {
 	const shouldShowHoverAction = isLeaf && selected;
 
 	const onDeleteFileHandler = (): void => {
-		props.removeFile(props.node.id);
+		props.actions?.find(action => action.type === "remove")?.handler(props.node.id);
 	};
 
 	return (
