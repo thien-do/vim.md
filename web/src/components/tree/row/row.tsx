@@ -44,7 +44,7 @@ const ActionBar = (props: ActionBarProps) => {
 						size={Button.sizes.smallIcon}
 					/>
 				}}
-				placement="bottom-start"
+				placement="bottom"
 				content={() => <Menu items={[
 					{
 						label: "Delete", fn: () => {
