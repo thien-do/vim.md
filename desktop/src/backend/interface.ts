@@ -1,8 +1,11 @@
 export interface BackendUIConfig {
 	/**
-	 * Height of title bar, or null if none (e.g. browser)
+	 * Detail of the title bar, or null if none (e.g. browser)
 	 */
-	titleBarHeight: number | null;
+	titleBar: {
+		height: number;
+		left: number;
+	} | null;
 }
 
 export interface BackendFile {

@@ -1,9 +1,10 @@
 import { Backend } from "./interface";
 import { localBackendPathUtils } from "./path";
 import { localBackendStorage } from "./storage";
+import { localBackendUIConfig } from "./ui";
 
 export const localBackend: Backend = {
-	ui: { titleBarHeight: 28 },
+	ui: localBackendUIConfig,
 	storage: localBackendStorage,
 	path: localBackendPathUtils,
 };

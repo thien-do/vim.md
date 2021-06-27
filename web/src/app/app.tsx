@@ -1,16 +1,15 @@
 import { scrollbar } from "@moai/core";
+import { useBackend } from "backend/backend";
 import { useState } from "react";
 import s from "./app.module.css";
-import { EditorPane, Editor } from "./editor/editor";
+import { Editor, EditorPane } from "./editor/editor";
 import { Explorer } from "./explorer/explorer";
 import { useFile } from "./file/file";
 import { PrefsPane } from "./prefs/pane/pane";
 import { usePrefs } from "./prefs/state/state";
 import { Preview } from "./preview/preview";
-import { ToolbarToggle } from "./toolbar/toggle/toggle";
-import { Toolbar } from "./toolbar/toolbar";
 import { Title } from "./title/title";
-import { useBackend } from "backend/backend";
+import { Toolbar } from "./toolbar/toolbar";
 
 export const App = (): JSX.Element => {
 	// State
@@ -21,20 +20,10 @@ export const App = (): JSX.Element => {
 
 	// Render
 	const toolbarCls = prefs.toolbarVisible ? "" : s.woToolbar;
-	const toolbar = (
-		<>
-			<div
-				className={s.toolbarToggle}
-				style={{ top: 16 + (backend.ui.titleBarHeight ?? 0) }}
-			>
-				<ToolbarToggle prefs={prefs} setPrefs={setPrefs} />
-			</div>
-			{prefs.toolbarVisible && (
-				<div className={s.toolbar}>
-					<Toolbar prefs={prefs} setPrefs={setPrefs} />
-				</div>
-			)}
-		</>
+	const toolbar = prefs.toolbarVisible && (
+		<div className={s.toolbar}>
+			<Toolbar ui={backend.ui} prefs={prefs} setPrefs={setPrefs} />
+		</div>
 	);
 
 	const explorer = prefs.explorerVisible && (
@@ -66,9 +55,9 @@ export const App = (): JSX.Element => {
 		</div>
 	);
 
-	const title = backend.ui.titleBarHeight !== null && (
+	const title = (
 		<div className={s.title}>
-			<Title path={backend.path} prefs={prefs} file={file} />
+			<Title backend={backend} prefs={prefs} setPrefs={setPrefs} file={file} />
 		</div>
 	);
 

@@ -1,0 +1,7 @@
+.toolbar {
+	position: absolute;
+	top: 16px;
+	left: 16px;
+	/* Higher than all CodeMirror's z-index */
+	z-index: 7;
+}

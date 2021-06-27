@@ -45,6 +45,7 @@ export const Explorer = (props: Props): JSX.Element => {
 				rootPath={root.path}
 				setRootPath={root.setPath}
 				backend={backend}
+				fileType={prefs.fileType}
 			/>
 			{root.node !== null && (
 				<ExplorerBody

@@ -24,7 +24,7 @@ export const createWindow = (): BrowserWindow => {
 			nodeIntegration: false,
 		},
 		autoHideMenuBar: true,
-		titleBarStyle: "hidden",
+		titleBarStyle: "hiddenInset",
 		// https://github.com/electron-userland/electron-builder/issues/2269#issuecomment-342168989
 		icon: path.resolve(root, "build/icons/512x512.png"),
 	});

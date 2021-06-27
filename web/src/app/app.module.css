@@ -7,15 +7,7 @@
 
 .title {
 	flex: 0 0 auto;
-	/* Hide toolbar's top border */
-	z-index: 1;
-}
-
-.toolbarToggle {
-	position: absolute;
-	/* the "top" will be set inline */
-	left: 16px;
-	/* Higher than all CodeMirror's z-index */
+	/* Hide toolbar's top border, also win the CodeMirror's z-index */
 	z-index: 7;
 }
 
