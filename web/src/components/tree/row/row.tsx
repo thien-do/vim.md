@@ -1,14 +1,10 @@
-import React, { useState } from "react";
-import { Button, Popover, Menu } from "@moai/core";
-import { RiArrowDownSLine, RiArrowRightSLine, RiMoreFill } from "react-icons/ri";
-import { TreeProps, TreeFileAction } from "../tree";
+import { Button } from "@moai/core";
+import { RiArrowDownSLine, RiArrowRightSLine } from "react-icons/ri";
+import { TreeProps } from "../tree";
 import { isTreeLeaf } from "../utils/leaf";
 import s from "./row.module.css";
 
-interface Props extends TreeProps<TreeFileAction> { }
-interface ActionBarProps {
-	onDeleteFile?: (e?: React.MouseEvent | undefined) => void;
-}
+interface Props extends TreeProps {}
 
 // For indentation, like in source code
 const Tab = () => (
@@ -25,48 +21,10 @@ const toggle = async (props: Props): Promise<void> => {
 	props.setExpanded(expanded);
 };
 
-const ActionBar = (props: ActionBarProps) => {
-	let popoverInst: any;
-	return (
-		<div className={s.action}>
-			<Popover
-				target={(popover) => {
-					popoverInst = popover;
-					return <Button
-						onClick={() => {
-							popover.toggle()
-						}}
-						selected={popover.opened}
-						icon={RiMoreFill}
-						iconLabel="More"
-						style={Button.styles.flat}
-						size={Button.sizes.smallIcon}
-					/>
-				}}
-				placement="bottom"
-				content={() => <Menu items={[
-					{
-						label: "Delete", fn: () => {
-							popoverInst.toggle();
-							props.onDeleteFile?.()
-						}
-					}
-				]} />}
-			/>
-		</div>
-	)
-}
-
 export const TreeItem = (props: Props): JSX.Element => {
 	const expanded = props.expanded.has(props.node.id);
 	const selected = props.selected.has(props.node.id);
 	const isLeaf = isTreeLeaf(props.node);
-	const shouldShowHoverAction = isLeaf;
-
-	const onDeleteFileHandler = (): void => {
-		props.actions?.find(action => action.type === "remove")?.handler(props.node.id);
-	};
-
 	return (
 		<div
 			className={[
@@ -100,7 +58,6 @@ export const TreeItem = (props: Props): JSX.Element => {
 				)}
 			</div>
 			<div className={s.label}>{props.node.label}</div>
-			{shouldShowHoverAction && <ActionBar onDeleteFile={onDeleteFileHandler} />}
 		</div>
 	);
 };

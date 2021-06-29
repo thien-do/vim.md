@@ -1,12 +1,6 @@
 import { useEffect } from "react";
 import { TreeItem } from "./row/row";
 
-
-export interface TreeFileAction {
-	type: "remove" | "rename";
-	handler: (path: string) => void;
-}
-
 export interface TreeNode {
 	id: string;
 	label: string;
@@ -23,7 +17,7 @@ export interface TreeNode {
 	isLeaf?: boolean;
 }
 
-export interface TreeProps<T> {
+export interface TreeProps {
 	/**
 	 * Nested level. This is only used to render the left padding of nested
 	 * nodes. The consumer usually should not set this since they are passing
@@ -63,19 +57,20 @@ export interface TreeProps<T> {
 	 * Whether clicking on a parent's title will select or expand it. If set to
 	 * "select", clicking on the chevron arrow will expand it.
 	 */
-	parentMode: "select" | "expand"
-
-	/**
-	 * Actions on a tree. It can be actions of a file system or any kind of tree.
-	 */
-	actions?: T[];
+	parentMode: "select" | "expand";
 }
 
-const renderChild = (props: TreeProps<TreeFileAction>) => (child: TreeNode) => (
-	<Tree {...props} key={child.id} level={(props.level ?? 0) + 1} node={child} />
-);
+const renderChild = (props: TreeProps) => (child: TreeNode) =>
+	(
+		<Tree
+			{...props}
+			key={child.id}
+			level={(props.level ?? 0) + 1}
+			node={child}
+		/>
+	);
 
-export const Tree = (props: TreeProps<TreeFileAction>): JSX.Element => {
+export const Tree = (props: TreeProps): JSX.Element => {
 	const expanded = props.expanded.has(props.node.id);
 
 	const { loadChildren, node } = props;
