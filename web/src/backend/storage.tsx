@@ -30,6 +30,10 @@ const write: BackendStorage["write"] = async (path, content) => {
 	window.localStorage.setItem(`docs/${path}`, content);
 };
 
+const remove: BackendStorage["remove"] = async (path) => {
+	window.localStorage.removeItem(`docs/${path}`);
+}
+
 const showSaveDialog: BackendStorage["showSaveDialog"] = async () => {
 	const name = await Dialog.prompt("Enter a name for your document");
 	if (name === null) return null; // cancel
@@ -45,6 +49,7 @@ export const localBackendStorage: BackendStorage = {
 	list,
 	read,
 	write,
+	remove,
 	showOpenDialog: "root",
 	showSaveDialog,
 };

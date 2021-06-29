@@ -1,7 +1,10 @@
+import { Dialog, MenuItemAction } from "@moai/core";
 import { FileState, isGoodToGo } from "app/file/file";
 import { Prefs } from "app/prefs/state/state";
 import { BackendStorage } from "backend/interface";
 import { Tree, TreeNode } from "components/tree/tree";
+import { isTreeLeaf } from "components/tree/utils/leaf";
+import { removeTreeNode } from "components/tree/utils/remove";
 import { updateTreeNode } from "components/tree/utils/update";
 import { useSetState } from "utils/set";
 import { SetState } from "utils/state";
@@ -39,6 +42,28 @@ const loadChildren =
 		setRootNode(newRoot);
 	};
 
+const removeFile = async (props: Props, node: TreeNode): Promise<void> => {
+	const { rootNode, file, storage, setFile, setRootNode } = props;
+	const msg = `Are you sure you want to delete "${node.label}"?`;
+	const yes = await Dialog.confirm(msg);
+	if (yes === false) return;
+	// Remove file from file system
+	await storage.remove(node.id);
+	// Remove file in our explorer
+	const nextRoot = removeTreeNode({ tree: rootNode, deleteId: node.id });
+	setRootNode(nextRoot);
+	// If delete current file, set file path as null
+	if (file.path !== node.id) return;
+	setFile({ path: null, saved: true });
+};
+
+const getRowActions =
+	(props: Props) =>
+	(node: TreeNode): MenuItemAction[] => {
+		if (isTreeLeaf(node) === false) return [];
+		return [{ label: "Delete…", fn: () => removeFile(props, node) }];
+	};
+
 export const ExplorerBody = (props: Props): JSX.Element | null => {
 	const { file, setFile, rootNode } = props;
 	const [expanded, setExpanded] = useSetState(EXPANDED_KEY);
@@ -59,6 +84,7 @@ export const ExplorerBody = (props: Props): JSX.Element | null => {
 				loadChildren={loadChildren(props)}
 				parentMode="expand"
 				node={props.rootNode}
+				getRowActions={getRowActions(props)}
 			/>
 		</div>
 	);

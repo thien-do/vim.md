@@ -12,6 +12,10 @@ const write: BackendStorage["write"] = async (path, content) => {
 	await fs.writeFile(path, content, "utf8");
 };
 
+const remove: BackendStorage["remove"] = async (path) => {
+	await fs.unlink(path);
+}
+
 const list: BackendStorage["list"] = async (path, extensions) => {
 	const names = await fs.readdir(path);
 	// Convert to our format
@@ -53,9 +57,9 @@ const showSaveDialog: BackendStorage["showSaveDialog"] = async () => {
 };
 
 export const localBackendStorage: BackendStorage = {
-	// titleBarHeight: 28,
 	read,
 	write,
+	remove,
 	list,
 	showOpenDialog,
 	showSaveDialog,

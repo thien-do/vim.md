@@ -2,6 +2,7 @@ import { Button } from "@moai/core";
 import { RiArrowDownSLine, RiArrowRightSLine } from "react-icons/ri";
 import { TreeProps } from "../tree";
 import { isTreeLeaf } from "../utils/leaf";
+import { TreeRowActions } from "./actions/actions";
 import s from "./row.module.css";
 
 interface Props extends TreeProps {}
@@ -21,7 +22,7 @@ const toggle = async (props: Props): Promise<void> => {
 	props.setExpanded(expanded);
 };
 
-export const TreeItem = (props: Props): JSX.Element => {
+export const TreeRow = (props: Props): JSX.Element => {
 	const expanded = props.expanded.has(props.node.id);
 	const selected = props.selected.has(props.node.id);
 	const isLeaf = isTreeLeaf(props.node);
@@ -58,6 +59,9 @@ export const TreeItem = (props: Props): JSX.Element => {
 				)}
 			</div>
 			<div className={s.label}>{props.node.label}</div>
+			<div className={s.actions}>
+				<TreeRowActions {...props} />
+			</div>
 		</div>
 	);
 };

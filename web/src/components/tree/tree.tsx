@@ -1,5 +1,6 @@
+import { MenuItemAction } from "@moai/core";
 import { useEffect } from "react";
-import { TreeItem } from "./row/row";
+import { TreeRow } from "./row/row";
 
 export interface TreeNode {
 	id: string;
@@ -38,6 +39,11 @@ export interface TreeProps {
 	 */
 	loadChildren?: (node: TreeNode) => Promise<void>;
 	/**
+	 * Actions to display for a given node/row. Return an empty array will
+	 * be the same as not define this prop.
+	 */
+	getRowActions?: (node: TreeNode) => MenuItemAction[];
+	/**
 	 * Selected nodes in controlled mode
 	 */
 	selected: Set<string>;
@@ -57,12 +63,18 @@ export interface TreeProps {
 	 * Whether clicking on a parent's title will select or expand it. If set to
 	 * "select", clicking on the chevron arrow will expand it.
 	 */
-	parentMode: "select" | "expand"
+	parentMode: "select" | "expand";
 }
 
-const renderChild = (props: TreeProps) => (child: TreeNode) => (
-	<Tree {...props} key={child.id} level={(props.level ?? 0) + 1} node={child} />
-);
+const renderChild = (props: TreeProps) => (child: TreeNode) =>
+	(
+		<Tree
+			{...props}
+			key={child.id}
+			level={(props.level ?? 0) + 1}
+			node={child}
+		/>
+	);
 
 export const Tree = (props: TreeProps): JSX.Element => {
 	const expanded = props.expanded.has(props.node.id);
@@ -74,7 +86,7 @@ export const Tree = (props: TreeProps): JSX.Element => {
 
 	const body = (
 		<>
-			<TreeItem {...props} />
+			<TreeRow {...props} />
 			{props.node.children && expanded && (
 				<>{props.node.children.map(renderChild(props))}</>
 			)}
