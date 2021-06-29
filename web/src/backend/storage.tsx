@@ -31,7 +31,6 @@ const write: BackendStorage["write"] = async (path, content) => {
 };
 
 const remove: BackendStorage["remove"] = async (path) => {
-	//TODO: verify if path is inside of current folder
 	window.localStorage.removeItem(`docs/${path}`);
 }
 

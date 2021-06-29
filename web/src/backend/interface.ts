@@ -23,7 +23,8 @@ export interface BackendStorage {
 	 */
 	write: (path: string, content: string) => Promise<void>;
 	/**
-	 * Remove file at @param path.
+	 * Delete the file at @param path. Use "remove" since "delete" is a
+	 * reserved keyword.
 	 */
 	remove: (path: string) => Promise<void>;
 	/**

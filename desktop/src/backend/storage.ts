@@ -13,8 +13,7 @@ const write: BackendStorage["write"] = async (path, content) => {
 };
 
 const remove: BackendStorage["remove"] = async (path) => {
-	//TODO: verify if path is inside of current folder
-	return await fs.unlink(path);
+	await fs.unlink(path);
 }
 
 const list: BackendStorage["list"] = async (path, extensions) => {
@@ -58,7 +57,6 @@ const showSaveDialog: BackendStorage["showSaveDialog"] = async () => {
 };
 
 export const localBackendStorage: BackendStorage = {
-	// titleBarHeight: 28,
 	read,
 	write,
 	remove,
