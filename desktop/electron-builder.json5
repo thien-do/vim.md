@@ -21,15 +21,19 @@
 		// https://github.com/electron/electron-notarize#prerequisites
 		hardenedRuntime: true,
 		darkModeSupport: true,
-		target: ["dmg"],
+		target: ["mas"],
 		type: "distribution",
+		// https://github.com/electron-userland/electron-builder/issues/4960
+		identity: null,
 	},
 	afterSign: "scripts/notarize.js",
 	mas: {
+		type: "distribution",
 		// provisioningProfile: "./build/dev.provisionprofile",
 		provisioningProfile: "./build/prod.provisionprofile",
 		entitlements: "build/entitlements.mas.plist",
 		entitlementsInherit: "build/entitlements.mas.inherit.plist",
+		hardenedRuntime: false,
 	},
 	dmg: {
 		// The dmg doesn't need to be signed and actually doing so would throw
