@@ -1,6 +1,6 @@
 {
 	appId: "md.vim.desktop",
-	buildVersion: "3",
+	buildVersion: "1",
 	productName: "Vim.md",
 	copyright: "Copyright © 2021 vim.md",
 	linux: {
@@ -21,7 +21,7 @@
 		// https://github.com/electron/electron-notarize#prerequisites
 		hardenedRuntime: true,
 		darkModeSupport: true,
-		target: ["mas"],
+		target: ["dmg"],
 		type: "distribution",
 	},
 	afterSign: "scripts/notarize.js",
