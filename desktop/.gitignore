@@ -1,2 +1,4 @@
-.env
-electron-builder.env
+/.env
+/dist
+/electron-builder.env
+/node_modules
