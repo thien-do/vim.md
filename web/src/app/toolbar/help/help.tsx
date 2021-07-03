@@ -1,14 +1,22 @@
-import { Dialog, text, Paragraph, Tag, DivEm, Icon } from "@moai/core"
+import { Dialog, text, Paragraph, Tag, DivEm, Icon, border } from "@moai/core"
 import { RiQuestionLine } from "react-icons/ri";
 import { data, Part as PartProps, PartItem } from "./data";
 import s from "./help.module.css";
 
-const Part = (part: PartProps) => {
+const Divider = (): JSX.Element => (
+  <div className={[s.divider, border.strong].join(" ")} />
+);
+
+const Part = (part: PartProps): JSX.Element => {
   return (
-    <div className={s.part}>
-      <Paragraph>{part.description}</Paragraph>
-      {part.items.map((item: any) => <Line key={item.keyword} {...item} type={part.type} />)}
-    </div>
+    <>
+      {part.type === "link" && <Divider />}
+      <div className={s.part}>
+        <Paragraph>{part.description}</Paragraph>
+        {part.items.map((item: any) => <Line key={item.keyword} {...item} type={part.type} />)}
+      </div>
+    </>
+
   )
 }
 
@@ -20,7 +28,7 @@ const formatLink = (link: string): string => {
   return link.includes("mailto") ? link.replace("mailto:", "") : link;
 }
 
-const Line = (props: LineProps) => {
+const Line = (props: LineProps): JSX.Element => {
   const { keyword, description, type } = props;
   const head = type === "operation"
     ? <Tag color={type === "operation" ? Tag.colors.green : Tag.colors.blue}>{keyword}
@@ -30,7 +38,7 @@ const Line = (props: LineProps) => {
     ? <a href={description} target="_blank" rel="noreferrer">{formatLink(description)}</a>
     : <span className={text.muted}>{description}</span>;
   return (
-    <div className={s.line}>
+    <div className={[s.line, type === "link" && s.lineLink].join(" ")}>
       {head}<DivEm />{tail}
     </div>
   )
@@ -41,7 +49,7 @@ export interface HelpProps {
   toggle: (val: boolean) => void
 }
 
-export const Help = (props: HelpProps) => {
+export const Help = (props: HelpProps): JSX.Element | null => {
   const { visible, toggle } = props;
   if (!visible) return null;
   return (
