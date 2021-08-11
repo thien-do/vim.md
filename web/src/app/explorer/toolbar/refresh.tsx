@@ -1,7 +1,4 @@
-import { Button } from "@moai/core";
-import { TreeNode } from "components/tree/tree";
-import { isTreeLeaf } from "components/tree/utils/leaf";
-import { refreshTree } from "components/tree/utils/refresh";
+import { Button, TreeNode, TreeUtils } from "@moai/core";
 import { useState } from "react";
 import { RiRefreshLine } from "react-icons/ri";
 import { listFilesAsNodes } from "../file";
@@ -12,7 +9,7 @@ type Props = ExplorerToolbarProps;
 const loadChildren =
 	(props: Props) =>
 	async (node: TreeNode): Promise<TreeNode[]> => {
-		if (isTreeLeaf(node)) throw Error("Cannot load children of leaf");
+		if (TreeUtils.isTreeLeaf(node)) throw Error("Cannot load children of leaf");
 		const children = await listFilesAsNodes({
 			path: node.id,
 			fileType: props.fileType,
@@ -23,7 +20,7 @@ const loadChildren =
 
 const refresh = async (props: Props): Promise<void> => {
 	if (props.rootNode === null) throw Error("rootNode is null");
-	const rootNode = await refreshTree({
+	const rootNode = await TreeUtils.refreshTree({
 		node: props.rootNode,
 		loadChildren: loadChildren(props),
 	});

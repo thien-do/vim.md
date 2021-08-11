@@ -1,6 +1,6 @@
+import { TreeNode } from "@moai/core";
 import { FileType } from "app/prefs/state/state";
 import { BackendFile, BackendStorage } from "backend/interface";
-import { TreeNode } from "components/tree/tree";
 
 const toTreeNode =
 	(parentId: string) =>

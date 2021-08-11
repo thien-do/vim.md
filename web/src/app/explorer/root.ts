@@ -1,6 +1,6 @@
+import { TreeNode } from "@moai/core";
 import { Prefs } from "app/prefs/state/state";
 import { Backend } from "backend/interface";
-import { TreeNode } from "components/tree/tree";
 import { useEffect, useState } from "react";
 import { SetState, useStorageState } from "utils/state";
 import { listFilesAsNodes } from "./file";

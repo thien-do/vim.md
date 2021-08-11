@@ -1,11 +1,7 @@
-import { Dialog, MenuItemAction } from "@moai/core";
+import { Dialog, MenuItemAction, TreeUtils, Tree, TreeNode } from "@moai/core";
 import { FileState, isGoodToGo } from "app/file/file";
 import { Prefs } from "app/prefs/state/state";
 import { BackendStorage } from "backend/interface";
-import { Tree, TreeNode } from "components/tree/tree";
-import { isTreeLeaf } from "components/tree/utils/leaf";
-import { removeTreeNode } from "components/tree/utils/remove";
-import { updateTreeNode } from "components/tree/utils/update";
 import { useSetState } from "utils/set";
 import { SetState } from "utils/state";
 import { listFilesAsNodes } from "../file";
@@ -33,7 +29,7 @@ const loadChildren =
 		if (node.children !== undefined) return;
 		const path = node.id;
 
-		const newRoot = updateTreeNode({
+		const newRoot = TreeUtils.updateTreeNode({
 			current: rootNode,
 			id: node.id,
 			key: "children",
@@ -50,7 +46,10 @@ const removeFile = async (props: Props, node: TreeNode): Promise<void> => {
 	// Remove file from file system
 	await storage.remove(node.id);
 	// Remove file in our explorer
-	const nextRoot = removeTreeNode({ tree: rootNode, deleteId: node.id });
+	const nextRoot = TreeUtils.removeTreeNode({
+		tree: rootNode,
+		deleteId: node.id,
+	});
 	setRootNode(nextRoot);
 	// If delete current file, set file path as null
 	if (file.path !== node.id) return;
@@ -60,7 +59,7 @@ const removeFile = async (props: Props, node: TreeNode): Promise<void> => {
 const getRowActions =
 	(props: Props) =>
 	(node: TreeNode): MenuItemAction[] => {
-		if (isTreeLeaf(node) === false) return [];
+		if (TreeUtils.isTreeLeaf(node) === false) return [];
 		return [{ label: "Delete…", fn: () => removeFile(props, node) }];
 	};
 

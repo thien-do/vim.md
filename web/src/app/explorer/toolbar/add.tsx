@@ -1,8 +1,5 @@
-import { Button } from "@moai/core";
+import { Button, TreeNode, TreeUtils } from "@moai/core";
 import { BackendPath } from "backend/interface";
-import { TreeNode } from "components/tree/tree";
-import { addTreeNode } from "components/tree/utils/add";
-import { isTreeNodeExist } from "components/tree/utils/exist";
 import { RiFileAddLine } from "react-icons/ri";
 import { ExplorerToolbarProps } from "./toolbar";
 
@@ -33,11 +30,11 @@ const addFileToTree = (props: Props, path: string): TreeNode => {
 	const parents: [string, BackendPath][] = getParents(props, path);
 	parents.forEach((parent, index) => {
 		const [id, parsed] = parent;
-		if (isTreeNodeExist({ node, id })) return;
+		if (TreeUtils.isTreeNodeExist({ node, id })) return;
 		const isLeaf = index === parents.length - 1;
 		const children = isLeaf ? undefined : [];
 		const addNode: TreeNode = { id, label: parsed.base, isLeaf, children };
-		node = addTreeNode({ node, id: parsed.dir, sort: true, addNode });
+		node = TreeUtils.addTreeNode({ node, id: parsed.dir, sort: true, addNode });
 	});
 	return node;
 };

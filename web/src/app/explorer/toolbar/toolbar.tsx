@@ -1,7 +1,7 @@
+import { TreeNode } from "@moai/core";
 import { FileType } from "app/prefs/state/state";
 import { Backend } from "backend/interface";
 import { PaneHeading } from "components/pane/heading/heading";
-import { TreeNode } from "components/tree/tree";
 import { SetState } from "utils/state";
 import { ExplorerToolbarAdd } from "./add";
 import { ExplorerToolbarOpen } from "./open";
