@@ -14,7 +14,7 @@
 	},
 	"scripts": {
 		"start": "yarn && BROWSER=NONE react-scripts start",
-		"build": "yarn && react-scripts build"
+		"build": "yarn && GENERATE_SOURCEMAP=false react-scripts build"
 	},
 	"eslintConfig": {
 		"extends": [
