@@ -14,7 +14,7 @@
 	font-family: inherit !important;
 }
 .CodeMirror-dialog-bottom span[style*="color: rgb(136, 136, 136)"] {
-    color: var(--border-strong) !important;
+	color: var(--border-strong) !important;
 }
 .CodeMirror-dialog-bottom {
 	border: none;
@@ -88,10 +88,10 @@
 	color: var(--text-muted);
 }
 .light .cm-searching {
-	background-color: #FCD34D;
+	background-color: #fcd34d;
 }
 .dark .cm-searching {
-	background-color: #B45309;
+	background-color: #b45309;
 }
 .CodeMirror-activeline-background {
 	background: none;

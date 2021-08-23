@@ -1,13 +1,13 @@
 .container {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .input {
-    flex: 2 1 0px;
+	flex: 2 1 0px;
 }
 
 /* To make the input takes 2/3 of space, because there are 2 options */
 .space {
-    flex: 1 1 0px;
+	flex: 1 1 0px;
 }

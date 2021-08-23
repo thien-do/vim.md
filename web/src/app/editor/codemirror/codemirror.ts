@@ -49,7 +49,8 @@ const addEventListeners = (editor: CodeMirror.Editor): void => {
 		const curr = editor.getCursor().line + 1;
 		if (editor.state.curLineNum === curr) return;
 		editor.state.curLineNum = curr;
-		const format = (l: number) => `${l === curr ? curr : Math.abs(curr - l)}`;
+		const format = (l: number) =>
+			`${l === curr ? curr : Math.abs(curr - l)}`;
 		editor.setOption("lineNumberFormatter", format);
 	});
 	// re-measure things on font changes

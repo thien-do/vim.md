@@ -24,20 +24,24 @@ const options: Option[] = [
 	{ title: "Quattro", description: "Propotional lovers", value: "quattro" },
 ];
 
-const renderOption = (props: Props) => (option: Option, index: number) => (
-	<div key={option.value}>
-		{index !== 0 && <DivPx size={12} />}
-		<Radio
-			name="pref-font-family"
-			value={option.value}
-			setValue={() => {
-				props.setPrefs((prefs) => ({ ...prefs, fontFamily: option.value }));
-			}}
-			checked={props.prefs.fontFamily === option.value}
-			children={renderLabel(option)}
-		/>
-	</div>
-);
+const renderOption = (props: Props) => (option: Option, index: number) =>
+	(
+		<div key={option.value}>
+			{index !== 0 && <DivPx size={12} />}
+			<Radio
+				name="pref-font-family"
+				value={option.value}
+				setValue={() => {
+					props.setPrefs((prefs) => ({
+						...prefs,
+						fontFamily: option.value,
+					}));
+				}}
+				checked={props.prefs.fontFamily === option.value}
+				children={renderLabel(option)}
+			/>
+		</div>
+	);
 
 export const PrefsFontFamily = (props: Props): JSX.Element => (
 	<div className={s.container}>

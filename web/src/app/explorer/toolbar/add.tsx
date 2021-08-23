@@ -34,7 +34,12 @@ const addFileToTree = (props: Props, path: string): TreeNode => {
 		const isLeaf = index === parents.length - 1;
 		const children = isLeaf ? undefined : [];
 		const addNode: TreeNode = { id, label: parsed.base, isLeaf, children };
-		node = TreeUtils.addTreeNode({ node, id: parsed.dir, sort: true, addNode });
+		node = TreeUtils.addTreeNode({
+			node,
+			id: parsed.dir,
+			sort: true,
+			addNode,
+		});
 	});
 	return node;
 };

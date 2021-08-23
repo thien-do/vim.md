@@ -9,7 +9,8 @@ type Props = ExplorerToolbarProps;
 const loadChildren =
 	(props: Props) =>
 	async (node: TreeNode): Promise<TreeNode[]> => {
-		if (TreeUtils.isTreeLeaf(node)) throw Error("Cannot load children of leaf");
+		if (TreeUtils.isTreeLeaf(node))
+			throw Error("Cannot load children of leaf");
 		const children = await listFilesAsNodes({
 			path: node.id,
 			fileType: props.fileType,

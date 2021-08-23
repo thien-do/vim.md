@@ -13,7 +13,8 @@ export const useFileWrite = (props: FileProps): void => {
 
 	useEffect(() => {
 		const save = async (cm: CodeMirror.Editor) => {
-			const path = file.path === null ? await showSaveDialog() : file.path;
+			const path =
+				file.path === null ? await showSaveDialog() : file.path;
 			// "path" is null when pickSaveFile is cancelled
 			if (path === null) return;
 			await write(path, cm.getValue());

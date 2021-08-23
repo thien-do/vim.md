@@ -1,9 +1,9 @@
 .container {
-    display: flex;
-    align-items: flex-start;
+	display: flex;
+	align-items: flex-start;
 }
 
 .label {
-    /* align with a radio item */
-    line-height: 20px;
+	/* align with a radio item */
+	line-height: 20px;
 }

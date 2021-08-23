@@ -6,262 +6,262 @@
 /* Line Height */
 
 .font-var-quattro {
-    --line-height-base: 160;
-    --line-height-base-viewport-adjustment: 0;
+	--line-height-base: 160;
+	--line-height-base-viewport-adjustment: 0;
 }
 
 @media screen {
-    .font-var-quattro.font-size-4xs {
-        --line-height-base: 170;
-    }
-    .font-var-quattro.font-size-3xs {
-        --line-height-base: 169;
-    }
-    .font-var-quattro.font-size-2xs {
-        --line-height-base: 168;
-    }
-    .font-var-quattro.font-size-xs {
-        --line-height-base: 167;
-    }
-    .font-var-quattro.font-size-s {
-        --line-height-base: 166;
-    }
-    .font-var-quattro.font-size-m {
-        --line-height-base: 165;
-    }
-    .font-var-quattro.font-size-l {
-        --line-height-base: 164;
-    }
-    .font-var-quattro.font-size-xl {
-        --line-height-base: 163;
-    }
-    .font-var-quattro.font-size-2xl {
-        --line-height-base: 159;
-    }
-    .font-var-quattro.font-size-3xl {
-        --line-height-base: 155;
-    }
-    .font-var-quattro.font-size-4xl {
-        --line-height-base: 151;
-    }
-    .font-var-quattro.font-size-5xl {
-        --line-height-base: 147;
-    }
-    .font-var-quattro.font-size-6xl {
-        --line-height-base: 142;
-    }
-    .font-var-quattro.font-size-7xl {
-        --line-height-base: 137;
-    }
-    .font-var-quattro.font-size-8xl {
-        --line-height-base: 132;
-    }
-    .font-var-quattro.font-size-9xl {
-        --line-height-base: 127;
-    }
-    .font-var-quattro.font-size-10xl {
-        --line-height-base: 123;
-    }
+	.font-var-quattro.font-size-4xs {
+		--line-height-base: 170;
+	}
+	.font-var-quattro.font-size-3xs {
+		--line-height-base: 169;
+	}
+	.font-var-quattro.font-size-2xs {
+		--line-height-base: 168;
+	}
+	.font-var-quattro.font-size-xs {
+		--line-height-base: 167;
+	}
+	.font-var-quattro.font-size-s {
+		--line-height-base: 166;
+	}
+	.font-var-quattro.font-size-m {
+		--line-height-base: 165;
+	}
+	.font-var-quattro.font-size-l {
+		--line-height-base: 164;
+	}
+	.font-var-quattro.font-size-xl {
+		--line-height-base: 163;
+	}
+	.font-var-quattro.font-size-2xl {
+		--line-height-base: 159;
+	}
+	.font-var-quattro.font-size-3xl {
+		--line-height-base: 155;
+	}
+	.font-var-quattro.font-size-4xl {
+		--line-height-base: 151;
+	}
+	.font-var-quattro.font-size-5xl {
+		--line-height-base: 147;
+	}
+	.font-var-quattro.font-size-6xl {
+		--line-height-base: 142;
+	}
+	.font-var-quattro.font-size-7xl {
+		--line-height-base: 137;
+	}
+	.font-var-quattro.font-size-8xl {
+		--line-height-base: 132;
+	}
+	.font-var-quattro.font-size-9xl {
+		--line-height-base: 127;
+	}
+	.font-var-quattro.font-size-10xl {
+		--line-height-base: 123;
+	}
 }
 
 @media print {
-    .font-var-quattro {
-        --line-height-base: 155;
-    }
+	.font-var-quattro {
+		--line-height-base: 155;
+	}
 }
 
 /* Compact */
 @media screen and (max-width: 414px) {
-    .font-var-quattro {
-        --line-height-base-viewport-adjustment: -10;
-    }
+	.font-var-quattro {
+		--line-height-base-viewport-adjustment: -10;
+	}
 }
 
 /* Regular */
 @media screen and (min-width: 415px) and (max-width: 1250px) {
-    .font-var-quattro {
-        --line-height-base-viewport-adjustment: 0;
-    }
+	.font-var-quattro {
+		--line-height-base-viewport-adjustment: 0;
+	}
 }
 
 /* ≥Wide */
 @media screen and (min-width: 1251px) {
-    .font-var-quattro {
-        --line-height-base-viewport-adjustment: +10;
-    }
+	.font-var-quattro {
+		--line-height-base-viewport-adjustment: +10;
+	}
 }
 
 .font-var-quattro {
-    --line-height: calc(
-        (var(--line-height-base) + var(--line-height-base-viewport-adjustment)) /
-            100
-    );
-    line-height: var(--line-height);
+	--line-height: calc(
+		(var(--line-height-base) + var(--line-height-base-viewport-adjustment)) /
+			100
+	);
+	line-height: var(--line-height);
 }
 
 /* Spacing */
 
 .font-var-quattro {
-    --spcg-adjustment: 0;
+	--spcg-adjustment: 0;
 }
 .font-var-quattro.font-size-4xs {
-    --spcg-adjustment: 22;
+	--spcg-adjustment: 22;
 }
 .font-var-quattro.font-size-3xs {
-    --spcg-adjustment: 18;
+	--spcg-adjustment: 18;
 }
 .font-var-quattro.font-size-2xs {
-    --spcg-adjustment: 14;
+	--spcg-adjustment: 14;
 }
 .font-var-quattro.font-size-xs {
-    --spcg-adjustment: 8;
+	--spcg-adjustment: 8;
 }
 .font-var-quattro.font-size-s {
-    --spcg-adjustment: 4;
+	--spcg-adjustment: 4;
 }
 .font-var-quattro.font-size-m {
-    --spcg-adjustment: 2;
+	--spcg-adjustment: 2;
 }
 .font-var-quattro.font-size-l {
-    --spcg-adjustment: 0;
+	--spcg-adjustment: 0;
 }
 .font-var-quattro.font-size-xl {
-    --spcg-adjustment: 0;
+	--spcg-adjustment: 0;
 }
 .font-var-quattro.font-size-2xl {
-    --spcg-adjustment: 0;
+	--spcg-adjustment: 0;
 }
 .font-var-quattro.font-size-3xl {
-    --spcg-adjustment: -1;
+	--spcg-adjustment: -1;
 }
 .font-var-quattro.font-size-4xl {
-    --spcg-adjustment: -1;
+	--spcg-adjustment: -1;
 }
 .font-var-quattro.font-size-5xl {
-    --spcg-adjustment: -2;
+	--spcg-adjustment: -2;
 }
 .font-var-quattro.font-size-6xl {
-    --spcg-adjustment: -3;
+	--spcg-adjustment: -3;
 }
 .font-var-quattro.font-size-7xl {
-    --spcg-adjustment: -4;
+	--spcg-adjustment: -4;
 }
 .font-var-quattro.font-size-8xl {
-    --spcg-adjustment: -5;
+	--spcg-adjustment: -5;
 }
 .font-var-quattro.font-size-9xl {
-    --spcg-adjustment: -6;
+	--spcg-adjustment: -6;
 }
 .font-var-quattro.font-size-10xl {
-    --spcg-adjustment: -7;
+	--spcg-adjustment: -7;
 }
 
 /* Compact */
 @media screen and (min-width: 200px) and (max-width: 414px) {
-    .font-var-quattro {
-        --spcg: 0;
-    }
+	.font-var-quattro {
+		--spcg: 0;
+	}
 }
 
 /* Regular */
 @media screen and (min-width: 415px) and (max-width: 1250px) {
-    .font-var-quattro {
-        --spcg: 1;
-    }
+	.font-var-quattro {
+		--spcg: 1;
+	}
 }
 
 /* ≥Wide */
 @media screen and (min-width: 1251px) {
-    .font-var-quattro {
-        --spcg: 2;
-    }
+	.font-var-quattro {
+		--spcg: 2;
+	}
 }
 
 @media print {
-    .font-var-quattro {
-        --spcg: 0;
-    }
+	.font-var-quattro {
+		--spcg: 0;
+	}
 }
 
 .font-var-quattro {
-    font-variation-settings: "SPCG" calc(var(--spcg) + var(--spcg-adjustment));
+	font-variation-settings: "SPCG" calc(var(--spcg) + var(--spcg-adjustment));
 }
 
 /* Weight */
 
 .font-var-quattro {
-    --wght: 400;
-    --wght-interface-orientation-adjustment: 0;
-    --wght-system-adjustment: 0;
-    --wght-dark-adjustment: 0;
+	--wght: 400;
+	--wght-interface-orientation-adjustment: 0;
+	--wght-system-adjustment: 0;
+	--wght-dark-adjustment: 0;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2), print {
-    .font-var-quattro.ios.interface-orientation-landscape {
-        --wght-interface-orientation-adjustment: -50;
-    }
-    .font-var-quattro.mac {
-        --wght-system-adjustment: -35;
-    }
-    .dark-mode .font-var-quattro {
-        --wght-dark-adjustment: -20;
-    }
-    .font-var-quattro.font-size-4xs {
-        --wght: 490;
-    }
-    .font-var-quattro.font-size-3xs {
-        --wght: 482;
-    }
-    .font-var-quattro.font-size-2xs {
-        --wght: 475;
-    }
-    .font-var-quattro.font-size-xs {
-        --wght: 470;
-    }
-    .font-var-quattro.font-size-s {
-        --wght: 465;
-    }
-    .font-var-quattro.font-size-m {
-        --wght: 460;
-    }
-    .font-var-quattro.font-size-l {
-        --wght: 455;
-    }
-    .font-var-quattro.font-size-xl {
-        --wght: 450;
-    }
-    .font-var-quattro.font-size-2xl {
-        --wght: 445;
-    }
-    .font-var-quattro.font-size-3xl {
-        --wght: 440;
-    }
-    .font-var-quattro.font-size-4xl {
-        --wght: 435;
-    }
-    .font-var-quattro.font-size-5xl {
-        --wght: 430;
-    }
-    .font-var-quattro.font-size-6xl {
-        --wght: 420;
-    }
-    .font-var-quattro.font-size-7xl {
-        --wght: 420;
-    }
-    .font-var-quattro.font-size-8xl {
-        --wght: 420;
-    }
-    .font-var-quattro.font-size-9xl {
-        --wght: 420;
-    }
-    .font-var-quattro.font-size-10xl {
-        --wght: 420;
-    }
+	.font-var-quattro.ios.interface-orientation-landscape {
+		--wght-interface-orientation-adjustment: -50;
+	}
+	.font-var-quattro.mac {
+		--wght-system-adjustment: -35;
+	}
+	.dark-mode .font-var-quattro {
+		--wght-dark-adjustment: -20;
+	}
+	.font-var-quattro.font-size-4xs {
+		--wght: 490;
+	}
+	.font-var-quattro.font-size-3xs {
+		--wght: 482;
+	}
+	.font-var-quattro.font-size-2xs {
+		--wght: 475;
+	}
+	.font-var-quattro.font-size-xs {
+		--wght: 470;
+	}
+	.font-var-quattro.font-size-s {
+		--wght: 465;
+	}
+	.font-var-quattro.font-size-m {
+		--wght: 460;
+	}
+	.font-var-quattro.font-size-l {
+		--wght: 455;
+	}
+	.font-var-quattro.font-size-xl {
+		--wght: 450;
+	}
+	.font-var-quattro.font-size-2xl {
+		--wght: 445;
+	}
+	.font-var-quattro.font-size-3xl {
+		--wght: 440;
+	}
+	.font-var-quattro.font-size-4xl {
+		--wght: 435;
+	}
+	.font-var-quattro.font-size-5xl {
+		--wght: 430;
+	}
+	.font-var-quattro.font-size-6xl {
+		--wght: 420;
+	}
+	.font-var-quattro.font-size-7xl {
+		--wght: 420;
+	}
+	.font-var-quattro.font-size-8xl {
+		--wght: 420;
+	}
+	.font-var-quattro.font-size-9xl {
+		--wght: 420;
+	}
+	.font-var-quattro.font-size-10xl {
+		--wght: 420;
+	}
 }
 
 .font-var-quattro {
-    font-weight: calc(
-        var(--wght) + var(--wght-interface-orientation-adjustment) +
-            var(--wght-system-adjustment) + var(--wght-dark-adjustment)
-    );
+	font-weight: calc(
+		var(--wght) + var(--wght-interface-orientation-adjustment) +
+			var(--wght-system-adjustment) + var(--wght-dark-adjustment)
+	);
 }
