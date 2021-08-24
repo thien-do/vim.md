@@ -19,7 +19,9 @@ export const PrefsTheme = (props: Props): JSX.Element => (
 			<div className={s.input}>
 				<Switcher<Theme>
 					value={props.prefs.theme}
-					setValue={(theme) => props.setPrefs((prefs) => ({ ...prefs, theme }))}
+					setValue={(theme) =>
+						props.setPrefs((prefs) => ({ ...prefs, theme }))
+					}
 					fill
 					options={getThemeOptions()}
 				/>

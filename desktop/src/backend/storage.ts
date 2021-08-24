@@ -14,7 +14,7 @@ const write: BackendStorage["write"] = async (path, content) => {
 
 const remove: BackendStorage["remove"] = async (path) => {
 	await fs.unlink(path);
-}
+};
 
 const list: BackendStorage["list"] = async (path, extensions) => {
 	const names = await fs.readdir(path);

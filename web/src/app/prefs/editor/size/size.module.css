@@ -1,13 +1,13 @@
 .container {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .input {
-    flex: 1 1 0px;
+	flex: 1 1 0px;
 }
 
 .value {
-    flex: 0 0 auto;
-    font-variant-numeric: tabular-nums;
+	flex: 0 0 auto;
+	font-variant-numeric: tabular-nums;
 }

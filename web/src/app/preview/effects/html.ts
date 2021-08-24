@@ -7,7 +7,7 @@ export const usePreviewHtml = (editor: Editor): string => {
 	const [html, setHtml] = useState("");
 
 	useEffect(() => {
-        if (editor === null) return;
+		if (editor === null) return;
 		const syncHtml = (cm: CodeMirror.Editor) => {
 			const value = cm.getValue();
 			setHtml(toHTML(value));

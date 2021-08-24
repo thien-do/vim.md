@@ -32,7 +32,7 @@ const write: BackendStorage["write"] = async (path, content) => {
 
 const remove: BackendStorage["remove"] = async (path) => {
 	window.localStorage.removeItem(`docs/${path}`);
-}
+};
 
 const showSaveDialog: BackendStorage["showSaveDialog"] = async () => {
 	const name = await Dialog.prompt("Enter a name for your document");

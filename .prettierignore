@@ -1,0 +1,19 @@
+node_modules
+.vercel
+.github
+README.md
+
+# web/.gitignore
+/web/build
+
+# desktop/.gitignore
+/desktop/.env
+/desktop/dist
+/desktop/electron-builder.env
+
+# desktop/src/.gitignore
+/desktop/src/*.js
+
+# desktop/build/.gitignore
+/desktop/build/*.p12
+/desktop/build/*.provisionprofile

@@ -28,7 +28,12 @@ export const App = (): JSX.Element => {
 
 	const explorer = prefs.explorerVisible && (
 		<div className={s.explorer}>
-			<Explorer file={file} setFile={setFile} backend={backend} prefs={prefs} />
+			<Explorer
+				file={file}
+				setFile={setFile}
+				backend={backend}
+				prefs={prefs}
+			/>
 		</div>
 	);
 
@@ -57,7 +62,12 @@ export const App = (): JSX.Element => {
 
 	const title = (
 		<div className={s.title}>
-			<Title backend={backend} prefs={prefs} setPrefs={setPrefs} file={file} />
+			<Title
+				backend={backend}
+				prefs={prefs}
+				setPrefs={setPrefs}
+				file={file}
+			/>
 		</div>
 	);
 

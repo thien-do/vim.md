@@ -16,28 +16,30 @@ const options: Option[] = [
 	// { label: "__Blank", value: "blank" }, // DEBUG
 ];
 
-const renderOption = (props: Props) => (option: Option, index: number) => (
-	<div key={option.value}>
-		{index !== 0 && <DivPx size={12} />}
-		<Radio
-			name="pref-template"
-			value={option.value}
-			setValue={() => {
-				props.setPrefs((prefs) => ({ ...prefs, template: option.value }));
-			}}
-			checked={props.prefs.template === option.value}
-			children={option.label}
-		/>
-	</div>
-);
+const renderOption = (props: Props) => (option: Option, index: number) =>
+	(
+		<div key={option.value}>
+			{index !== 0 && <DivPx size={12} />}
+			<Radio
+				name="pref-template"
+				value={option.value}
+				setValue={() => {
+					props.setPrefs((prefs) => ({
+						...prefs,
+						template: option.value,
+					}));
+				}}
+				checked={props.prefs.template === option.value}
+				children={option.label}
+			/>
+		</div>
+	);
 
 export const PrefsTemplate = (props: Props): JSX.Element => (
 	<div className={s.container}>
 		<PaneLabel>
 			<div className={s.label}>Template:</div>
 		</PaneLabel>
-		<div className={s.input}>
-			{options.map(renderOption(props))}
-		</div>
+		<div className={s.input}>{options.map(renderOption(props))}</div>
 	</div>
 );
