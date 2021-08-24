@@ -12,8 +12,8 @@ const toTreeNode =
 	});
 
 const fileNodesCompareFn = (a: TreeNode, b: TreeNode) => {
-	if (!a.isLeaf && !b.isLeaf) {
-		// they are both folders, then sort by alphabet
+	if (a.isLeaf === b.isLeaf) {
+		// they are same type, then sort by alphabet
 		return a.label.toLowerCase().localeCompare(b.label.toLowerCase());
 	}
 
