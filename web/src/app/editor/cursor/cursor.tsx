@@ -8,13 +8,15 @@ export interface CursorPosition {
 	left: number;
 }
 
-interface Props {
+interface UncontrolledCursorProps {
 	editor: Editor;
 	offsetTop?: number;
 	offsetLeft?: number;
 }
 
-export const Cursor = (props: Props): JSX.Element => {
+export const UncontrolledCursor = (
+	props: UncontrolledCursorProps
+): JSX.Element => {
 	const [blink, setBlink] = useState<boolean>(true);
 	const [position, setPosition] = useState<CursorPosition>({
 		top: 0,
@@ -51,9 +53,22 @@ export const Cursor = (props: Props): JSX.Element => {
 	}, [props.editor, props.offsetTop, props.offsetLeft]);
 
 	return (
+		<>
+			<Cursor blink={blink} position={position} />
+		</>
+	);
+};
+
+interface Props {
+	blink: boolean;
+	position: CursorPosition;
+}
+
+export const Cursor = (props: Props): JSX.Element => {
+	return (
 		<div
-			className={[s.cursor, blink ? s.blink : ""].join(" ")}
-			style={{ top: position.top, left: position.left }}
+			className={[s.cursor, props.blink ? s.blink : ""].join(" ")}
+			style={{ top: props.position.top, left: props.position.left }}
 		/>
 	);
 };

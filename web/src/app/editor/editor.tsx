@@ -4,7 +4,7 @@ import { SetState } from "utils/state";
 import s from "./editor.module.css";
 import { CodeMirrorUtils } from "./codemirror/codemirror";
 import "./style/style";
-import { Cursor } from "./cursor/cursor";
+import { UncontrolledCursor } from "./cursor/cursor";
 import { render } from "react-dom";
 
 const fontFamilyClasses: Record<FontFamily, [string, string]> = {
@@ -42,7 +42,7 @@ export const EditorPane = (props: Props): JSX.Element => {
 			const container = document.createElement("div");
 			root.parentNode.appendChild(container);
 			render(
-				<Cursor
+				<UncontrolledCursor
 					editor={editor}
 					offsetTop={-codeMirrorLinesPaddingTop}
 				/>,
