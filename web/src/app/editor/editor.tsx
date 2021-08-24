@@ -4,12 +4,16 @@ import { SetState } from "utils/state";
 import s from "./editor.module.css";
 import { CodeMirrorUtils } from "./codemirror/codemirror";
 import "./style/style";
+import { Cursor } from "./cursor/cursor";
+import { render } from "react-dom";
 
 const fontFamilyClasses: Record<FontFamily, [string, string]> = {
 	mono: ["mono", "mono-duo"],
 	duo: ["duo", "mono-duo"],
 	quattro: ["quattro", "quattro"],
 };
+
+const codeMirrorLinesPaddingTop = 96;
 
 export type Editor = CodeMirror.Editor | null;
 
@@ -30,6 +34,22 @@ export const EditorPane = (props: Props): JSX.Element => {
 		const instance = CodeMirrorUtils.init(container.current);
 		setEditor(instance);
 	}, [editor, setEditor]);
+
+	useEffect(() => {
+		if (editor === null) return;
+		const root = document.getElementsByClassName("CodeMirror-cursors")[0];
+		if (root?.parentNode) {
+			const container = document.createElement("div");
+			root.parentNode.appendChild(container);
+			render(
+				<Cursor
+					editor={editor}
+					offsetTop={-codeMirrorLinesPaddingTop}
+				/>,
+				container
+			);
+		}
+	}, [editor]);
 
 	const fontFamilyClass = fontFamilyClasses[prefs.fontFamily];
 	return (

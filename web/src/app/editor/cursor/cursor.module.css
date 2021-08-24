@@ -1,0 +1,28 @@
+.cursor {
+	z-index: 3;
+	position: absolute;
+	width: 3px;
+	height: 36px;
+	background: var(--highlight-5);
+
+	/* Smooth transition */
+	transition-duration: 0.05s;
+	transition-property: top, left;
+	transition-timing-function: linear;
+}
+
+.blink {
+	animation-name: cursorBlink;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes cursorBlink {
+	0%,
+	100% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+}
