@@ -26,6 +26,8 @@ export const UncontrolledCursor = (
 	useEffect(() => {
 		if (props.editor === null) return;
 
+		let isSyncPaused = false;
+
 		const turnOnBlinkDebounced = debounce(() => setBlink(true), 1000);
 
 		const temporaryTurnOffBlink = () => {
@@ -34,7 +36,7 @@ export const UncontrolledCursor = (
 		};
 
 		const syncCursor = (editor: Editor) => {
-			if (editor === null) return;
+			if (editor === null || isSyncPaused) return;
 			temporaryTurnOffBlink();
 			const position = editor.cursorCoords(null, "local");
 			if (props.offsetTop) position.top += props.offsetTop;
@@ -42,11 +44,33 @@ export const UncontrolledCursor = (
 			setPosition(position);
 		};
 
+		// CodeMirror remove and re-intialize cursor when render new line
+		// Thus, when Enter is captured (aka new line will be rendered),
+		// we temporary pause cursor syncing process
+		const pauseSyncOnEnter = (editor: Editor, name: any) => {
+			if (name === "Enter") {
+				isSyncPaused = true;
+			}
+		};
+
+		// After CodeMirror updated DOM (aka new line is rendered),
+		// we resume cursor syncing process
+		const resumeSyncOnDOMUpdated = (editor: Editor) => {
+			if (isSyncPaused) {
+				isSyncPaused = false;
+				syncCursor(editor);
+			}
+		};
+
 		syncCursor(props.editor);
 		props.editor.on("cursorActivity", syncCursor);
+		props.editor.on("keyHandled", pauseSyncOnEnter);
+		props.editor.on("update", resumeSyncOnDOMUpdated);
 
 		return () => {
 			props.editor?.off("cursorActivity", syncCursor);
+			props.editor?.off("keyHandled", pauseSyncOnEnter);
+			props.editor?.off("update", resumeSyncOnDOMUpdated);
 		};
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
