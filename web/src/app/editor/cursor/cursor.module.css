@@ -1,9 +1,6 @@
 .cursor {
 	z-index: 3;
 	position: absolute;
-	width: 3px;
-	height: 36px;
-	background: var(--highlight-5);
 
 	/* Smooth transition */
 	transition-duration: 0.05s;

@@ -1,0 +1,5 @@
+.underline {
+	width: 1ch;
+	height: 36px;
+	border-bottom: var(--border-strong) solid 3px;
+}

@@ -1,0 +1,6 @@
+.block {
+	width: 1ch;
+	height: 36px;
+	z-index: 1;
+	background-color: var(--border-strong);
+}
