@@ -7,6 +7,7 @@
 		"@moai/core": "^1.4.1",
 		"@vimdotmd/markdown": "^1.8.0",
 		"codemirror": "^5.62.2",
+		"lodash.debounce": "^4.0.8",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"react-helmet-async": "^1.0.9",
@@ -26,6 +27,7 @@
 	],
 	"devDependencies": {
 		"@types/codemirror": "5.60.2",
+		"@types/lodash.debounce": "^4.0.6",
 		"@types/react": "17.0.17",
 		"@types/react-dom": "17.0.9",
 		"react-scripts": "4.0.3",

@@ -30,6 +30,8 @@
 	min-width: 48px;
 }
 
+/* If you are changing padding, please update codeMirrorLinesPaddingTop
+	in web/src/app/editor/editor.tsx */
 .CodeMirror-lines {
 	--char-width: calc((1em / 20) * 12.8);
 	--char-count-adjusted: calc(var(--line-length) + 2); /* 2 is margin */
@@ -57,6 +59,10 @@
 .CodeMirror-focused .CodeMirror-selected,
 .CodeMirror-selected {
 	background-color: var(--border-weak);
+}
+
+.CodeMirror-cursors {
+	display: none;
 }
 
 /* Cursor inside a selection */
