@@ -1,0 +1,22 @@
+.part {
+	margin-bottom: 8px;
+}
+
+.title {
+	margin-left: 8px;
+}
+
+.line {
+	padding: 4px 0;
+}
+
+.lineLink {
+	padding: 0;
+}
+
+.divider {
+	flex: 1 0 auto;
+	border-top-style: solid;
+	border-top-width: 1px;
+	margin: 8px 0;
+}

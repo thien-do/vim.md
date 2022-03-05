@@ -1,12 +1,19 @@
+import { useState } from "react";
 import { Button, Pane, Switcher } from "@moai/core";
 import { Layout, PrefsState } from "app/prefs/state/state";
 import { BackendUIConfig } from "backend/interface";
 import { RiFolderLine, RiQuestionLine, RiSettingsLine } from "react-icons/ri";
+import { CodeMirrorUtils } from "app/editor/codemirror/codemirror";
 import { TitleToolbar } from "../title/toolbar/toolbar";
+import { Help } from "./help/help";
 import s from "./toolbar.module.css";
 
 interface Props extends PrefsState {
 	ui: BackendUIConfig;
+}
+
+interface RightProps extends Props {
+	toggleHelp: (val: boolean) => void;
 }
 
 const Left = (props: Props): JSX.Element => (
@@ -53,9 +60,9 @@ const Center = (props: Props): JSX.Element => (
 	</div>
 );
 
-const Right = (props: Props): JSX.Element => (
+const Right = (props: RightProps): JSX.Element => (
 	<div className={s.right}>
-		<Button icon={RiQuestionLine} children="Help" />
+		<Button icon={RiQuestionLine} children="Help" onClick={() => props.toggleHelp(true)} />
 		<Button
 			icon={RiSettingsLine}
 			children="Preferences"
@@ -70,14 +77,20 @@ const Right = (props: Props): JSX.Element => (
 	</div>
 );
 
-export const Toolbar = (props: Props): JSX.Element => (
-	<div className={s.wrapper}>
-		<Pane>
-			<div className={s.container}>
-				<Left {...props} />
-				<Center {...props} />
-				<Right {...props} />
-			</div>
-		</Pane>
-	</div>
-);
+export const Toolbar = (props: Props): JSX.Element => {
+	const [showHelp, toggleHelp] = useState(false);
+	CodeMirrorUtils.setCommand("openHelp", () => toggleHelp(true));
+
+	return (
+		<div className={s.wrapper}>
+			<Pane>
+				<div className={s.container}>
+					<Left {...props} />
+					<Center {...props} />
+					<Right {...props} toggleHelp={toggleHelp} />
+				</div>
+			</Pane>
+			<Help visible={showHelp} toggle={toggleHelp} />
+		</div>
+	)
+};
